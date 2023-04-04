@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Open+Sans&family=PT+Sans:wght@400;700&family=Roboto+Slab:wght@400;600;700&display=swap');
+
+:root{
+    --login-bg: #cccccc;
+    --titulo-bg: #586A83;
+    --btn-inicio: #063970;
+    --light-red: #c93513;
+    --img-bg:#75a2d4;
+    
+}
+
+body{
+    height: 100vh;
+    font-family:'Lato', sans-serif;
+    background-image: url(../img/hospital.jpeg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.login-container{
+    height: 40.75em;
+    width: 60em;
+    margin: 6em auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.login-info-container{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 0.5rem;
+    background-color: var(--login-bg);
+    border-radius: 10px;
+}
+
+.image-container{
+    width: 50%;
+    padding-top: 2rem;
+    background-color: var(--img-bg);
+}
+
+.title{
+    text-transform: capitalize;
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color:var(--titulo-bg);
+}
+
+.logo-login{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.logo-elemento{
+    width: 12.5rem;
+    height: 3.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--titulo-bg);
+}
+
+    .logo-elemento img{
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+    top: 0;
+    left: 1.5rem;
+    }
+
+.logo-elemento:hover{
+    background-color: var(--login-bg);
+    cursor: pointer;
+}
+.inputs-container{
+    height: 55%;
+    width: 85%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  
+}
+
+input[type="text"], input[type="password"],.btn{
+    width: 90%;
+    margin-top: 1rem;
+    height: 3.125rem;
+    font-size: 1rem;
+}
+
+input[type="text"], input[type="password"]{
+    margin-top: 1rem;
+    padding-left:20px ;
+    border: none;
+    text-align:center;
+    border-radius: 5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+}
+
+input:hover{
+    border: 2px solid var(--btn-inicio);
+}
+
+.izquierda{
+    text-align: left;
+    margin-top: 2rem;
+    margin-left: 1.5rem;
+}
+.centrear{
+    align-items: center;
+}
+
+.btn{
+    width: 80%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color:#FFFFFF;
+    margin-top: 2rem;
+    border-radius: 5px;
+    border:none;
+    background-color: var(--btn-inicio);
+    cursor: pointer;
+}
+
+.btn:hover{
+    border: 2px solid var(--img-bg);
+    cursor: pointer;
+}
+
+.btn-cancelar{
+    width: 80%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color:#FFFFFF;
+    border-radius: 5px;
+    background-color: var(--light-red);
+    cursor: pointer;
+}
+
+.icono-placeholder-image::placeholder{
+    background-image: url(../img/icono.png);
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.icono-placeholder-image2::placeholder{
+    background-image: url(../img/key.png);
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.texto-login {
+    margin-top: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;    
+}
+
+@media screen and (max-width:1000px){
+    .image-container{
+        display: none;
+
+    }
+    .login-container{
+        width: 70%;
+        margin-top: 3rem;
+    }
+
+    .login-info-container{
+        width: 100%;
+    }
+
+    .btn{
+        margin-top: 1rem; 
+     }
+
+     .inputs-container{
+        margin-top:  1rem;
+    }
+}
+
+@media screen and (max-width:650px) {
+
+    .login-container{
+        width: 90%;
+    }  
+
+    .btn{
+        margin-top: 1rem; 
+     }
+
+     .inputs-container{
+        margin-top:  1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+
+@media screen and (max-width:500px) {
+
+    .login-container{
+        height: 100%;
+    }
+    
+    .btn{
+       margin-top: 1.5rem; 
+       margin-bottom: 1.5rem;
+       
+    }
+    .inputs-container{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+    }
+  .logo-login{
+    flex-direction: column;
+    height: 30%;
+    align-items: center;
+  }
+}
