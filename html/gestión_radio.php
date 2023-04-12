@@ -18,8 +18,8 @@
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.html"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.html"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -29,18 +29,18 @@
         </label>
     <nav>
       <ul>
-          <li ><a href="../html/pagina_inicio2.html" id="selected"></a></li>
-          <li ><a href="../html/control_citas.html" >Gestión Citas</a></li>
-          <li ><a href="../html/gestión_solicitud.html" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestión_solicitud.html" >Gestión Usuario</a></li>
-          <li ><a href="../html/servicios2.html" >Servicios</a>
+          <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
+          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
+          <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
+          <li ><a href="../html/gestión_solicitud.php" >Gestión Usuario</a></li>
+          <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/gestión_radio.html" > Gestión Radioterapia </a></li>
-                  <li><a href="../html/gestión_quimio.html" > Gestión Quimioterapia</a></li>
+                  <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
+                  <li><a href="../html/gestión_quimio.php" > Gestión Quimioterapia</a></li>
               </ul>
           </li>
           
-          <li ><a href="../index.html" >Cerrar Sesión</a></li>   
+          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
       </ul>
   </nav>
 </div>     
@@ -208,9 +208,9 @@
     <a href="https://twitter.com/ioncologico?lang=es" class="social-icon"></a>
   </div>
   <ul class="footer-menu-container">
-    <a href="pagina_inicio2.html"><li class="menu-item">Inicio</li></a>
-    <a href="gestión_solicitud.html"><li class="menu-item">Gestión Expediente</li></a>
-    <a href="gestion_cita.html"><li class="menu-item">Gestión Citas</li></a>
+    <a href="pagina_inicio2.php"><li class="menu-item">Inicio</li></a>
+    <a href="gestión_solicitud.php"><li class="menu-item">Gestión Expediente</li></a>
+    <a href="gestion_cita.php"><li class="menu-item">Gestión Citas</li></a>
     <a href="https://www.ion.gob.pa/resena-historica/"><li class="menu-item">Sobre Nosotros</li></a>
   </ul>
   <span class="copyright">&copy; 2023, Instituto Oncológico Nacional, Todos los derechos reservados.</span>

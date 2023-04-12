@@ -1,3 +1,7 @@
+<?php
+include "conexion/conexion.php";
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,7 +27,7 @@
                     <span>Instituto Oncológico Nacional</span>
                 </div>
             </div>
-        <form action="html/pagina_inicio.html" class="inputs-container">
+        <form action="html/pagina_inicio.php" class="inputs-container">
             <div class="izquierda">
                 <label class="texto-login">Número de Cédula</label>   
             </div>

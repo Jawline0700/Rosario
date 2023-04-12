@@ -16,8 +16,8 @@
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.html"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.html"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -31,16 +31,16 @@
         
     <nav>
       <ul>
-          <li ><a href="../html/pagina_inicio.html" id="selected"></a></li>
-          <li ><a href="../html/gestion_cita.html" >Historial Citas</a></li>
-          <li ><a href="../html/solicitud.html" >Solicitud Expediente</a></li>
-          <li ><a href="../html/servicios.html" >Servicios</a>
+          <li ><a href="../html/pagina_inicio.php" id="selected"></a></li>
+          <li ><a href="../html/gestion_cita.php" >Historial Citas</a></li>
+          <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
+          <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/servicio_Radio.html" >Radioterapia </a></li>
-                  <li><a href="../html/servicio_Quimio.html" >Quimioterapia</a></li>
+                  <li><a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                  <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
               </ul>
           </li>
-          <li ><a href="../index.html" >Cerrar Sesión</a></li>   
+          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
       </ul>
   </nav>
 </div>     
@@ -156,9 +156,9 @@
       <a href="https://twitter.com/ioncologico?lang=es" class="social-icon"></a>
     </div>
     <ul class="footer-menu-container">
-      <a href="pagina_inicio.html"><li class="menu-item">Inicio</li></a>
-      <a href="solicitud.html"><li class="menu-item">Solicitud Expediente</li></a>
-      <a href="gestion_cita.html"><li class="menu-item">Historial Citas</li></a>
+      <a href="pagina_inicio.php"><li class="menu-item">Inicio</li></a>
+      <a href="solicitud.php"><li class="menu-item">Solicitud Expediente</li></a>
+      <a href="gestion_cita.php"><li class="menu-item">Historial Citas</li></a>
       <a href="https://www.ion.gob.pa/resena-historica/"><li class="menu-item">Sobre Nosotros</li></a>
     </ul>
     <span class="copyright">&copy; 2023, Instituto Oncológico Nacional, Todos los derechos reservados.</span>

@@ -18,9 +18,8 @@
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.html"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.html"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
-        
+        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -30,27 +29,21 @@
         </label>
     <nav>
       <ul>
-          <li ><a href="../html/pagina_inicio2.html" id="selected"></a></li>
-          <li ><a href="../html/control_citas.html" >Gestión Citas</a></li>
-          <li ><a href="../html/gestión_solicitud.html" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestión_solicitud.html" >Gestión Usuario</a></li>
-          <li ><a href="../html/servicios2.html" >Servicios</a>
+          <li ><a href="../html/pagina_inicio.php" id="selected"></a></li>
+          <li ><a href="../html/gestion_cita.php" >Historial Citas</a></li>
+          <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
+          <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/gestión_radio.html" > Gestión Radioterapia </a></li>
-                  <li><a href="../html/gestión_quimio.html" > Gestión Quimioterapia</a></li>
+                  <li><a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                  <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
               </ul>
           </li>
-          
-          <li ><a href="../index.html" >Cerrar Sesión</a></li>   
+          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
       </ul>
   </nav>
 </div>     
 </div>
-<br>
-<br>
-<br>
       <section>
-       
 
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-indicators">
@@ -60,13 +53,13 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-               <a href="../html/control_citas.html"><img src="../img/gestión-citas.png" class="d-block w-100" alt="Imagen de la Gestión de Citas"></a>
+              <img src="../img/Carrusel/imagen-carrusel.png" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <a href="../html/gestión_solicitud.html"><img src="../img/Gestión- Expediente.png" class="d-block w-100" alt="..."></a>
+              <img src="../img/Carrusel/imagen-carrusel2.png" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <a href="#"><img src="../img/Gestión Quimioterapia..png" class="d-block w-100" alt="..."></a>
+              <a href="https://www.ion.gob.pa/dia-mundial-de-la-salud/"><img src="../img/Carrusel/imagen-carrusel3.jpg" class="d-block w-100" alt="..."></a>
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -78,7 +71,6 @@
             <span class="visually-hidden">Siguiente</span>
           </button>
         </div>
-        <br>
 
       <div class= "card text-center fondo" >
     <div class= "card-body">
@@ -86,46 +78,31 @@
       <H1 class="card-title letras">Instituto Oncológico Nacional</H1>
       <H1><p class="card-text letras">Nuestro Lema: "Por Un Servicio Más Humano"</p></H1>
   <H1>
-    <a href="#" type="button"  class="btn btn-secondary boton-color letras">Servicios</a>
+    <a href="../html/servicios.php" type="button"  class="btn btn-secondary boton-color letras">Servicios</a>
   <H1>
     </div>
     </div>          
       </section>
-      <br>
       <div class="card-group cartas">
         <div class="card">
-          <a href="https://www.ion.gob.pa/plataforma-para-entrega-de-medicamentos/"><img src="../img/Carrusel/imagen-carrusel3.jpg" class="card-img-top" alt="..."></a>
+          <a href="https://www.ion.gob.pa/plataforma-para-entrega-de-medicamentos/"><img src="../img/Carrusel/medicamentos.png" class="card-img-top" alt="..."></a>
           <div class="card-body">
-            <h5 class="card-title texto">Nuestra Visión:</h5>
-            <p class="card-text texto">Ser líderes en la atención, investigación, prevención y rehabilitacíon del paciente con cáncer en Panamá..</p>
+            <h5 class="card-title texto">Entrega de Medicamentos</h5>
+            <p class="card-text texto">Si desea conocer más información sobre el proceso de entrega de Medicamento seleccione la imagen </p>
           </div>
         </div>
         <div class="card">
-          <a href="https://www.ion.gob.pa/horario-oncobus/"><img src="../img/hospital.jpeg" class="card-img-top" alt="..." style="height: 130%; width: 120%;"></a>
+          <a href="https://www.ion.gob.pa/horario-oncobus/"><img src="../img/Carrusel/HORARIOTRANSPORTE.png" class="card-img-top" alt="..."></a>
           <div class="card-body">
-            <br>
-            <br>
-            <br>
-            <h5 class="card-title texto">Nuestra Misión:</h5>
-            <p class="card-text texto">Ser una institución especializada en la rama de la oncología, cuyo propósito fundamental es brindar una excelente atención médica, social y familiar, a toda la población panameña, con el apoyo de la comunidad; y en la que intervienen directamente un equipo humano altamente calificado y de gran sensibilidad humana.</p>
+            <h5 class="card-title texto">Horario de Transporte</h5>
+            <p class="card-text texto">Si desea conocer más información sobre el OncoBus seleccione la imagen</p>
           </div>
         </div>
         <div class="card">
-          <a href="https://www.ion.gob.pa/dia-mundial-de-la-salud/"><img src="../img/Carrusel/valores.jpg" class="card-img-top" alt="..." style="height:125%; width: 100%;"></a>
+          <a href="https://www.ion.gob.pa/dia-mundial-de-la-salud/"><img src="../img/Carrusel/ocupacional3.png" class="card-img-top" alt="..."></a>
           <div class="card-body">
-            <br>
-            <br>
-            <br>
-            <h5 class="card-title texto">Nuestro Valores:</h5>
-            <p class="card-text texto">
-                Servicio, <br>
-                Responsabilidad,<br>
-                Solidaridad , Fraternidad y Participación <br>
-                Respeto<br>
-                Honestidad<br>
-                Justicia<br>
-                Tolerancia <br>
-                </p>
+            <h5 class="card-title texto">Terapia Ocupacional</h5>
+            <p class="card-text texto">!ATENCIÓN!...El cambio empieza desde casa</p>
           </div>
         </div>
       </div>
@@ -143,9 +120,9 @@
     <a href="https://twitter.com/ioncologico?lang=es" class="social-icon"></a>
   </div>
   <ul class="footer-menu-container">
-    <a href="pagina_inicio2.html"><li class="menu-item">Inicio</li></a>
-    <a href="gestión_solicitud.html"><li class="menu-item">Gestión Expediente</li></a>
-    <a href="../html/control_citas.html"><li class="menu-item">Gestión Citas</li></a>
+    <a href="pagina_inicio.php"><li class="menu-item">Inicio</li></a>
+    <a href="solicitud.php"><li class="menu-item">Solicitud Expediente</li></a>
+    <a href="gestion_cita.php"><li class="menu-item">Historial Citas</li></a>
     <a href="https://www.ion.gob.pa/resena-historica/"><li class="menu-item">Sobre Nosotros</li></a>
   </ul>
   <span class="copyright">&copy; 2023, Instituto Oncológico Nacional, Todos los derechos reservados.</span>
