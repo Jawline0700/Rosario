@@ -27,19 +27,24 @@ include "conexion/conexion.php";
                     <span>Instituto Oncológico Nacional</span>
                 </div>
             </div>
-        <form action="html/pagina_inicio.php" class="inputs-container">
+
+        <form  action="logica/proceso_login.php"method="POST" class="inputs-container">
             <div class="izquierda">
                 <label class="texto-login">Número de Cédula</label>   
             </div>
             <div class="centrear">
-                <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image">
+                <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name="cedula-inicio">
             </div>
             <div class="izquierda">
                 <label class="texto-login">Contraseña</label>
             </div>
             <div class="centrear">
-            <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2">
-            <input type="submit" class="btn" value="Iniciar Sesión" >
+            <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2" name="password">
+            <br>
+            <?php if(isset($_GET['msg'])){?>
+            <?php echo $_GET['msg'];?>
+            <?php } ?>
+            <button type="submit" class="btn" value="Iniciar Sesión">Iniciar Sesión</button>
             <button class="btn btn-cancelar">Cancelar</button>
             </div>
       
