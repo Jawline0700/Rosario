@@ -6,15 +6,20 @@ if(isset($_POST['cedula-inicio']) && isset($_POST['password'])){
   $cedula =$_POST['cedula-inicio'];
   $pass = ($_POST['password']);
 
-  $consulta=$conexion->query("SELECT * From usuario Where Cedula='$cedula' and Password='$pass' and Tipo_Usuario=4");
+  $consulta=$conexion->query("SELECT * From usuario Where Cedula='$cedula' and Password='$pass'");
   $consulta->execute();
   $row=$consulta->fetch();
 
   if($consulta->rowCount()>0){
     $_SESSION['sw']=true;
     $_SESSION['id']=$row['ID_Usuario'];
-    
-    header("Location: ../html/pagina_inicio.php");
+    $tipo_usuario = $_SESSION['tipo']=$row['Tipo_Usuario'];
+
+    if($tipo_usuario == 4 ){
+      header("Location: ../html/pagina_inicio.php");
+    }else{
+      header("Location: ../html/pagina_inicio2.php");
+    }
     exit;
   }
 

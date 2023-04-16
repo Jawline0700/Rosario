@@ -1,5 +1,5 @@
 <?php
-session_start();
+include "../logica/verificar_sesion.php";
 ?>
 
 
@@ -43,7 +43,13 @@ session_start();
                   <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
               </ul>
           </li>
-          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
+          <li >
+          <?php if(!isset($_SESSION['sw'])){?>
+                <a href="../index.php" >Cerrar Sesión</a>
+           <?php }else{?>
+            <a href="../logica/cerrar_sesion.php" >Cerrar Sesión</a>
+        <?php } ?>
+          </li>   
       </ul>
   </nav>
 </div>     

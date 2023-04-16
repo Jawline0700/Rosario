@@ -1,3 +1,7 @@
+
+<?php 
+include "../logica/verificar_sesion.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,7 +47,13 @@
                   <li><a href="servicio_Quimio.php" >Quimioterapia</a></li>
               </ul>
           </li>
-          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
+          <li >
+            <?php if(!isset($_SESSION['sw'])){?>
+                <a href="../index.php" >Cerrar Sesión</a>
+           <?php }else{?>
+            <a href="../logica/cerrar_sesion.php" >Cerrar Sesión</a>
+        <?php } ?>
+      </li>   
       </ul>
   </nav>
 </div>     

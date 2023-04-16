@@ -1,3 +1,8 @@
+
+<?php 
+include "../logica/verificar_sesion.php";
+include("../logica/proceso_idpatient.php")
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,7 +45,13 @@
                   <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
               </ul>
           </li>
-          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
+          <li >
+            <?php if(!isset($_SESSION['sw'])){?>
+                <a href="../index.php" >Cerrar Sesión</a>
+           <?php }else{?>
+            <a href="../logica/cerrar_sesion.php" >Cerrar Sesión</a>
+        <?php } ?>
+        </li>   
       </ul>
   </nav>
 </div>     
@@ -60,84 +71,30 @@
                     <th class="col">Medico</th>
                     <th class="col">Fecha de Atención</th>
                     <th class="col">Estado</th>
-                    <th class="col">Especialidad</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">1111111</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Control</td>
-                    <td data-titulo="Medico:" class="col">Cristobal Rodriguez</td>
-                    <td data-titulo="Fecha de Atención:" class="col">07/07/200</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Hematologia</td>
-                </tr>
 
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-              
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-              
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-              
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-              
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-              
-                <tr>
-                    <td data-titulo="ID_Cita:" class="col">222222</td>
-                    <td data-titulo="Tipo de Cita:" class="col">Quimioterapia</td>
-                    <td data-titulo="Medico:" class="col">Enfermera</td>
-                    <td data-titulo="Fecha de Atención:" class="col">04/02/2023</td>
-                    <td data-titulo="Estado:" class="col">Realizada</td>
-                    <td data-titulo="Área:" class="col">Odontologia</td>
-                </tr>
-              
-              
-              
-                
+                <?php 
+                $ID_Paciente = $datoid->ID_Paciente;
+                $query = "SELECT c.ID_Cita , t.Tipo as 'Tipo Cita', c.Fecha,us.Nombre, e.Estado as 'Estado Cita'FROM CITA AS c
+                INNER JOIN tipo_tratamiento AS t ON t.ID_tipo_Tratamiento = c.ID_tipo_tratamiento
+                INNER JOIN estado_cita as e ON e.ID_Estado = c.ID_Estado_Cita
+                INNER JOIN medico as m ON m.ID_Medico = c.ID_Medico 
+                INNER JOIN usuario as us ON m.ID_Usuario = us.ID_Usuario WHERE ID_Paciente = '$ID_Paciente'" ;
+                $consulta=$conexion->query($query);
+                while($fila=$consulta->fetch(PDO::FETCH_ASSOC)){
+
+                ?>
+                    <tr>
+                    <td data-titulo="ID_Cita:" class="col"><?php echo $fila['ID_Cita'] ?></td>
+                    <td data-titulo="Tipo de Cita:" class="col"><?php echo $fila['Tipo Cita']?></td>
+                    <td data-titulo="Medico:" class="col"><?php echo $fila['Nombre']?></td>
+                    <td data-titulo="Fecha de Atención:" class="col"> <?php echo $fila['Fecha']?></td>
+                    <td data-titulo="Estado:" class="col"><?php echo $fila['Estado Cita']?></td>
+                    </tr> 
+             <?php } ?>
+            
             </tbody>
         </table>
         </div>
