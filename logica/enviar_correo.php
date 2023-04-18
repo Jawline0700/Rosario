@@ -23,8 +23,6 @@ if(isset($_POST['cedula'])){
 
     $correo = $row->Email;
     
-
-
     $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente as
                                 s inner Join paciente as p ON s.ID_Paciente = p.ID_Paciente 
                                 INNER JOIN usuario as u On u.ID_Usuario = p.ID_User 
@@ -68,7 +66,7 @@ if($retorno->rowCount() == 0){
                          para que sea retirado de manera presencial.';
     
         $mail->send();
-       header("Location: ../html/solicitud.php?msg= Su Solicitud se envio con exito");
+       header("Location: ../html/solicitud.php?msg= Su Solicitud se envio con éxito.");
     } catch (Exception $e) {
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }
