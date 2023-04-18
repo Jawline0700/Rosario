@@ -1,7 +1,7 @@
 
 <?php 
 include "../logica/verificar_sesion.php";
-include("../logica/proceso_idpatient.php")
+include("../logica/proceso_idpatient.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">

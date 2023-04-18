@@ -1,5 +1,6 @@
 <?php 
 include "../logica/verificar_sesion.php";
+include("../logica/proceso_idpatient.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -54,13 +55,17 @@ include "../logica/verificar_sesion.php";
 
     <div class="soli-container">
         <div class="soli-info-container">
-            <form action="solicitud.html" class="inputs-container">
+            <form action="../logica/enviar_correo.php" method="POST" class="inputs-container">
                 <div class="izquierda">
                     <label class="texto-login">Solicitar Expediente Médico</label>   
                 </div>
                 <div class="centrear">
-                    <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image">
+                    <input type="hidden" name="ID-Paciente" value= <?php echo $ID_Paciente = $datoid->ID_Paciente; ?>>
+                    <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name= "cedula">
                 </div>
+                  <?php if(isset($_GET['msg'])){?>
+                  <?php echo $_GET['msg'];?>
+                  <?php } ?>
                 <div class="centrear">
                     <input type="submit" class="btn-soli" value="Solicitar" >
                     <button class="btn-soli btn-cancelar">Cancelar</button>
