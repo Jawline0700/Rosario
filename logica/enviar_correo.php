@@ -41,7 +41,8 @@ if($retorno->rowCount() == 0){
     try {
         //Server settings
        // $mail->SMTPDebug = 0;                    //Enable verbose debug output
-        $mail->isSMTP();                                           //Send using SMTP
+        $mail->isSMTP();        
+        $mail->CharSet = 'UTF-8';                                   //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'rosario1936ion@gmail.com';                     //SMTP username
@@ -61,7 +62,7 @@ if($retorno->rowCount() == 0){
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Instituto Oncológico Nacional - Solicitud de Expediente Médico - Rosario ';
-        $mail->Body    = 'Su Solicitud de Expediente Medico sera procesada, revise periodicamente su correo 
+        $mail->Body    = 'Su Solicitud de Expediente Médico sera procesada, revise periodicamente su correo 
                           ya que sera notificado por este medio cuando este disponible su expediente medico, 
                          para que sea retirado de manera presencial.';
     

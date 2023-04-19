@@ -1,3 +1,10 @@
+<?php 
+include "../logica/verificar_sesion.php"; 
+include "../conexion/conexion.php";
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,7 +47,13 @@
               </ul>
           </li>
           
-          <li ><a href="../index.php" >Cerrar Sesión</a></li>   
+          <li >
+          <?php if(!isset($_SESSION['sw'])){?>
+                <a href="../index.php" >Cerrar Sesión</a>
+           <?php }else{?>
+            <a href="../logica/cerrar_sesion.php" >Cerrar Sesión</a>
+        <?php } ?>
+          </li>   
       </ul>
   </nav>
 </div>     
@@ -93,7 +106,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="" method="POST">
                                         <div class="mb-3">
                                             <label class="texto">Fecha de Cita</label>
                                             <br>
@@ -108,11 +121,14 @@
                                             <label class="texto">Medico:</label>
                                             <br>
                                             <select id="Medicos" class="seleccion">
-                                                <br>
-                                                <option value="" class="seleccion">Dra. Rosa Perez</option>
-                                                <option value="" class="seleccion">Dr. Mariano Gomez</option>
-                                                <option value="" class="seleccion">Dr. Israel </option>
-                                                <option value="" class="seleccion">Dra. Farrah Moan</option>
+                                                <?php 
+                                                $informacion = $conexion->prepare("SELECT m.ID_Usuario,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion->execute();
+                                                $data = $informacion->fetchAll();
+                                                foreach($data as $identificador):
+                                                    echo '<option value="'.$identificador["ID_Usuario"].'">'.$identificador["Nombre"].'</option>';
+                                                endforeach;
+                                                ?>
                                             </select>
                                         </div>
 
@@ -121,12 +137,17 @@
                                             <label class="texto">Tipo de Tratamiento</label>
                                             <br>
                                             <select id="Tipo de Tratamiento" class="seleccion">
-                                                <br>
-                                                <option value="" class="seleccion">Atención Medica</option>
-                                                <option value="" class="seleccion">Laboratorios</option>
-                                                <option value="" class="seleccion">Quimioterapia</option>
-                                                <option value="" class="seleccion">Radioterapia</option>
+                                            <?php 
+                                            $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
+                                            $consultar->execute();
+                                            $info = $consultar->fetchAll();
+                                            foreach($info as $valor):
+                                                echo '<option value="'.$valor["ID_Tipo_Tratamiento"].'">'.$valor["Tipo"].'</option>';
+                                            endforeach;
+                                           ?>
                                             </select>
+
+                                           
                                         </div>
                                     </form>
                                 </div>
@@ -148,7 +169,6 @@
                 <tr>
                     <th class="col">Cédula</th>
                     <th class="col">Nombre</th>
-                    <th class="col">Apellido</th>
                     <th class="col">Fecha Cita</th>
                     <th class="col">Estado</th>
                     <th class="col">Acciones</th>
@@ -156,11 +176,18 @@
             </thead>
             <tbody>
                 <tr>
-                    <td data-titulo="Cédula" class="col">8-960-165</td>
-                    <td data-titulo="Apellido" class="col">Castillo</td>
-                    <td data-titulo="Nombre" class="col">Wencers</td>
-                    <td data-titulo="Fecha Cita" class="col">07/07/200</td>
-                    <td data-titulo="Estado" class="col">Realizada</td>
+                    <?php  
+                        $query = "SELECT u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
+                        INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente
+                        INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
+                        INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado";
+                        $consulta=$conexion->query($query);
+                        while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
+                    ?>
+                    <td data-titulo="Cédula" class="col"><?php echo $dato['Cedula']?></td>
+                    <td data-titulo="Apellido" class="col"><?php echo $dato['Nombre']?></td>
+                    <td data-titulo="Nombre" class="col"><?php echo $dato['Fecha']?></td>
+                    <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
                         <div class="contenido">
                             <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
@@ -170,67 +197,8 @@
                         </div>
                      </td>
                 </tr>
-                <tr>
-                    <td data-titulo="Cédula" class="col">8-123-32</td>
-                    <td data-titulo="Apellido" class="col">Rodriguez</td>
-                    <td data-titulo="Nombre" class="col">Cristobal</td>
-                    <td data-titulo="Fecha Cita" class="col">03/28/2023</td>
-                    <td data-titulo="Estado" class="col">Cancelada</td>
-                    <td> 
-                            
-                        <div class="contenido">
-                                <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
-                        </div>
-                        <div class="contenido">
-                            <button typr="button" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-titulo="Cédula" class="col">8-960-165</td>
-                    <td data-titulo="Apellido" class="col">Luigi </td>
-                    <td data-titulo="Nombre" class="col">Santana</td>
-                    <td data-titulo="Fecha Cita" class="col">05/02/2023</td>
-                    <td data-titulo="Estado" class="col">Espera</td>
-                    <td> 
-                        <div class="contenido">
-                                <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
-                        </div>
-                        <div class="contenido">
-                            <button typr="button" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
-                        </div>
-                </tr>
-                <tr>
-                <td data-titulo="Cédula" class="col">8-960-165</td>
-                    <td data-titulo="Apellido" class="col">Elianys</td>
-                    <td data-titulo="Nombre" class="col">Gonzalez</td>
-                    <td data-titulo="Fecha Cita" class="col">05/02/2023</td>
-                    <td data-titulo="Estado" class="col">Espera</td>
-                    <td> 
-                        <div class="contenido">
-                                <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
-                        </div>
-                        <div class="contenido">
-                            <button typr="button" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td data-titulo="Cédula" class="col">8-960-165</td>
-                    <td data-titulo="Apellido" class="col">Luigi </td>
-                    <td data-titulo="Nombre" class="col">Santana</td>
-                    <td data-titulo="Fecha Cita" class="col">05/02/2023</td>
-                    <td data-titulo="Estado" class="col">Espera</td>
-                    <td> 
-                        <div class="contenido">
-                                <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
-                        </div>
-                        <div class="contenido">
-                            <button typr="button" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
+                <?php } ?>
+               
                 
             </tbody>
         </table>
