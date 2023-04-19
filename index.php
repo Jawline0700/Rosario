@@ -45,7 +45,7 @@ include "conexion/conexion.php";
             <?php echo $_GET['msg'];?>
             <?php } ?>
             <button type="submit" class="btn" value="Iniciar Sesión">Iniciar Sesión</button>
-            <button class="btn btn-cancelar">Cancelar</button>
+            <button type="reset" class="btn btn-cancelar">Cancelar</button>
             </div>
       
     </form>  

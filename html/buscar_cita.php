@@ -2,7 +2,14 @@
 include "../logica/verificar_sesion.php"; 
 include "../conexion/conexion.php";
 
+if(!empty($_POST)){
+$cedula = $_POST['cedula'];
 
+$campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+$registrar = $campos->fetch(PDO::FETCH_OBJ);
+var_dump($registrar);
+if($campos->rowCount()> 0){
+    
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +92,7 @@ include "../conexion/conexion.php";
                                     <h5 class="modal-title">Buscar Paciente</h5>
                                     <button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"></button>
                                 </div>
-
+                                
                                 <div class="modal-body">
                                     <form action= "buscar_cita.php" method="Post">
                                         <div class="mb-3" >
@@ -98,7 +105,6 @@ include "../conexion/conexion.php";
                                 </div>
                                     </form>
                                 </div>
-                                
                             </div>
                         </div>
                      </div>
@@ -181,10 +187,7 @@ include "../conexion/conexion.php";
             <tbody>
                 <tr>
                     <?php  
-                        $query = "SELECT u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
-                        INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente
-                        INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
-                        INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado";
+                        $query = "SELECT u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado WHERE u.Cedula = '$cedula'";
                         $consulta=$conexion->query($query);
                         while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
@@ -330,3 +333,15 @@ include "../conexion/conexion.php";
 </footer>
 
 </html>
+<?php 
+  }
+  else{
+    header("Location: ../html/control_citas.php?msg1= Cédula Invalida.");
+  }
+}
+else{
+    header("Location: ../html/control_citas.php?msg1= No deje campos en blanco.");
+}
+
+?>
+

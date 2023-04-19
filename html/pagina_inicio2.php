@@ -1,3 +1,5 @@
+<?php  include "../logica/verificar_sesion.php"; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
