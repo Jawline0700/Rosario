@@ -1,6 +1,7 @@
 <?php 
 
 include ('../conexion/conexion.php');
+include ('../clases/cita.php');
 
 if(!empty($_POST)){
  $fecha_cita = $_POST['fecha'];
@@ -12,15 +13,20 @@ if(!empty($_POST)){
  $registro = $sentencia->fetch(PDO::FETCH_OBJ);
 
  if($sentencia->rowCount()>0){
-    $ID_Paciente = $registro->ID_Paciente;
+   $ID_Paciente = $registro->ID_Paciente;
 
-    $insertar = $conexion->prepare("INSERT INTO cita (Fecha,ID_Paciente,ID_Medico,ID_Tipo_Tratamiento,ID_Estado_Cita) values (?,?,?,?,?)");
-    $insertar->bindParam(1,$fecha_cita);
-    $insertar->bindParam(2,$ID_Paciente);
-    $insertar->bindParam(3,$id_medico);
-    $insertar->bindParam(4,$tipo);
-    $insertar->bindParam(5,$estado);
-    $insertar->execute();
+    $datos = new cita($fecha_cita,$ID_Paciente,$id_medico,$tipo,$estado);
+
+    try{
+      $stmt = $conexion->prepare("INSERT INTO cita (Fecha,ID_Paciente,ID_Medico,ID_Tipo_Tratamiento,ID_Estado_Cita) values (:Fecha,:ID_Paciente,:ID_Medico,:ID_Tipo_Tratamiento,:ID_Estado_Cita)");
+      $stmt->execute((array)$datos);
+
+    }catch(PDOException $e){
+
+    header("Location: ../html/control_citas.php?msg=No se puedo crear la cita.".$e);
+    }
+    
+   
 
     header("Location: ../html/control_citas.php?msg=Cita creada con exito.");
  }
@@ -31,7 +37,7 @@ if(!empty($_POST)){
 
 }
 else{
-
+ header("Location: ../html/control_citas.php?msg= Llene los campos.");
 }
 
 

@@ -7,7 +7,6 @@ $cedula = $_POST['cedula'];
 
 $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
 $registrar = $campos->fetch(PDO::FETCH_OBJ);
-var_dump($registrar);
 if($campos->rowCount()> 0){
     
 ?>
@@ -70,6 +69,10 @@ if($campos->rowCount()> 0){
             <h2 class="subtitulo">Gestión de Citas</h2>
         <div class="centrear">  
             <div class="buscar-info-container">
+
+                <?php if(isset($_GET['msg2'])){?>
+                <?php echo $_GET['msg2'];?>
+                <?php } ?>
                    
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Cita</button>
@@ -174,27 +177,32 @@ if($campos->rowCount()> 0){
                 
         
         </div>
-        <table>
+        <table id="tabla">
             <thead>
                 <tr>
+                    <th class="col">ID_Cita</th>
                     <th class="col">Cédula</th>
                     <th class="col">Nombre</th>
                     <th class="col">Fecha Cita</th>
                     <th class="col">Estado</th>
-                    <th class="col">Acciones</th>
+                    <th class="col">Acciones</th> 
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <?php  
-                        $query = "SELECT u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado WHERE u.Cedula = '$cedula'";
-                        $consulta=$conexion->query($query);
-                        while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
+                <?php  
+                    $query = "SELECT c.ID_Cita,u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
+                    INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente
+                    INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
+                    INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado WHERE u.Cedula = '$cedula'";
+                    $consulta=$conexion->query($query);
+                    while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
+                    <td data-titulo="ID_Cita" class="col"><?php echo $dato['ID_Cita']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $dato['Cedula']?></td>
-                    <td data-titulo="Apellido" class="col"><?php echo $dato['Nombre']?></td>
-                    <td data-titulo="Nombre" class="col"><?php echo $dato['Fecha']?></td>
-                    <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Estado']?></td>
+                    <td data-titulo="Nombre" class="col"><?php echo $dato['Nombre']?></td>
+                    <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
+                    <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
                         <div class="contenido">
                             <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
@@ -215,74 +223,81 @@ if($campos->rowCount()> 0){
     
 
     <div class="modal" id="myModal3">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar Cita</h5>
-                    <button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"></button>
-                </div>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Editar Cita</h5>
+                                    <button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"></button>
+                                </div>
 
-                <div class="modal-body centrear">
-                    <form>
-                        <div class="mb-3">
-                            <label class="texto">Fecha de Cita</label>
-                            <br>
-                            <input type="date" class="seleccion">
+                                <div class="modal-body centrear input-edit">
+                                    <form action="../logica/editar_cita.php" method="POST" name="edit">
+                                        <div class="mb-3">
+                                            <label class="texto">Fecha de Cita</label>
+                                            <br>
+                                            <input type="date" class="seleccion" name="fecha-editar">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="texto">Cédula Paciente</label>
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula-editar" readonly>
+
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="texto">Medico:</label>
+                                            <br>
+                                            <select id="Medicos" class="seleccion" name="medico">
+                                                <?php 
+                                                $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion->execute();
+                                                $data = $informacion->fetchAll();
+                                                foreach($data as $identificador):
+                                                    echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
+                                                endforeach;
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <br>
+                                            <label class="texto">Tipo de Tratamiento</label>
+                                            <br>
+                                            <select id="Tipo" class="seleccion" name="tratamiento">
+                                            <?php 
+                                            $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
+                                            $consultar->execute();
+                                            $info = $consultar->fetchAll();
+                                            foreach($info as $valor):?>
+                                             <option value= <?php echo $valor["ID_Tipo_Tratamiento"]?> ><?php echo $valor["Tipo"]?></option>';
+                                            <?php endforeach; ?>
+                                            </select>
+                                        </div>                    
+                                        <div class="mb-3">
+                                        <br>
+                                        <label class="texto">Estado de la Cita</label>
+                                        <br>
+                                        <select id="estado" class="seleccion" name="estado" >
+                                            <?php 
+                                            $consultar = $conexion->prepare("SELECT * from estado_cita");
+                                            $consultar->execute();
+                                            $info = $consultar->fetchAll();
+                                            foreach($info as $valor):?>
+                                            <option value= <?php echo $valor["ID_Estado"]?> ><?php echo $valor["Estado"]?></option>';
+                                            <?php endforeach; ?>
+                                            ?>
+                                        </select>
+                                        <input type="hidden" name=id-cita>
+                                        </div>
+                                    <div class="modal-footer pie-pagina">
+                                        <button type="submit" class="btn btn-crear">Editar</button>
+                                        <button type="reset" class="btn btn-buscar">Cancelar</button>
+                                  </div>
+                                    </form>
+                                </div>
+                               
+
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="texto">Cédula Paciente</label>
-                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula">
-
-                        </div>
-                        <div class="mb-3">
-                            <label class="texto">Medico:</label>
-                            <br>
-                            <select id="Medicos" class="seleccion">
-                                <br>
-                                <option value="" class="seleccion">Dra. Rosa Perez</option>
-                                <option value="" class="seleccion">Dr. Mariano Gomez</option>
-                                <option value="" class="seleccion">Dr. Israel </option>
-                                <option value="" class="seleccion">Dra. Farrah Moan</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <br>
-                            <label class="texto">Tipo de Tratamiento</label>
-                            <br>
-                            <select id="Tipo de Tratamiento" class="seleccion">
-                                <option value="" class="seleccion">Atención Medica</option>
-                                <option value="" class="seleccion">Laboratorios</option>
-                                <option value="" class="seleccion">Quimioterapia</option>
-                                <option value="" class="seleccion">Radioterapia</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <br>
-                            <label class="texto">Estado de la Cita</label>
-                            <br>
-                            <select id="estado" class="seleccion">
-                                <option value="" class="seleccion">Activa</option>
-                                <option value="" class="seleccion">En espera</option>
-                                <option value="" class="seleccion">Cancelada</option>
-                                <option value="" class="seleccion">Finalizada</option>
-                                
-
-                            </select>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer pie-pagina">
-                    <button type="submit" class="btn btn-crear">Guardar</button>
-                    <button type="submit" class="btn btn-buscar">Cancelar</button>
-
-                </div>
-
-            </div>
-        </div>
-     </div>
+                     </div>
 
 
 
@@ -332,6 +347,8 @@ if($campos->rowCount()> 0){
 
 </footer>
 
+<script src='../js/enviarinfo.js'></script>
+
 </html>
 <?php 
   }
@@ -344,4 +361,3 @@ else{
 }
 
 ?>
-

@@ -1,10 +1,7 @@
 <?php 
 include "../logica/verificar_sesion.php"; 
 include "../conexion/conexion.php";
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,11 +12,23 @@ include "../conexion/conexion.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/82edd683c2.js" crossorigin="anonymous"></script>
+    <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
     <link rel="icon" type="image/png" href="../img/iconos/ION.png">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
+    <script>
+         function pasardatos(){
+            const tabla = document.getElementById("tabla");
+
+            tabla.addEventListener('click', (e)=>{
+                e.stopPropagation(); 
+                 var id =  e.target.parentElement.parentElement.parentElement.children[0].textContent;
+                 document.getElementsByName('cita-id')[0].value = id;
+            })
+        }
+    </script>
    
 
 </head>
@@ -63,6 +72,9 @@ include "../conexion/conexion.php";
             <h2 class="subtitulo">Gestión de Citas</h2>
         <div class="centrear">  
             <div class="buscar-info-container">
+            <?php if(isset($_GET['msg2'])){?>
+                    <?php echo $_GET['msg2'];?>
+                    <?php } ?>
                    
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Cita</button>
@@ -168,9 +180,10 @@ include "../conexion/conexion.php";
                 
         
         </div>
-        <table>
+        <table  id="tabla">
             <thead>
                 <tr>
+                    <th class="col">ID_Cita</th>
                     <th class="col">Cédula</th>
                     <th class="col">Nombre</th>
                     <th class="col">Fecha Cita</th>
@@ -181,104 +194,113 @@ include "../conexion/conexion.php";
             <tbody>
                 <tr>
                     <?php  
-                        $query = "SELECT u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
+                        $query = "SELECT c.ID_Cita,u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
                         INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente
                         INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
                         INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado";
                         $consulta=$conexion->query($query);
                         while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
+                    <td data-titulo="ID_Cita" class="col"><?php echo $dato['ID_Cita']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $dato['Cedula']?></td>
-                    <td data-titulo="Apellido" class="col"><?php echo $dato['Nombre']?></td>
-                    <td data-titulo="Nombre" class="col"><?php echo $dato['Fecha']?></td>
-                    <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Estado']?></td>
+                    <td data-titulo="Nombre" class="col"><?php echo $dato['Nombre']?></td>
+                    <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
+                    <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
                         <div class="contenido">
                             <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
                         </div>
                         <div class="contenido">
-                            <button type="button" class="btn btn-eliminar" data-bs-toggle="modal" data-bs-target="#myModal4">Eliminar</button>
+                            <button type="button" onclick="pasardatos()" class="btn btn-eliminar" data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
                         </div>
                      </td>
                 </tr>
                 <?php } ?>
-               
                 
             </tbody>
         </table>
         </div>
     </section>
 
+    <div class="modal" id="myModal3">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Editar Cita</h5>
+                                    <button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body centrear input-edit">
+                                    <form action="../logica/editar_cita.php" method="POST" name="edit">
+                                        <div class="mb-3">
+                                            <label class="texto">Fecha de Cita</label>
+                                            <br>
+                                            <input type="date" class="seleccion" name="fecha-editar">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="texto">Cédula Paciente</label>
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula-editar" readonly>
+
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="texto">Medico:</label>
+                                            <br>
+                                            <select id="Medicos" class="seleccion" name="medico">
+                                                <?php 
+                                                $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion->execute();
+                                                $data = $informacion->fetchAll();
+                                                foreach($data as $identificador):
+                                                    echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
+                                                endforeach;
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <br>
+                                            <label class="texto">Tipo de Tratamiento</label>
+                                            <br>
+                                            <select id="Tipo" class="seleccion" name="tratamiento">
+                                            <?php 
+                                            $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
+                                            $consultar->execute();
+                                            $info = $consultar->fetchAll();
+                                            foreach($info as $valor):?>
+                                             <option value= <?php echo $valor["ID_Tipo_Tratamiento"]?> ><?php echo $valor["Tipo"]?></option>';
+                                            <?php endforeach; ?>
+                                            </select>
+                                        </div>                    
+                                        <div class="mb-3">
+                                        <br>
+                                        <label class="texto">Estado de la Cita</label>
+                                        <br>
+                                        <select id="estado" class="seleccion" name="estado" >
+                                            <?php 
+                                            $consultar = $conexion->prepare("SELECT * from estado_cita");
+                                            $consultar->execute();
+                                            $info = $consultar->fetchAll();
+                                            foreach($info as $valor):?>
+                                            <option value= <?php echo $valor["ID_Estado"]?> ><?php echo $valor["Estado"]?></option>';
+                                            <?php endforeach; ?>
+                                            ?>
+                                        </select>
+                                        <input type="hidden" name=id-cita>
+                                        </div>
+                                    <div class="modal-footer pie-pagina">
+                                        <button type="submit" class="btn btn-crear">Editar</button>
+                                        <button type="reset" class="btn btn-buscar">Cancelar</button>
+                                  </div>
+                                    </form>
+                                </div>
+                               
+
+                            </div>
+                        </div>
+                     </div>
+
     
 
-    <div class="modal" id="myModal3">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar Cita</h5>
-                    <button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body centrear">
-                    <form>
-                        <div class="mb-3">
-                            <label class="texto">Fecha de Cita</label>
-                            <br>
-                            <input type="date" class="seleccion">
-                        </div>
-                        <div class="mb-3">
-                            <label class="texto">Cédula Paciente</label>
-                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula">
-
-                        </div>
-                        <div class="mb-3">
-                            <label class="texto">Medico:</label>
-                            <br>
-                            <select id="Medicos" class="seleccion">
-                                <br>
-                                <option value="" class="seleccion">Dra. Rosa Perez</option>
-                                <option value="" class="seleccion">Dr. Mariano Gomez</option>
-                                <option value="" class="seleccion">Dr. Israel </option>
-                                <option value="" class="seleccion">Dra. Farrah Moan</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <br>
-                            <label class="texto">Tipo de Tratamiento</label>
-                            <br>
-                            <select id="Tipo de Tratamiento" class="seleccion">
-                                <option value="" class="seleccion">Atención Medica</option>
-                                <option value="" class="seleccion">Laboratorios</option>
-                                <option value="" class="seleccion">Quimioterapia</option>
-                                <option value="" class="seleccion">Radioterapia</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <br>
-                            <label class="texto">Estado de la Cita</label>
-                            <br>
-                            <select id="estado" class="seleccion">
-                                <option value="" class="seleccion">Activa</option>
-                                <option value="" class="seleccion">En espera</option>
-                                <option value="" class="seleccion">Cancelada</option>
-                                <option value="" class="seleccion">Finalizada</option>
-                                
-
-                            </select>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer pie-pagina">
-                    <button type="submit" class="btn btn-crear">Guardar</button>
-                    <button type="submit" class="btn btn-buscar">Cancelar</button>
-
-                </div>
-
-            </div>
-        </div>
      </div>
 
 
@@ -290,15 +312,17 @@ include "../conexion/conexion.php";
                     <h5 class="modal-title">Eliminar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
+              <form method="POST" action="../logica/eliminar_cita.php">
                 <div class="modal-body">
                     <p class="texto">¿Desea eliminar esta cita?</p>
-                  
-                    </div>
+                    <input type="hidden" name=cita-id>
                     <div class="modal-footer pie-pagina">
                         <button type="submit" class=" btn btn-buscar">Si</button>
                         <button type="submit" class="btn btn-crear">No</button>
-                </div>
+                     </div>
+                    </div>
+            </form>
+                   
             </div>
         </div>
     </div>
@@ -309,7 +333,7 @@ include "../conexion/conexion.php";
     <br>
     <br>
     <br>
-
+    <script src='../js/enviarinfo.js'> </script>
 </body>
 <footer>
   <img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
