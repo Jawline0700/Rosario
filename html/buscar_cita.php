@@ -26,6 +26,18 @@ if($campos->rowCount()> 0){
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
+    <script>
+         function pasardatos(){
+            const tabla = document.getElementById("tabla");
+
+            tabla.addEventListener('click', (e)=>{
+                e.stopPropagation(); 
+                 var id =  e.target.parentElement.parentElement.parentElement.children[0].textContent;
+                 document.getElementsByName('cita-id')[0].value = id;
+            })
+        }
+    </script>
+   
    
 
 </head>
@@ -208,7 +220,7 @@ if($campos->rowCount()> 0){
                             <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
                         </div>
                         <div class="contenido">
-                            <button type="button" class="btn btn-eliminar" data-bs-toggle="modal" data-bs-target="#myModal4">Eliminar</button>
+                            <button type="button"  onclick="pasardatos()" class="btn btn-eliminar" data-bs-toggle="modal" data-bs-target="#myModal4">Eliminar</button>
                         </div>
                      </td>
                 </tr>
@@ -308,15 +320,16 @@ if($campos->rowCount()> 0){
                     <h5 class="modal-title">Eliminar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
+                <form method="POST" action="../logica/eliminar_cita.php">
                 <div class="modal-body">
                     <p class="texto">¿Desea eliminar esta cita?</p>
-                  
-                    </div>
+                    <input type="hidden" name=cita-id>
                     <div class="modal-footer pie-pagina">
                         <button type="submit" class=" btn btn-buscar">Si</button>
                         <button type="submit" class="btn btn-crear">No</button>
-                </div>
+                     </div>
+                    </div>
+            </form>
             </div>
         </div>
     </div>

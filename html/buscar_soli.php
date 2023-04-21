@@ -1,6 +1,16 @@
 <?php  
 include "../logica/verificar_sesion.php";
-include "../conexion/conexion.php"?>
+include "../conexion/conexion.php";
+
+if(!empty($_POST)){
+    $cedula = $_POST['cedula-soli'];
+    
+    $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+    $registrar = $campos->fetch(PDO::FETCH_OBJ);
+    if($campos->rowCount()> 0){
+
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -82,11 +92,10 @@ include "../conexion/conexion.php"?>
                                     <div class="mb-3" >
                                         <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-soli">
                                     </div>
-                                    <div class="modal-footer pie-pagina">
-                                   <button type="submit" class="btn btn-crear">Buscar</button>
-                                   <button type="reset" class="btn btn-buscar">Cancelar</button>
-
-                                   </div>
+                            <div class="modal-footer pie-pagina">
+                                <button type="submit" class="btn btn-crear">Buscar</button>
+                                <button type="submit" class="btn btn-buscar">Cancelar</button>
+                            </div>
                                 </form>
                             </div>
                             
@@ -110,10 +119,10 @@ include "../conexion/conexion.php"?>
             <tbody>
                 <tr>
                     <?php 
-                    $query = "SELECT s.ID_Solicitud , u.Nombre , u.Cedula , u.Email, i.Estado 
-                              from solicitud_expediente as s INNER JOIN paciente as p ON p.ID_Paciente = s.ID_Paciente 
+                    $query = "SELECT s.ID_Solicitud , u.Nombre , u.Cedula , u.Email, i.Estado from solicitud_expediente 
+                              as s INNER JOIN paciente as p ON p.ID_Paciente = s.ID_Paciente 
                               INNER JOIN usuario as u ON u.ID_Usuario = p.ID_User 
-                              INNER JOIN estado_expediente as i ON i.ID_Estado_Expediente = s.Estado";
+                              INNER JOIN estado_expediente as i ON i.ID_Estado_Expediente = s.Estado WHERE u.Cedula ='$cedula'";
                     $consulta = $conexion->query($query);
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
@@ -183,7 +192,7 @@ include "../conexion/conexion.php"?>
                     <div class="modal-footer pie-pagina">
                         <button type="submit" class=" btn btn-buscar">Si</button>
                         <button type="submit" class="btn btn-crear">No</button>
-                    </div>
+                </div>
                     </form>
             </div>
         </div>
@@ -216,3 +225,15 @@ include "../conexion/conexion.php"?>
 </footer>
 
 </html>
+
+<?php 
+  }
+  else{
+    header("Location: ../html/gestión_solicitud.php?msg1= Cédula Invalida.");
+  }
+}
+else{
+    header("Location: ../html/gestión_solicitud.php?msg1= No deje campos en blanco.");
+}
+
+?>

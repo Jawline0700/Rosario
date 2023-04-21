@@ -5,41 +5,21 @@ use PHPMailer\PHPMailer\SMTP;
 
 
 include('../conexion/conexion.php');
-include("verificar_solicitud.php");
 
 require '../PHPMailer/Exception.php';
 require '../PHPMailer/PHPMailer.php';
 require '../PHPMailer/SMTP.PHP';
 
-if(isset($_POST['cedula'])){
-
-    $cedula = $_POST['cedula'];
-    $idpaciente = $_POST['ID-Paciente'];
-    $estado = 1;
-    $info = 1;
-    $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4;");
-    $row  = $consulta->fetch(PDO::FETCH_OBJ);
-
-    if($consulta->rowCount()>0){
-
-    $correo = $row->Email;
-    
-    $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente as
-                                s inner Join paciente as p ON s.ID_Paciente = p.ID_Paciente 
-                                INNER JOIN usuario as u On u.ID_Usuario = p.ID_User 
-                                WHERE p.ID_Paciente = '$idpaciente';" );
-
-    $row = $retorno->fetch(PDO::FETCH_OBJ);
-
-if($retorno->rowCount() == 0){
-         
+if(!empty($_POST)){
+    $id = $_POST['soli-id'];
+    $correo = $_POST['soli-correo'];
+    $estado = 2;
+    $data = ['id'=>$id,'estado'=>$estado];
+    $sql = "UPDATE solicitud_expediente set Estado=:estado WHERE ID_Solicitud =:id";
+    $stmt = $conexion->prepare($sql);
+    if($stmt->execute($data)){
+    }
     $mail = new PHPMailer(true);
-    $insercion = $conexion->prepare("INSERT INTO solicitud_expediente (ID_Paciente,Expendiente_Entregado,Estado) values (?,?,?)");
-    $insercion->bindParam(1, $idpaciente);
-    $insercion->bindParam(2, $estado);
-    $insercion->bindParam(3,$info);
-    $insercion->execute();
-
     try {
         //Server settings
        // $mail->SMTPDebug = 0;                    //Enable verbose debug output
@@ -64,39 +44,16 @@ if($retorno->rowCount() == 0){
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Instituto Oncológico Nacional - Solicitud de Expediente Médico - Rosario ';
-        $mail->Body    = 'Su Solicitud de Expediente Médico sera procesada, revise periodicamente su correo 
-                          ya que sera notificado por este medio cuando este disponible su expediente medico, 
-                         para que sea retirado de manera presencial.';
+        $mail->Body    = 'Su Solicitud de Expediente Médico fue rechazada comuniquese lo mas pronto posible al Insituto Oncologico Nacional.';
     
-        $mail->send();
-       header("Location: ../html/solicitud.php?msg= Su Solicitud se envio con éxito.");
+       $mail->send();
+       header("Location: ../html/gestión_solicitud.php?msg1=La Solicitud ha sido rechazada.");
     } catch (Exception $e) {
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }
-
-
-}
-
-else{
-    header("Location: ../html/solicitud.php?msg= Usted ya solicito su Expediente Médico");
-}
-   
     }
-    else{
-      header("Location: ../html/solicitud.php?msg= Ingrese un Correo Valido");
-    }
-
-
     
 
-}
-else{
- echo ("No entro");
-}
-
-
-
-
-
+?>
 
 ?>
