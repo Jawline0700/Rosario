@@ -57,7 +57,7 @@ if($campos->rowCount()> 0){
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
           <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestión_usuario.php" >Gestión Usuario</a></li>
+          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>

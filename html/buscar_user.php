@@ -1,5 +1,13 @@
 <?php include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
+
+
+if(!empty($_POST)){
+    $cedula = $_POST['cedula-user'];
+    $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+    $registrar = $campos->fetch(PDO::FETCH_OBJ);
+    if($campos->rowCount()> 0){
+
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -175,7 +183,7 @@ include "../conexion/conexion.php";
             <tbody>
                 <tr>
                     <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
-                                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1";
+                                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Cedula ='$cedula' AND u.Estado = 1";
                     $consulta = $conexion->query($query);
                     while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
                     <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
@@ -306,3 +314,16 @@ include "../conexion/conexion.php";
 </footer>
 
 </html>
+
+
+<?php 
+  }
+  else{
+    header("Location: ../html/gestión_solicitud.php?msg1= Cédula Invalida.");
+  }
+}
+else{
+    header("Location: ../html/gestión_solicitud.php?msg1= No deje campos en blanco.");
+}
+
+?>
