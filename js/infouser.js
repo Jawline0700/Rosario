@@ -13,3 +13,14 @@ function llenardatos(){
          
     })
 }
+
+function deleteusario(){
+    const tabla = document.getElementById('tabla-user');
+    tabla.addEventListener('click',(e)=>{
+        e.stopPropagation();
+        var id =  e.target.parentElement.parentElement.parentElement.children[0].textContent;
+        console.log(id);
+        document.getElementsByName("delete")[0].value = id;
+    })
+
+}
