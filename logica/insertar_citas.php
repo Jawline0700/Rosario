@@ -18,7 +18,7 @@ if(!empty($_POST)){
     $datos = new cita($fecha_cita,$ID_Paciente,$id_medico,$tipo,$estado);
 
     try{
-      $stmt = $conexion->prepare("INSERT INTO cita (Fecha,ID_Paciente,ID_Medico,ID_Tipo_Tratamiento,ID_Estado_Cita) values (:Fecha,:ID_Paciente,:ID_Medico,:ID_Tipo_Tratamiento,:ID_Estado_Cita)");
+      $stmt = $conexion->prepare("INSERT INTO cita (Fecha,ID_Paciente,ID_Medico,ID_Tipo_Tratamiento,ID_Estado_Cita,Orden) values (:Fecha,:ID_Paciente,:ID_Medico,:ID_Tipo_Tratamiento,:ID_Estado_Cita,0)");
       $stmt->execute((array)$datos);
 
     }catch(PDOException $e){
