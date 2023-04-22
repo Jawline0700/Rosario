@@ -1,4 +1,7 @@
-<?php include "../logica/verificar_sesion.php"; ?><!DOCTYPE html>
+<?php include "../logica/verificar_sesion.php";
+include "../conexion/conexion.php";
+ ?>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -13,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
+    <script src="../js/infouser.js"></script>
    
 
 </head>
@@ -82,7 +86,7 @@
                                 </div>
                                 <div class="modal-footer pie-pagina">
                                     <button type="submit" class="btn btn-crear">Buscar</button>
-                                    <button type="submit" class="btn btn-buscar">Cancelar</button>
+                                    <button type="reset" class="btn btn-buscar">Cancelar</button>
 
                                 </div>
                             </div>
@@ -127,24 +131,26 @@
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado" class="seleccion">
-                                <option value="" class="seleccion">Paciente</option>
-                                <option value="" class="seleccion">Médico</option>
-                                <option value="" class="seleccion">Enfermera</option>
-                                <option value="" class="seleccion">Administrador</option>
-                                
-
+                            <select id="estado" class="seleccion" name="user-tipo">
+                                <?php  
+                                $informacion = $conexion->prepare("SELECT * from rol_usuario");
+                                $informacion->execute();
+                                $data = $informacion->fetchAll();
+                                foreach($data as $fila):
+                                    echo '<option value="'.$fila["ID_Rol"].'name="tipo-user">'.$fila["Descripcion"].'</option>';
+                                endforeach;
+                                ?> 
+    
                             </select>
 
+                        </div>                        
+                        <div class="modal-footer pie-pagina">
+                                    <button type="submit" class="btn btn-crear">Crear</button>
+                                    <button type="Reset" class="btn btn-buscar">Cancelar</button>
                         </div>
                     </form>
                 </div>
 
-                                <div class="modal-footer pie-pagina">
-                                    <button type="submit" class="btn btn-crear">Crear</button>
-                                    <button type="submit" class="btn btn-buscar">Cancelar</button>
-
-                                </div>
                             </div>
                         </div>
                      </div>
@@ -152,12 +158,12 @@
                 
         
         </div>
-        <table>
+        <table id="tabla-user">
             <thead>
                 <tr>
+                    <th class="col">ID_Usuario</th>
                     <th class="col">Nombre</th>
                     <th class="col">Cédula</th>
-                    <th class="col">Edad</th>
                     <th class="col">Telefono</th>
                     <th class="col">Email</th>
                     <th class="col">Tipo Usuario</th>
@@ -166,40 +172,26 @@
             </thead>
             <tbody>
                 <tr>
-                    <td data-titulo="Nombre:" class="col">Wencers Castillo</td>
-                    <td data-titulo="Cédula:" class="col">8-960-165</td>
-                    <td data-titulo="Edad:" class="col">22 Años</td>
-                    <td data-titulo="Telefono:" class="col">6319-4033</td>
-                    <td data-titulo="Correo:" class="col">mathewscastillo40@gmail.com</td>
-                    <td data-titulo="Tipo Usuario:" class="col">Administrador</td>
+                    <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol";
+                    $consulta = $conexion->query($query);
+                    while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
+                    <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
+                    <td data-titulo="Nombre:" class="col"><?php echo $dato['Nombre']?></td>
+                    <td data-titulo="Cédula:" class="col"><?php echo $dato['Cedula']?></td>
+                    <td data-titulo="Telefono:" class="col"><?php echo $dato['Telefono'] ?></td>
+                    <td data-titulo="Correo:" class="col"><?php echo $dato['Email'] ?></td>
+                    <td data-titulo="Tipo Usuario:" class="col"><?php echo $dato['Descripcion']?></td>
                     <td> 
                         <div class="contenido">
-                                <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
+                                <button type="button" onclick="llenardatos()" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
                         </div>
                         <div class="contenido">
                             <button typr="button" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
                         </div>
                     </td>
                 </tr>
-
-
-                <tr>
-                    <td data-titulo="Nombre:" class="col">Luigi Santana</td>
-                    <td data-titulo="Cédula:" class="col">7-98-94</td>
-                    <td data-titulo="Edad:" class="col">22 Años</td>
-                    <td data-titulo="Telefono:" class="col">645-2354</td>
-                    <td data-titulo="Correo:" class="col">luigisantana@gmail.com</td>
-                    <td data-titulo="Tipo Usuario:" class="col">Enfermero</td>
-                    <td> 
-                        <div class="contenido">
-                                <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
-                        </div>
-                        <div class="contenido">
-                            <button typr="button" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-               
+                <?php } ?>
             </tbody>
         </table>
         </div>
@@ -215,52 +207,47 @@
                     <button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body centrear">
-                    <form>
+                    <form method="POST" action="../logica/insertar_user.php">
                         <div class="mb-3">
                             <label class="texto">Nombre:</label>
                             <br>
-                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre">
+                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-user">
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula">
+                            <input type="text" class="icono-cedula" readonly placeholder="Digite la Cédula" name="cedula-user">
 
                         </div>
-                        <div class="mb-3">
-                            <label class="texto">Edad:</label>
-                            <br>
-                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad ">
-                        </div>
-
                         <div class="mb-3">
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user">
                         </div>
 
                         <div class="mb-3">
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado" class="seleccion">
-                                <option value="" class="seleccion">Paciente</option>
-                                <option value="" class="seleccion">Médico</option>
-                                <option value="" class="seleccion">Enfermera</option>
-                                <option value="" class="seleccion">Administrador</option>
-                                
+                            <select id="estado" class="seleccion" name="user-tipo">
+                            <?php  
+                                $informacion = $conexion->prepare("SELECT * from rol_usuario");
+                                $informacion->execute();
+                                $data = $informacion->fetchAll();
+                                foreach($data as $fila):
+                                    echo '<option value="'.$fila["ID_Rol"].'name="tipo-user">'.$fila["Descripcion"].'</option>';
+                                endforeach;
+                                ?> 
 
                             </select>
-
+                            <input type="hidden" name="id-usuario">
                         </div>
+                        <div class="modal-footer pie-pagina">
+                                    <button type="submit" class="btn btn-crear">Guardar</button>
+                                    <button type="reset" class="btn btn-buscar">Cancelar</button>
+                                </div>
                     </form>
                 </div>
-                <div class="modal-footer pie-pagina">
-                    <button type="submit" class="btn btn-crear">Guardar</button>
-                    <button type="submit" class="btn btn-buscar">Cancelar</button>
-
-                </div>
-
             </div>
         </div>
      </div>
