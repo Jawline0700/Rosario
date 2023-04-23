@@ -4,6 +4,7 @@
     $sentencia = $conexion->query("SELECT ID_Paciente FROM paciente WHERE ID_User = $Sesion");
     $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
+    $ID_Paciente = 0;
     foreach($registro as $reg){
         $ID_Paciente = $reg['ID_Paciente']; 
     };

@@ -1,5 +1,8 @@
 <?php 
-include "../logica/verificar_sesion.php";
+
+    include("../logica/verificar_sesion.php");
+    include("../conexion/conexion.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -65,11 +68,9 @@ include "../logica/verificar_sesion.php";
                     <div class="mb-3">
                         <label class="texto">Turno Actual:</label>
                         <br>
-                        <input type="text" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
+                        <input type="text" id="turnoActual" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
                     </div>
-                    
                 </div>                
-        
         </div>
         <table>
             <thead>
@@ -83,39 +84,58 @@ include "../logica/verificar_sesion.php";
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-titulo="Maquina" class="col">111111</td>
-                    <td data-titulo="Cédula" class="col">8-960-165</td>
-                    <td data-titulo="Enf." class="col">Maria Perez</td>
-                    <td data-titulo="Estado" class="col">En Proceso</td>
-                    <td data-titulo="Turno" class="col">15</td>
-                    <td> 
-                        <div class="contenido">
-                            <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Modificar</button>
-                        </div>
-                     </td>
-                </tr>
+                <?php
 
-                <tr>
-                    <td data-titulo="Maquina" class="col">222222</td>
-                    <td data-titulo="Cédula" class="col">8-77-12</td>
-                    <td data-titulo="Enf." class="col">Lolita </td>
-                    <td data-titulo="Estado" class="col">Finalizada</td>
-                    <td data-titulo="Turno" class="col">11</td>
+                    $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, co.ID_Maquina, u.Cedula, co.ID_Enfermera, ci.ID_Estado_Cita, ci.Orden FROM cita ci 
+                                                     RIGHT JOIN cola co ON ci.ID_Paciente=co.ID_Paciente
+                                                     INNER JOIN paciente p ON ci.ID_Paciente=p.ID_Paciente
+                                                     INNER JOIN usuario u ON p.ID_User=u.ID_Usuario
+                                                     WHERE ci.ID_Tipo_Tratamiento = 3 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
+                    $sentencia->execute();
+                    $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+                    if(count($registro) > 0){
+                    foreach($registro as $reg){
+                ?>
+                <tr id='<?php echo $reg['ID_Cita'] ?>'>
+                    <?php 
+                    
+                        if($reg['ID_Maquina'] == null){
+                            $reg['ID_Maquina'] = "No asignado";
+                        }
+
+                        if($reg['ID_Enfermera'] == null){
+                            $reg['ID_Enfermera'] = "No asignado";
+                        }
+
+                        $estadoCita = "Cancelada";
+                        switch($reg['ID_Estado_Cita']){
+                            case 1: $estadoCita = 'Realizada';
+                                    break;
+                            case 2: $estadoCita = 'En Proceso';
+                                    break;
+                            case 3: $estadoCita = 'Pendiente';
+                                    break;
+                        }
+                    
+                    ?>
+                    <td data-titulo="Maquina" class="col"><?php echo $reg['ID_Maquina'] ?></td>
+                    <td data-titulo="Cédula" class="col"><?php echo $reg['Cedula'] ?></td>
+                    <td data-titulo="Enf." class="col"><?php echo $reg['ID_Enfermera'] ?></td>
+                    <td data-titulo="Estado" class="col"><?php echo $estadoCita; ?></td>
+                    <td data-titulo="Turno" class="col"><?php echo $reg['Orden'] ?></td>
                     <td> 
                         <div class="contenido">
                             <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Modificar</button>
                         </div>
                      </td>
                 </tr>
-               
-                
+                <?php }} else { ?>
+                <td data-titulo="NoHay" class="col" colspan=6>No hay citas aún...</td> 
+                <?php } ?>
             </tbody>
         </table>
         </div>
     </section>
-
-    
 
     <div class="modal" id="myModal3">
         <div class="modal-dialog">
@@ -226,5 +246,13 @@ include "../logica/verificar_sesion.php";
 
 
 </footer>
+
+<?php 
+    
+    $_SESSION['tratamiento']=3;
+    include("../logica/turnos.php"); 
+    unset($_SESSION['tratamiento']);
+    
+  ?>
 
 </html>
