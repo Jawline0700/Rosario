@@ -1,6 +1,8 @@
-
 <?php 
-include "../logica/verificar_sesion.php";
+
+  include("../logica/verificar_sesion.php");
+  include("../conexion/conexion.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -62,13 +64,13 @@ include "../logica/verificar_sesion.php";
     <div class="soli-container">
         <div class="soli-info-container">
             <form action="solicitud.html" class="inputs-container">
-                <div class="centrear">
+            <div class="centrear">
                     <label class="texto-login">El turno Actual:</label>
-                    <input type="text" placeholder="El Turno Actual #20" class="icono-placeholder-image-fila" >
+                    <input type="text" id="turnoActual" placeholder="El Turno Actual 0" class="icono-placeholder-image-fila" readonly >
                 </div>
                 <div class="centrear">
                     <label class="texto-login">Su turno:</label>
-                    <input type="text" placeholder="Su turno es: 18"  class="icono-placeholder-image-fila">
+                    <input type="text" id="suTurno" placeholder="Su Turno Es 0"  class="icono-placeholder-image-fila" readonly>
                 </div>
             </form>
         </div>
@@ -112,5 +114,13 @@ include "../logica/verificar_sesion.php";
   
   </footer>
   
+  <?php
+  
+    $_SESSION['tratamiento']=4;
+    include("../logica/turnos.php"); 
+    unset($_SESSION['tratamiento']);
+  
+  ?>
+
 </body>
 </html>

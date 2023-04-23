@@ -10,15 +10,14 @@ $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 try{
     foreach($registro as $reg){
-        echo $sentencia->rowCount();
+        // Obtener las citas por tipo
         $num = $reg['ID_Tipo_Tratamiento'];
-    
-        $sentencia2 = $conexion->prepare("SELECT ID_Paciente FROM cita WHERE Fecha = '2023-04-14' AND ID_Tipo_Tratamiento = $num ORDER BY Orden");
+        $sentencia2 = $conexion->prepare("SELECT ID_Paciente, ID_Cita FROM cita WHERE Fecha = CURDATE() AND ID_Tipo_Tratamiento = $num ORDER BY Orden");
         $sentencia2->execute();
         $registro2 = $sentencia2->fetchAll(PDO::FETCH_ASSOC);
 
-        echo $sentencia2->rowCount();
         foreach($registro2 as $reg2){
+            // Insertar las citas a la cola
             $sentencia3 = $conexion->prepare("INSERT INTO cola (ID_Paciente) VALUES (:idP)");
             $sentencia3->bindParam(':idP', $reg2['ID_Paciente']);
             $sentencia3->execute();

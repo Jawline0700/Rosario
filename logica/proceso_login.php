@@ -13,9 +13,9 @@ if(isset($_POST['cedula-inicio']) && isset($_POST['password'])){
   if($consulta->rowCount()>0){
     $_SESSION['sw']=true;
     $_SESSION['id']=$row['ID_Usuario'];
-    $tipo_usuario = $_SESSION['tipo']=$row['Tipo_Usuario'];
+    $_SESSION['tipo']=$row['Tipo_Usuario'];
 
-    if($tipo_usuario == 4 ){
+    if($_SESSION['tipo'] == 4 ){
       header("Location: ../html/pagina_inicio.php");
     }else{
       header("Location: ../html/pagina_inicio2.php");
