@@ -62,6 +62,9 @@ include "../conexion/conexion.php";
                 <?php if(isset($_GET['msg1'])){?>
                 <?php echo $_GET['msg1'];?>
                 <?php } ?> 
+                <?php if(isset($_GET['msg2'])){?>
+                    <?php echo $_GET['msg2'];?>
+                    <?php } ?>
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Usuario</button>
                 </div>
@@ -81,7 +84,7 @@ include "../conexion/conexion.php";
                                 <div class="modal-body">
                                     <form method="POST" Action="buscar_user.php">
                                         <div class="mb-3" >
-                                            <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula">
+                                            <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name ="cedula-search" >
                                         </div>
                                         <div class="modal-footer pie-pagina">
                                             <button type="submit" class="btn btn-crear">Buscar</button>
@@ -113,22 +116,24 @@ include "../conexion/conexion.php";
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula">
+                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula" name="cedula-crear">
 
                         </div>
                         <div class="mb-3">
                             <label class="texto">Edad:</label>
                             <br>
-                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad ">
+                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad" name="edad-crear">
                         </div>
-
                         <div class="mb-3">
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="email-crear">
                         </div>
-
+                        <div class="mb-3">
+                            <label class="texto">Télefono:</label>
+                            <input type="text"  placeholder="Digite su Telefono" name="telefono-crear">
+                        </div>
                         <div class="mb-3">
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
@@ -161,9 +166,6 @@ include "../conexion/conexion.php";
                                 ?>
                             </select>
                             </div>
-
-
-                                               
                         <div class="modal-footer pie-pagina">
                                     <button type="submit" class="btn btn-crear">Crear</button>
                                     <button type="Reset" class="btn btn-buscar">Cancelar</button>
@@ -245,6 +247,10 @@ include "../conexion/conexion.php";
                             <label class="texto">Correo Electronico:</label>
                             <br>
                             <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user">
+                        </div>
+                        <div class="mb-3">
+                            <label class="texto">Télefono:</label>
+                            <input type="text"  placeholder="Digite su Telefono" name="telefono-user">
                         </div>
 
                         <div class="mb-3">

@@ -31,7 +31,7 @@ else{
 
 }
 else{
-    echo "no entro";
+    echo "No Entro";
 }
 
 

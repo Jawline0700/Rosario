@@ -6,12 +6,14 @@ function llenardatos(){
         var id =  e.target.parentElement.parentElement.parentElement.children[0].textContent;
         var cedula = e.target.parentElement.parentElement.parentElement.children[2].textContent;
         var nombre =  e.target.parentElement.parentElement.parentElement.children[1].textContent;
+        var telefono =  e.target.parentElement.parentElement.parentElement.children[3].textContent;
         var email =  e.target.parentElement.parentElement.parentElement.children[4].textContent;
         var user = e.target.parentElement.parentElement.parentElement.children[5].textContent;
         document.getElementsByName("id-usuario")[0].value = id;
         document.getElementsByName("nombre-user")[0].value = nombre;
         document.getElementsByName("correo-user")[0].value = email;
         document.getElementsByName("cedula-user")[0].value = cedula;
+        document.getElementsByName("telefono-user")[0].value = telefono;
 
         if(user == "Paciente"){
              $('#estado-editar').prop('disabled','disabled');

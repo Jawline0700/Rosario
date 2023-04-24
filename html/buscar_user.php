@@ -3,12 +3,14 @@ include "../conexion/conexion.php";
 
 
 if(!empty($_POST)){
-    $cedula = $_POST['cedula-user'];
+    $cedula = $_POST['cedula-search'];
     $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
     $registrar = $campos->fetch(PDO::FETCH_OBJ);
     if($campos->rowCount()> 0){
 
  ?>
+
+ 
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,13 +21,12 @@ if(!empty($_POST)){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/82edd683c2.js" crossorigin="anonymous"></script>
+    <script  src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../img/iconos/ION.png">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
-    
-   
 
 </head>
 <body>
@@ -47,8 +48,8 @@ if(!empty($_POST)){
           <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
-                  <li><a href="../html/gestión_quimio.php" > Gestión Quimioterapia</a></li>
+                  <li><a href="../html/gestión_radio.php">Gestión Radioterapia </a></li>
+                  <li><a href="../html/gestión_quimio.php">Gestión Quimioterapia</a></li>
               </ul>
           </li>
           
@@ -71,6 +72,9 @@ if(!empty($_POST)){
                 <?php if(isset($_GET['msg1'])){?>
                 <?php echo $_GET['msg1'];?>
                 <?php } ?> 
+                <?php if(isset($_GET['msg2'])){?>
+                    <?php echo $_GET['msg2'];?>
+                    <?php } ?>
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Usuario</button>
                 </div>
@@ -90,7 +94,7 @@ if(!empty($_POST)){
                                 <div class="modal-body">
                                     <form method="POST" Action="buscar_user.php">
                                         <div class="mb-3" >
-                                            <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-user">
+                                            <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-search">
                                         </div>
                                         <div class="modal-footer pie-pagina">
                                             <button type="submit" class="btn btn-crear">Buscar</button>
@@ -102,6 +106,7 @@ if(!empty($_POST)){
                             </div>
                         </div>
                      </div>
+               
 
 
                      <div class="modal" id="myModal2">
@@ -113,47 +118,64 @@ if(!empty($_POST)){
                                 </div>
 
                 <div class="modal-body centrear">
-                    <form>
+                    <form method="POST"  action="../logica/crear_usuario.php">
                         <div class="mb-3">
                             <label class="texto">Nombre:</label>
                             <br>
-                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre">
+                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-crear">
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula">
+                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula" name="cedula-crear">
 
                         </div>
                         <div class="mb-3">
                             <label class="texto">Edad:</label>
                             <br>
-                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad ">
+                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad" name="edad-crear">
                         </div>
-
                         <div class="mb-3">
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="email-crear">
                         </div>
-
+                        <div class="mb-3">
+                            <label class="texto">Télefono:</label>
+                            <input type="text"  placeholder="Digite su Telefono" name="telefono-crear">
+                        </div>
                         <div class="mb-3">
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado" class="seleccion" name="user-tipo">
+                            <select id="estado-crear" class="seleccion" name="user-tipo">
                                 <?php  
                                 $informacion = $conexion->prepare("SELECT * from rol_usuario");
                                 $informacion->execute();
                                 $data = $informacion->fetchAll();
-                                foreach($data as $fila):
-                                    echo '<option value="'.$fila["ID_Rol"].'name="tipo-user">'.$fila["Descripcion"].'</option>';
-                                endforeach;
-                                ?> 
+                                foreach($data as $fila):?>
+                                  <option value="<?php echo $fila["ID_Rol"]?>"><?php echo $fila["Descripcion"]?></option>
+                                <?php endforeach;?> 
     
                             </select>
+                            </div>
 
-                        </div>                        
+                            <div class="mb-3">
+                            <br>
+                            <label class="texto">Especialidad</label>
+                            <br>
+                            <select required id="especial-crear" class="seleccion" name="especial">
+                                <?php  
+                                $informacion = $conexion->prepare("SELECT * from Especialidad");
+                                $informacion->execute();
+                                $data = $informacion->fetchAll();
+                                echo '<option disabled selected>Seleccione una opción:</option>';
+                                foreach($data as $fila):
+                                    echo '<option value="'.$fila["ID_Especialidad"].'name="id-especialidad">'.$fila["Nombre"].'</option>';
+                                endforeach;
+                                ?>
+                            </select>
+                            </div>
                         <div class="modal-footer pie-pagina">
                                     <button type="submit" class="btn btn-crear">Crear</button>
                                     <button type="Reset" class="btn btn-buscar">Cancelar</button>
@@ -164,6 +186,8 @@ if(!empty($_POST)){
                             </div>
                         </div>
                      </div>
+
+
                    
                 
         
@@ -225,7 +249,7 @@ if(!empty($_POST)){
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-cedula" readonly placeholder="Digite la Cédula" name="cedula-user">
+                            <input type="text" readonly class="icono-cedula" placeholder="Digite la Cédula" name="cedula-user">
 
                         </div>
                         <div class="mb-3">
@@ -234,24 +258,44 @@ if(!empty($_POST)){
                             <br>
                             <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user">
                         </div>
+                        <div class="mb-3">
+                            <label class="texto">Télefono:</label>
+                            <input type="text"  placeholder="Digite su Telefono" name="telefono-user">
+                        </div>
 
                         <div class="mb-3">
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado" class="seleccion" name="user-tipo">
+                            <select id="estado-editar" class="seleccion" name="user-tipo">
                             <?php  
                                 $informacion = $conexion->prepare("SELECT * from rol_usuario");
                                 $informacion->execute();
                                 $data = $informacion->fetchAll();
-                                foreach($data as $fila):
-                                    echo '<option value="'.$fila["ID_Rol"].'name="tipo-user">'.$fila["Descripcion"].'</option>';
-                                endforeach;
-                                ?> 
+                                echo '<option disabled selected>Seleccione una opción:</option>';
+                                foreach($data as $fila):?>
+                                   <option value="<?php echo $fila["ID_Rol"]?>"><?php echo $fila["Descripcion"]?></option>
+                                <?php endforeach; ?> 
 
                             </select>
                             <input type="hidden" name="id-usuario">
                         </div>
+                        <div class="mb-3">
+                            <br>
+                            <label class="texto">Especialidad</label>
+                            <br>
+                            <select required id="especial-editar" class="seleccion" name="especial">
+                                <?php  
+                                $informacion = $conexion->prepare("SELECT * from Especialidad");
+                                $informacion->execute();
+                                $data = $informacion->fetchAll();
+                                echo '<option disabled selected>Seleccione una opción:</option>';
+                                foreach($data as $fila):
+                                    echo '<option value="'.$fila["ID_Especialidad"].'name="id-especialidad">'.$fila["Nombre"].'</option>';
+                                endforeach;
+                                ?>
+                            </select>
+                            </div>
                         <div class="modal-footer pie-pagina">
                                     <button type="submit" class="btn btn-crear">Guardar</button>
                                     <button type="reset" class="btn btn-buscar">Cancelar</button>
@@ -261,9 +305,6 @@ if(!empty($_POST)){
             </div>
         </div>
      </div>
-
-
-
     <div class="modal" id="myModal4">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -294,6 +335,27 @@ if(!empty($_POST)){
     <br>
     <script src="../js/infouser.js"></script>
 
+    <script>
+                        $("#estado-crear").change(function(){
+                             console.log($("#estado-crear").val());
+                            if($("#estado-crear").val() == 4 || $("#estado-crear").val() == 3 ){
+                                $('#especial-crear').prop('disabled', 'disabled');
+                            }
+                            else{
+                                $('#especial-crear').prop('disabled', false);
+                            }
+                        })                        
+                        $("#estado-editar").change(function(){
+                             console.log($("#estado-editar").val());
+                            if($("#estado-editar").val() == 4 || $("#estado-editar").val() == 3 ){
+                                $('#especial-editar').prop('disabled', 'disabled');
+                            }
+                            else{
+                                $('#especial-editar').prop('disabled', false);
+                            }
+                        })                 
+    </script>
+
 </body>
 <footer>
   <img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
@@ -314,6 +376,7 @@ if(!empty($_POST)){
 </footer>
 
 </html>
+
 
 
 <?php 
