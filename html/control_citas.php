@@ -21,7 +21,6 @@ include "../conexion/conexion.php";
     <script>
          function pasardatos(){
             const tabla = document.getElementById("tabla");
-
             tabla.addEventListener('click', (e)=>{
                 e.stopPropagation(); 
                  var id =  e.target.parentElement.parentElement.parentElement.children[0].textContent;
@@ -143,6 +142,7 @@ include "../conexion/conexion.php";
                                                 <?php 
                                                 $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
                                                 $informacion->execute();
+                                                echo '<option disabled selected>Seleccione una opción:</option>';
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):
                                                     echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
@@ -159,6 +159,7 @@ include "../conexion/conexion.php";
                                             <?php 
                                             $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
                                             $consultar->execute();
+                                            echo '<option disabled selected>Seleccione una opción:</option>';
                                             $info = $consultar->fetchAll();
                                             foreach($info as $valor):?>
                                              <option value= <?php echo $valor["ID_Tipo_Tratamiento"]?> ><?php echo $valor["Tipo"]?></option>';
@@ -208,7 +209,7 @@ include "../conexion/conexion.php";
                     <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
                         <div class="contenido">
-                            <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
+                            <button type="button"  class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
                         </div>
                         <div class="contenido">
                             <button type="button" onclick="pasardatos()" class="btn btn-eliminar" data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
@@ -249,6 +250,7 @@ include "../conexion/conexion.php";
                                                 <?php 
                                                 $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
                                                 $informacion->execute();
+                                                echo '<option disabled selected>Seleccione una opción:</option>';
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):
                                                     echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
@@ -265,6 +267,7 @@ include "../conexion/conexion.php";
                                             <?php 
                                             $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
                                             $consultar->execute();
+                                            echo '<option disabled selected>Seleccione una opción:</option>';
                                             $info = $consultar->fetchAll();
                                             foreach($info as $valor):?>
                                              <option value= <?php echo $valor["ID_Tipo_Tratamiento"]?> ><?php echo $valor["Tipo"]?></option>';
