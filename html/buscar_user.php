@@ -209,6 +209,8 @@ if(!empty($_POST)){
                     <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
                                     INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Cedula ='$cedula' AND u.Estado = 1";
                     $consulta = $conexion->query($query);
+                    $consulta->execute();
+                    if($consulta->rowCount()>0){
                     while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
                     <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
                     <td data-titulo="Nombre:" class="col"><?php echo $dato['Nombre']?></td>
@@ -225,7 +227,9 @@ if(!empty($_POST)){
                         </div>
                     </td>
                 </tr>
-                <?php } ?>
+                <?php } }else{?>
+                    <td data-titulo="Usuario" class="col" colspan=6>Usuario no Encontrado</td> 
+            <?php } ?>
             </tbody>
         </table>
         </div>

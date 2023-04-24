@@ -1,4 +1,5 @@
-<?php include "../logica/verificar_sesion.php";
+<?php 
+include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
  ?>
 <!DOCTYPE html>
@@ -196,26 +197,31 @@ include "../conexion/conexion.php";
             </thead>
             <tbody>
                 <tr>
-                    <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
-                                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1";
-                    $consulta = $conexion->query($query);
-                    while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
-                    <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
-                    <td data-titulo="Nombre:" class="col"><?php echo $dato['Nombre']?></td>
-                    <td data-titulo="Cédula:" class="col"><?php echo $dato['Cedula']?></td>
-                    <td data-titulo="Telefono:" class="col"><?php echo $dato['Telefono'] ?></td>
-                    <td data-titulo="Correo:" class="col"><?php echo $dato['Email'] ?></td>
-                    <td data-titulo="Tipo Usuario:" class="col"><?php echo $dato['Descripcion']?></td>
-                    <td> 
-                        <div class="contenido">
-                                <button type="button" onclick="llenardatos()" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
-                        </div>
-                        <div class="contenido">
-                            <button typr="button" onclick="deleteusario();" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-                <?php } ?>
+                        <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                                        INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1";
+                        $consulta = $conexion->query($query);
+                        $consulta->execute();
+                        if($consulta->rowCount()>0){
+                        while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
+
+                            <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
+                            <td data-titulo="Nombre:" class="col"><?php echo $dato['Nombre']?></td>
+                            <td data-titulo="Cédula:" class="col"><?php echo $dato['Cedula']?></td>
+                            <td data-titulo="Telefono:" class="col"><?php echo $dato['Telefono'] ?></td>
+                            <td data-titulo="Correo:" class="col"><?php echo $dato['Email'] ?></td>
+                            <td data-titulo="Tipo Usuario:" class="col"><?php echo $dato['Descripcion']?></td>
+                            <td> 
+                                <div class="contenido">
+                                        <button type="button" onclick="llenardatos()" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
+                                </div>
+                                <div class="contenido">
+                                    <button typr="button" onclick="deleteusario();" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                <?php } }else{?>
+                    <td data-titulo="Sin Usuario" class="col" colspan=6>No hay usuarios para mostrar..</td> 
+                <?php }?>
             </tbody>
         </table>
         </div>

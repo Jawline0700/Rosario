@@ -84,8 +84,11 @@ include("../logica/proceso_idpatient.php");
                 INNER JOIN medico as m ON m.ID_Medico = c.ID_Medico 
                 INNER JOIN usuario as us ON m.ID_Usuario = us.ID_Usuario WHERE ID_Paciente = '$ID_Paciente'" ;
                 $consulta=$conexion->query($query);
+                $consulta->execute();
+                if($consulta->rowCount()>0){
                 while($fila=$consulta->fetch(PDO::FETCH_ASSOC)){
 
+                 
                 ?>
                     <tr>
                     <td data-titulo="ID_Cita:" class="col"><?php echo $fila['ID_Cita'] ?></td>
@@ -94,7 +97,11 @@ include("../logica/proceso_idpatient.php");
                     <td data-titulo="Fecha de Atención:" class="col"> <?php echo $fila['Fecha']?></td>
                     <td data-titulo="Estado:" class="col"><?php echo $fila['Estado Cita']?></td>
                     </tr> 
-             <?php } ?>
+             <?php
+                }
+            }else{?>
+                <td data-titulo="Sin Cita" class="col" colspan=6>No Mantiene Citas...</td> 
+          <?php  } ?>
             
             </tbody>
         </table>

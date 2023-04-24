@@ -208,6 +208,8 @@ if($campos->rowCount()> 0){
                     INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
                     INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado WHERE u.Cedula = '$cedula'";
                     $consulta=$conexion->query($query);
+                    $consulta->execute();
+                    if($consulta->rowCount()>0){
                     while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
                     <td data-titulo="ID_Cita" class="col"><?php echo $dato['ID_Cita']?></td>
@@ -224,9 +226,9 @@ if($campos->rowCount()> 0){
                         </div>
                      </td>
                 </tr>
-                <?php } ?>
-               
-                
+                <?php } }else{ ?>
+                    <td data-titulo="Sin Cita" class="col" colspan=6>No Mantiene Citas...</td> 
+                 <?php  } ?>  
             </tbody>
         </table>
         </div>

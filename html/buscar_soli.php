@@ -124,6 +124,8 @@ if(!empty($_POST)){
                               INNER JOIN usuario as u ON u.ID_Usuario = p.ID_User 
                               INNER JOIN estado_expediente as i ON i.ID_Estado_Expediente = s.Estado WHERE u.Cedula ='$cedula'";
                     $consulta = $conexion->query($query);
+                    $consulta->execute();
+                    if($consulta->rowCount()>0){
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
                     <td data-titulo="ID_Solicitud" class="col"> <?php echo $fila['ID_Solicitud'] ?></td>
@@ -141,8 +143,9 @@ if(!empty($_POST)){
                         </div>
                      </td>
                 </tr>
-                <?php } ?>
-               
+                <?php } }else{?>
+                <td data-titulo="Sin Solicitud" class="col" colspan=6>No hay solicitudes para mostrar..</td> 
+               <?php } ?>
             </tbody>
         </table>
         </div>

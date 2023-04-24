@@ -115,6 +115,8 @@ include "../conexion/conexion.php"?>
                               INNER JOIN usuario as u ON u.ID_Usuario = p.ID_User 
                               INNER JOIN estado_expediente as i ON i.ID_Estado_Expediente = s.Estado";
                     $consulta = $conexion->query($query);
+                    $consulta->execute();
+                    if($consulta->rowCount()>0){
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
                     <td data-titulo="ID_Solicitud" class="col"> <?php echo $fila['ID_Solicitud'] ?></td>
@@ -132,8 +134,10 @@ include "../conexion/conexion.php"?>
                         </div>
                      </td>
                 </tr>
-                <?php } ?>
-               
+                <?php } 
+                } else{?>
+                <td data-titulo="Sin Solicitud" class="col" colspan=6>No hay solicitudes para mostrar</td> 
+               <?php }?>
             </tbody>
         </table>
         </div>
