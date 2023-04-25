@@ -9,7 +9,7 @@ if(!empty($_POST)){
  $id_medico = $_POST['medico'];
  $tipo= $_POST['tratamiento'];
  $estado = 2;
- $sentencia = $conexion->query("SELECT p.ID_Paciente from usuario as u INNER JOIN paciente as p ON p.ID_User = u.ID_Usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+ $sentencia = $conexion->query("SELECT p.ID_Paciente from usuario as u INNER JOIN paciente as p ON p.ID_User = u.ID_Usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4 AND Estado = 1");
  $registro = $sentencia->fetch(PDO::FETCH_OBJ);
 
  if($sentencia->rowCount()>0){

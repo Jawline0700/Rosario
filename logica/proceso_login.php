@@ -6,7 +6,7 @@ if(isset($_POST['cedula-inicio']) && isset($_POST['password'])){
   $cedula =$_POST['cedula-inicio'];
   $pass = ($_POST['password']);
 
-  $consulta=$conexion->query("SELECT * From usuario Where Cedula='$cedula' and Password='$pass'");
+  $consulta=$conexion->query("SELECT * From usuario Where Cedula='$cedula' and Password='$pass' and Estado = 1");
   $consulta->execute();
   $row=$consulta->fetch();
 
