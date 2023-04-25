@@ -4,8 +4,10 @@
   include("../logica/verificar_quimio.php");
   include("../logica/verificar_radio.php");
 
-  
+$tipo_user =  $_SESSION['tipo'];
+if($tipo_user == 4){
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -122,10 +124,13 @@
   </footer>
   
   <?php
-  
-    $_SESSION['tratamiento']=4;
+    $_SESSION['tratamiento']=2;
     include("../logica/turnos.php"); 
     unset($_SESSION['tratamiento']);
+  } else{
+    header("Location: ../index.php?msg=1");
+    exit();
+  }
   
   ?>
 

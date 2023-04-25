@@ -149,8 +149,11 @@ if($tipo_user == 4){
 </footer>
 
 </html>
+
 <?php 
 } else{
   header("Location: ../index.php?msg=1");
   exit();
 }
+
+?>
