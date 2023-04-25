@@ -188,7 +188,8 @@ input:hover{
     }
 
     .btn{
-        margin-top: 1rem; 
+        margin-top: 3rem; 
+        margin-bottom: 3rem;
      }
 
      .inputs-container{
@@ -204,11 +205,12 @@ input:hover{
 
     .btn{
         margin-top: 1rem; 
+        margin-bottom: 1rem;
      }
 
      .inputs-container{
-        margin-top:  1rem;
-        margin-bottom: 1rem;
+        margin-top:  1.5rem;
+        margin-bottom: 1.5rem;
     }
 }
 

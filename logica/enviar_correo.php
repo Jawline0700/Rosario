@@ -69,7 +69,7 @@ if($retorno->rowCount() == 0){
                          para que sea retirado de manera presencial.';
     
         $mail->send();
-       header("Location: ../html/solicitud.php?msg= Su Solicitud se envio con éxito.");
+       header("Location: ../html/solicitud.php?msg=Exito");
     } catch (Exception $e) {
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }
@@ -78,12 +78,12 @@ if($retorno->rowCount() == 0){
 }
 
 else{
-    header("Location: ../html/solicitud.php?msg= Usted ya solicito su Expediente Médico");
+    header("Location: ../html/solicitud.php?msg=Error");
 }
    
     }
     else{
-      header("Location: ../html/solicitud.php?msg= Ingrese un Correo Valido");
+      header("Location: ../html/solicitud.php?msg=Vacios");
     }
 
 

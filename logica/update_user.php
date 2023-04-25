@@ -28,11 +28,11 @@ if(!empty($_POST)){
         $sentencia2 = "UPDATE usuario set Nombre=:nombre,Cedula=:cedula,Telefono=:telefono,Email=:correo,Tipo_Usuario=:tipo WHERE ID_Usuario =:id_usuario";
         $accion2 = $conexion->prepare($sentencia2);
         $accion2->execute($info);
-        header("Location: ../html/gestion_usuario.php?msg1=Usuario Editado con Exito.");
+        header("Location: ../html/gestion_usuario.php?msg=Exito");
      }
     }
 else{
-    header("Location: ../html/gestion_usuario.php?msg1=Datos Invalidos");
+    header("Location: ../html/gestion_usuario.php?msg=Invalidos");
 }
 
 }

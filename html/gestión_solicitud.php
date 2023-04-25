@@ -22,8 +22,8 @@ include "../conexion/conexion.php"?>
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -59,9 +59,26 @@ include "../conexion/conexion.php"?>
         <div class="row tbl-fixed">
             <h2 class="subtitulo">Gestión de Solicitudes</h2>
         <div class="centrear">  
-        <?php if(isset($_GET['msg1'])){?>
-        <?php echo $_GET['msg1'];?>
-        <?php } ?>
+        <?php if(isset($_GET['msg'])){?>
+            <?php $valor = $_GET['msg'];
+                  if($valor == "Exito" ){ 
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Solicitud Aprobada con exito",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Eliminar"){
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Solicitud Rechazada con exito",
+                      })
+                          </script>';
+                    }?>
+
+            <?php } ?>
             <div class="buscar-info-container">
 
                 <div class="contenido">
@@ -119,7 +136,7 @@ include "../conexion/conexion.php"?>
                     if($consulta->rowCount()>0){
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
-                    <td data-titulo="ID_Solicitud" class="col"> <?php echo $fila['ID_Solicitud'] ?></td>
+                    <td data-titulo="ID" class="col"> <?php echo $fila['ID_Solicitud'] ?></td>
                     <td data-titulo="Nombre" class="col"><?php echo $fila['Nombre']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $fila['Cedula']?></td>
                     <td data-titulo="Email" class="col"><?php echo $fila['Email']?></td>

@@ -22,8 +22,8 @@ include "../conexion/conexion.php";
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -60,12 +60,57 @@ include "../conexion/conexion.php";
             <h2 class="subtitulo">Gestión de Usuarios</h2>
         <div class="centrear">  
             <div class="buscar-info-container">
-                <?php if(isset($_GET['msg1'])){?>
-                <?php echo $_GET['msg1'];?>
-                <?php } ?> 
-                <?php if(isset($_GET['msg2'])){?>
-                    <?php echo $_GET['msg2'];?>
-                    <?php } ?>
+            <?php if(isset($_GET['msg'])){?>
+            <?php $valor = $_GET['msg'];
+                  if($valor == "Exito" ){ 
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Usuario Editado con exito",
+                      })
+                          </script>';
+                    } else if($valor == "Vacios"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "warning",
+                        title: "Campos Vacios",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Invalidos"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "error",
+                        title: "Campos Invalidos",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Eliminar"){
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Usuario Eliminado con Exito",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Exito2"){
+                        echo '<script type="text/JavaScript">
+                        Swal.fire({
+                            icon: "success",
+                            title: "Usuario Creado con exito",
+                          })
+                              </script>';
+                    }
+                    else if($valor == "Error2"){
+                        echo '<script type="text/JavaScript">
+                        Swal.fire({
+                            icon: "error",
+                            title: "Cedula o Correo ya registrado",
+                          })
+                              </script>';
+                    }
+                    ?>
+            <?php } ?>
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Usuario</button>
                 </div>

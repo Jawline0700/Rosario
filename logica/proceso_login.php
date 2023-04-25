@@ -24,7 +24,7 @@ if(isset($_POST['cedula-inicio']) && isset($_POST['password'])){
   }
 
 else{
-    header("Location: ../index.php?msg=Cédula o Contraseña incorrectos, intentelo nuevamente");
+    header("Location: ../index.php?msg=1");
     exit();
 }
 

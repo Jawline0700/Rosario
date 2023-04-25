@@ -50,7 +50,7 @@ if(!empty($_POST)){
         $mail->Body    = 'Su Solicitud de Expediente Médico fue aprobada comuniquese lo mas pronto posible al Insituto Oncologico Nacional.';
     
         $mail->send();
-        header("Location: ../html/gestión_solicitud.php?msg1=La Solicitud ha sido aprobada.");
+        header("Location: ../html/gestión_solicitud.php?msg=Exito");
     } catch (Exception $e) {
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }

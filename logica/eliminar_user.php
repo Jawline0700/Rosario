@@ -8,7 +8,7 @@ if(!empty($_POST)){
  $sql = "UPDATE usuario set Estado=:estado WHERE ID_Usuario=:id_user";
  $stmt = $conexion->prepare($sql);
  if($stmt->execute($data)){ 
-    header("Location: ../html/gestion_usuario.php?msg1=Usuario desactivado con Exito.");
+    header("Location: ../html/gestion_usuario.php?msg=Eliminar");
  }
 
 }

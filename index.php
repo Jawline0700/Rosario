@@ -11,6 +11,7 @@ include "conexion/conexion.php";
     <link rel="icon" type="image/png" href="img/iconos/ION.png">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/estilo_login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Inicio de Sesión</title>
 </head>
 <body>
@@ -42,7 +43,18 @@ include "conexion/conexion.php";
             <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2" name="password">
             <br>
             <?php if(isset($_GET['msg'])){?>
-            <?php echo $_GET['msg'];?>
+            <?php $valor = $_GET['msg'];
+                  if($valor == "1"){ 
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "error",
+                        title: "Datos Erróneos",
+                      })
+                          </script>';
+
+                  }
+            
+               ?>
             <?php } ?>
             <button type="submit" class="btn" value="Iniciar Sesión">Iniciar Sesión</button>
             <button type="reset" class="btn btn-cancelar">Cancelar</button>

@@ -13,6 +13,7 @@ include "../conexion/conexion.php";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/82edd683c2.js" crossorigin="anonymous"></script>
     <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="../img/iconos/ION.png">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -33,8 +34,8 @@ include "../conexion/conexion.php";
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -71,22 +72,56 @@ include "../conexion/conexion.php";
             <h2 class="subtitulo">Gestión de Citas</h2>
         <div class="centrear">  
             <div class="buscar-info-container">
-            <?php if(isset($_GET['msg2'])){?>
-                    <?php echo $_GET['msg2'];?>
-                    <?php } ?>
+            <?php if(isset($_GET['msg'])){?>
+            <?php $valor = $_GET['msg'];
+                  if($valor == "Exito" ){ 
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Cita Editada con exito",
+                      })
+                          </script>';
+                    } else if($valor == "Vacios"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "warning",
+                        title: "Campos Vacios",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Invalidos"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "error",
+                        title: "Campos Invalidos",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Eliminar"){
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Cita Eliminada con Exito",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Exito2"){
+                        echo '<script type="text/JavaScript">
+                        Swal.fire({
+                            icon: "success",
+                            title: "Cita Creada con exito",
+                          })
+                              </script>';
+                    }
+                    ?>
+            <?php } ?>
                    
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Cita</button>
-                    <?php if(isset($_GET['msg1'])){?>
-                    <?php echo $_GET['msg1'];?>
-                    <?php } ?>
                 </div>
 
                 <div class="contenido">
                     <button type="button" class="btn btn-buscar" data-bs-toggle="modal" data-bs-target="#myModal2">Crear Cita</button>
-                    <?php if(isset($_GET['msg'])){?>
-                    <?php echo $_GET['msg'];?>
-                    <?php } ?>
                 </div>
                 
                      <div class="modal" id="myModal">

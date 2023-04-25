@@ -24,8 +24,8 @@
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -38,7 +38,7 @@
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
           <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestión_solicitud.php" >Gestión Usuario</a></li>
+          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
@@ -130,7 +130,7 @@
                      </td>
                 </tr>
                 <?php }} else { ?>
-                <td data-titulo="NoHay" class="col" colspan=6>No hay citas aún...</td> 
+                <td  class="col" colspan=6>No hay citas aún...</td> 
                 <?php } ?>
             </tbody>
         </table>

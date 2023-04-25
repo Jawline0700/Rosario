@@ -63,9 +63,33 @@ include("../logica/proceso_idpatient.php");
                     <input type="hidden" name="ID-Paciente" value= <?php echo $ID_Paciente = $datoid->ID_Paciente; ?>>
                     <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name= "cedula">
                 </div>
-                  <?php if(isset($_GET['msg'])){?>
-                  <?php echo $_GET['msg'];?>
-                  <?php } ?>
+                <?php if(isset($_GET['msg'])){?>
+            <?php $valor = $_GET['msg'];
+                  if($valor == "Exito" ){ 
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Su Solicitud sera procesada",
+                      })
+                          </script>';
+                    } else if($valor == "Vacios"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "warning",
+                        title: "Campos Vacios",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Error"){
+                        echo '<script type="text/JavaScript">
+                        Swal.fire({
+                            icon: "error",
+                            title: "Su solicitud no pudo ser procesada",
+                          })
+                              </script>';
+                    }
+                    ?>
+            <?php } ?>
                 <div class="centrear">
                     <input type="submit" class="btn-soli" value="Solicitar" >
                     <button class="btn-soli btn-cancelar">Cancelar</button>

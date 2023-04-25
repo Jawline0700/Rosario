@@ -28,16 +28,16 @@ if(!empty($_POST)){
     
    
 
-    header("Location: ../html/control_citas.php?msg=Cita creada con exito.");
+    header("Location: ../html/control_citas.php?msg=Exito2");
  }
  else {
-    header("Location: ../html/control_citas.php?msg= Cédula Invalida.");
+    header("Location: ../html/control_citas.php?msg=Invalidos");
  }
 
 
 }
 else{
- header("Location: ../html/control_citas.php?msg= Llene los campos.");
+ header("Location: ../html/control_citas.php?msg=Vacios");
 }
 
 

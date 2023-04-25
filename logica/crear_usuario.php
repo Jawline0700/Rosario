@@ -81,7 +81,7 @@ if(!empty($_POST)){
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }
 
-    header("Location: ../html/gestion_usuario.php?msg2= Medico Ingresado con Exito");
+    header("Location: ../html/gestion_usuario.php?msg=Exito2");
 
         }
         else if($user_tipo == 2){
@@ -137,7 +137,7 @@ if(!empty($_POST)){
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }
     
-    header("Location: ../html/gestion_usuario.php?msg2= Enfermer@ Ingresado con Exito");
+    header("Location: ../html/gestion_usuario.php?msg=Exito2");
 
         }
         else if($user_tipo == 3){
@@ -192,7 +192,7 @@ if(!empty($_POST)){
             }
 
 
-            header("Location: ../html/gestion_usuario.php?msg2= Administrador Ingresado con Exito");
+            header("Location: ../html/gestion_usuario.php?msg=Exito2");
 
 
 
@@ -250,12 +250,12 @@ if(!empty($_POST)){
                 echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
             }
 
-            header("Location: ../html/gestion_usuario.php?msg2= Paciente Ingresado con Exito");
+            header("Location: ../html/gestion_usuario.php?msg=Exito2");
         }
 
     }
     else{
-        header("Location: ../html/gestion_usuario.php?msg2=Correo o Cedula ya registrados");
+        header("Location: ../html/gestion_usuario.php?msg=Error2");
     }
 }
 

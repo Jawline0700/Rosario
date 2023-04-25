@@ -47,7 +47,7 @@ if(!empty($_POST)){
         $mail->Body    = 'Su Solicitud de Expediente Médico fue rechazada comuniquese lo mas pronto posible al Insituto Oncologico Nacional.';
     
        $mail->send();
-       header("Location: ../html/gestión_solicitud.php?msg1=La Solicitud ha sido rechazada.");
+       header("Location: ../html/gestión_solicitud.php?msg=Eliminar");
     } catch (Exception $e) {
         echo "No se pudo enviar el correo: {$mail->ErrorInfo}";
     }

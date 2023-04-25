@@ -16,11 +16,11 @@ $sql = "UPDATE cita set Fecha=:Fecha,ID_Medico=:ID_Medico,ID_Tipo_Tratamiento=:I
 
 $stmt = $conexion->prepare($sql);
 if($stmt->execute($data)){
-    header("Location: ../html/control_citas.php?msg2=Cita editada con exito.");
+    header("Location: ../html/control_citas.php?msg=Exito");
 }
 }else{
 
-    header("Location: ../html/control_citas.php?msg2=No deje Campos Vacios");
+    header("Location: ../html/control_citas.php?msg=Vacios");
 
 }
 

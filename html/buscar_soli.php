@@ -32,8 +32,8 @@ if(!empty($_POST)){
 </head>
 <body>
     <header class="site-header contenedor">
-        <a href="pagina_inicio.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
-        <a href="pagina_inicio.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoGob.png" alt="Logo Gobierno"></a>
+        <a href="pagina_inicio2.php"><img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px"></a>
     </header>
     <div class="container__menu">
       <div class="menu">
@@ -69,9 +69,26 @@ if(!empty($_POST)){
         <div class="row tbl-fixed">
             <h2 class="subtitulo">Gestión de Solicitudes</h2>
         <div class="centrear">  
-        <?php if(isset($_GET['msg1'])){?>
-        <?php echo $_GET['msg1'];?>
-        <?php } ?>
+        <?php if(isset($_GET['msg'])){?>
+            <?php $valor = $_GET['msg'];
+                  if($valor == "Exito" ){ 
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Solicitud Aprobada con exito",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Eliminar"){
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Solicitud Rechazada con exito",
+                      })
+                          </script>';
+                    }?>
+
+            <?php } ?>
             <div class="buscar-info-container">
 
                 <div class="contenido">
@@ -232,11 +249,11 @@ if(!empty($_POST)){
 <?php 
   }
   else{
-    header("Location: ../html/gestión_solicitud.php?msg1= Cédula Invalida.");
+    header("Location: ../html/gestión_solicitud.php?msg=Invalidos");
   }
 }
 else{
-    header("Location: ../html/gestión_solicitud.php?msg1= No deje campos en blanco.");
+    header("Location: ../html/gestión_solicitud.php?msg=Vacios");
 }
 
 ?>
