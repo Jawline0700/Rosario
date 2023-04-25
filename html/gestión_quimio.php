@@ -91,7 +91,7 @@
                                                 RIGHT JOIN cola co ON ci.ID_Paciente=co.ID_Paciente
                                                 INNER JOIN paciente p ON ci.ID_Paciente=p.ID_Paciente
                                                 INNER JOIN usuario u ON p.ID_User=u.ID_Usuario
-                                                WHERE ci.ID_Tipo_Tratamiento = 4 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
+                                                WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
                 $sentencia->execute();
                 $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 if(count($registro) > 0){

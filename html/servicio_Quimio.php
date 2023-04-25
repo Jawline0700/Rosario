@@ -1,8 +1,10 @@
 <?php 
-
   include("../logica/verificar_sesion.php");
   include("../conexion/conexion.php");
+  include("../logica/verificar_quimio.php");
+  include("../logica/verificar_radio.php");
 
+  
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -45,8 +47,12 @@
           <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
           <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/servicio_Radio.php" >Radioterapia </a></li>
-                  <li><a href="servicio_Quimio.php" >Quimioterapia</a></li>
+              <li><?php if($consultar->rowCount()>0){?>
+                    <a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                    <?php } ?>
+                  <li><?php if($consulta->rowCount()>0){?>
+                    <a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                    <?php }?>
               </ul>
           </li>
           <li >
@@ -80,7 +86,7 @@
         <div class="card mb-3 " style="max-width: 12000px;">
           <div class="row g-0">
             <div class="col-md-4">
-             <a href="../html/servicio_Quimio.html"><img src="../img/Quimioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a> 
+             <a href="../html/servicios.php"><img src="../img/Quimioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a> 
             </div>
             <div class="col-md-8">
               <div class="card-body">

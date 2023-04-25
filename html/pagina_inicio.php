@@ -1,8 +1,11 @@
 <?php
 include "../logica/verificar_sesion.php";
+include("../logica/verificar_quimio.php");
+include("../logica/verificar_radio.php");
+$tipo_user =  $_SESSION['tipo'];
+if($tipo_user == 4){
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,8 +42,12 @@ include "../logica/verificar_sesion.php";
           <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
           <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/servicio_Radio.php" >Radioterapia </a></li>
-                  <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                  <li><?php if($consultar->rowCount()>0){?>
+                    <a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                    <?php } ?>
+                  <li><?php if($consulta->rowCount()>0){?>
+                    <a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                    <?php }?>
               </ul>
           </li>
           <li >
@@ -142,3 +149,8 @@ include "../logica/verificar_sesion.php";
 </footer>
 
 </html>
+<?php 
+} else{
+  header("Location: ../index.php?msg=1");
+  exit();
+}

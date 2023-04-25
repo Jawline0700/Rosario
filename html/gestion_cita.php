@@ -2,6 +2,8 @@
 <?php 
 include "../logica/verificar_sesion.php";
 include("../logica/proceso_idpatient.php");
+include("../logica/verificar_quimio.php");
+include("../logica/verificar_radio.php");
 
 ?>
 <!DOCTYPE html>
@@ -42,8 +44,12 @@ include("../logica/proceso_idpatient.php");
           <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
           <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/servicio_Radio.php" >Radioterapia </a></li>
-                  <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                 <li><?php if($consultar->rowCount()>0){?>
+                    <a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                    <?php } ?>
+                  <li><?php if($consulta->rowCount()>0){?>
+                    <a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                    <?php }?>
               </ul>
           </li>
           <li >

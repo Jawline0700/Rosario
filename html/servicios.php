@@ -1,5 +1,7 @@
 <?php 
 include "../logica/verificar_sesion.php";
+include("../logica/verificar_quimio.php");
+include("../logica/verificar_radio.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -39,8 +41,12 @@ include "../logica/verificar_sesion.php";
           <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
           <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="servicio_Radio.php" >Radioterapia </a></li>
-                  <li><a href="servicio_Quimio.php" >Quimioterapia</a></li>
+              <li><?php if($consultar->rowCount()>0){?>
+                    <a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                    <?php } ?>
+                  <li><?php if($consulta->rowCount()>0){?>
+                    <a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                    <?php }?>
               </ul>
           </li>
           <li >
@@ -59,7 +65,11 @@ include "../logica/verificar_sesion.php";
     <div class="card mb-3 " style="max-width: 12000px;">
         <div class="row g-0">
           <div class="col-md-4">
+            <?php if($consulta->rowCount()>0){?>
            <a href="../html/servicio_Quimio.php"><img src="../img/Quimioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a> 
+           <?php }else{ ?>
+            <img src="../img/Quimioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a> 
+            <?php } ?>
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -77,7 +87,11 @@ include "../logica/verificar_sesion.php";
     <div class="card mb-3 " style="max-width: 12000px;">
         <div class="row g-0">
           <div class="col-md-4">
-           <a href="../html/servicio_Radio.php"><img src="../img/Radioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a> 
+            <?php if($consultar->rowCount()>0){ ?>
+           <a href="../html/servicio_Radio.php"><img src="../img/Radioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a>
+           <?php }else{ ?> 
+            <img src="../img/Radioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Solicitud"></a>
+            <?php }?>
           </div>
           <div class="col-md-8">
             <div class="card-body">

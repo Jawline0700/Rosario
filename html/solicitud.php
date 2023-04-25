@@ -1,6 +1,8 @@
 <?php 
 include "../logica/verificar_sesion.php";
 include("../logica/proceso_idpatient.php");
+include("../logica/verificar_quimio.php");
+include("../logica/verificar_radio.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,6 +17,7 @@ include("../logica/proceso_idpatient.php");
     <link rel="icon" type="image/png" href="../img/iconos/ION.png">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
 </head>
@@ -36,8 +39,12 @@ include("../logica/proceso_idpatient.php");
           <li ><a href="../html/solicitud.php" >Solicitud Expediente</a></li>
           <li ><a href="../html/servicios.php" >Servicios</a>
               <ul>
-                  <li><a href="../html/servicio_Radio.php" >Radioterapia </a></li>
-                  <li><a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+              <li><?php if($consultar->rowCount()>0){?>
+                    <a href="../html/servicio_Radio.php" >Radioterapia </a></li>
+                    <?php } ?>
+                  <li><?php if($consulta->rowCount()>0){?>
+                    <a href="../html/servicio_Quimio.php" >Quimioterapia</a></li>
+                    <?php }?>
               </ul>
           </li>
           <li >

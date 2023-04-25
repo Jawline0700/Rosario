@@ -23,7 +23,7 @@ if(!empty($_POST)){
         $sql = "UPDATE usuario set Nombre =:nombre,Cedula=:cedula,Telefono=:telefono,Email=:correo WHERE ID_Usuario =:id_usuario"; 
         $stmt = $conexion->prepare($sql);
         $stmt->execute($info2);
-        header("Location: ../html/gestion_usuario.php?msg1=Usuario Editado con Exito.");
+        header("Location: ../html/gestion_usuario.php?msg=Exito.");
      }else{
         $sentencia2 = "UPDATE usuario set Nombre=:nombre,Cedula=:cedula,Telefono=:telefono,Email=:correo,Tipo_Usuario=:tipo WHERE ID_Usuario =:id_usuario";
         $accion2 = $conexion->prepare($sentencia2);
