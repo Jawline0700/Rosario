@@ -1,6 +1,10 @@
 <?php  
 include "../logica/verificar_sesion.php";
-include "../conexion/conexion.php"?>
+include "../conexion/conexion.php";
+$tipo_user = $_SESSION['tipo'];
+
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,10 +38,19 @@ include "../conexion/conexion.php"?>
         </label>
     <nav>
       <ul>
+
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
+          <li><?php if($tipo_user == 1 || $tipo_user == 2){?>
+            <a href="../html/control_citas.php" >Gestión Citas</a>
+            <?php } ?>
+        </li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+          <li >
+           <?php if($tipo_user == 3){?>
+            <a href="../html/gestion_usuario.php" >Gestión Usuario</a>
+            <?php } ?>
+           
+        </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
@@ -144,12 +157,16 @@ include "../conexion/conexion.php"?>
                     <td data-titulo="Estado" class="col"><?php echo $fila['Estado']?></td>
                   
                     <td> 
+                        <?php if($tipo_user == 3){ ?>
                         <div class="contenido">
                             <button type="button" onClick="pasarid()" class="btn btn-editar"data-bs-toggle="modal" data-bs-target="#myModal3">Aprobar</button>
                         </div>
                         <div class="contenido">
                             <button type="button" onClick="pasaridsoli()" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4">Rechazar</button>
                         </div>
+                        <?php }else{?>
+                            Sin Acciones..
+                         <?php }?>
                      </td>
                 </tr>
                 <?php } 

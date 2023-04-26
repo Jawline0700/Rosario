@@ -9,6 +9,7 @@ function llenardatos(){
         var telefono =  e.target.parentElement.parentElement.parentElement.children[3].textContent;
         var email =  e.target.parentElement.parentElement.parentElement.children[4].textContent;
         var user = e.target.parentElement.parentElement.parentElement.children[5].textContent;
+       
         document.getElementsByName("id-usuario")[0].value = id;
         document.getElementsByName("nombre-user")[0].value = nombre;
         document.getElementsByName("correo-user")[0].value = email;

@@ -6,6 +6,8 @@ if(!empty($_POST)){
     $cedula = $_POST['cedula-search'];
     $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
     $registrar = $campos->fetch(PDO::FETCH_OBJ);
+    $tipo_user = $_SESSION['tipo'];
+
     if($campos->rowCount()> 0){
 
  ?>
@@ -44,9 +46,15 @@ if(!empty($_POST)){
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
+          <li >
+          <?php if($tipo_user == 1 || $tipo_user == 2){?>
+            <a href="../html/control_citas.php" >Gestión Citas</a></li>
+            <?php } ?>
+        </li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+          <li ><?php if($tipo_user == 3) {?>
+            <a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+            <?php } ?>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php">Gestión Radioterapia </a></li>

@@ -1,4 +1,6 @@
-<?php include "../logica/verificar_sesion.php";  ?>
+<?php include "../logica/verificar_sesion.php";
+
+$tipo_user = $_SESSION['tipo'];  ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,9 +33,14 @@
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
+          <li ><?php if($tipo_user == 1 || $tipo_user == 2){?>
+            <a href="../html/control_citas.php" >Gestión Citas</a></li>
+            <?php } ?></li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+          <li ><?php if($tipo_user == 3){?>
+            <a href="../html/gestion_usuario.php" >Gestión Usuario</a>
+            <?php }?>
+          </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
@@ -59,7 +66,7 @@
 <div class="card mb-3 " style="max-width: 12000px;">
     <div class="row g-0">
       <div class="col-md-4">
-       <a href="../html/servicio_Quimio.html"><img src="../img/Gestión Quimioterapia..png" class="img-fluid rounded-start" alt="Anuncio-Quimioterapia"></a> 
+       <a href="../html/gestion_quimio.php"><img src="../img/Gestión Quimioterapia..png" class="img-fluid rounded-start" alt="Anuncio-Quimioterapia"></a> 
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -82,7 +89,7 @@
 <div class="card mb-3 " style="max-width: 12000px;">
     <div class="row g-0">
       <div class="col-md-4">
-       <a href="../html/servicio_Quimio.html"><img src="../img/Gestión Radioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Quimioterapia"></a> 
+       <a href="../html/gestion_radio.php"><img src="../img/Gestión Radioterapia.png" class="img-fluid rounded-start" alt="Anuncio-Quimioterapia"></a> 
       </div>
       <div class="col-md-8">
         <div class="card-body">

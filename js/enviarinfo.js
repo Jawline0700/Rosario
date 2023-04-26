@@ -9,6 +9,7 @@ tabla.addEventListener('click',(e)=>{
     var cedula = e.target.parentElement.parentElement.parentElement.children[1].textContent;
     document.getElementsByName("cedula-editar")[0].value = cedula;
     document.getElementsByName("id-cita")[0].value = id;
+    varible = "<?php echo $_SESSION['tipo']?>";
 })
 
 

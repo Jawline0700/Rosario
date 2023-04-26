@@ -1,4 +1,10 @@
-<?php  include "../logica/verificar_sesion.php"; ?>
+<?php  include "../logica/verificar_sesion.php";
+
+$tipo_user = $_SESSION['tipo'];
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -32,24 +38,29 @@
         </label>
     <nav>
       <ul>
-          <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
-          <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+      <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
+          <li > <?php if($tipo_user == 1 || $tipo_user == 2){?>
+            <a href="../html/control_citas.php" >Gestión Citas</a></li>
+            <?php } ?>
+          <li >
+            <a href="../html/gestión_solicitud.php" >Gestión Expediente</a> 
+          <li ><?php if($tipo_user == 3){?>
+            <a href="../html/gestion_usuario.php" >Gestión Usuario</a>
+            <?php }?></li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
                   <li><a href="../html/gestión_quimio.php" > Gestión Quimioterapia</a></li>
               </ul>
+
           </li>
-          
           <li >
           <?php if(!isset($_SESSION['sw'])){?>
                 <a href="../index.php" >Cerrar Sesión</a>
            <?php }else{?>
             <a href="../logica/cerrar_sesion.php" >Cerrar Sesión</a>
         <?php } ?>
-          </li>   
+          </li>     
       </ul>
   </nav>
 </div>     
@@ -74,7 +85,7 @@
               <a href="../html/gestión_solicitud.html"><img src="../img/Gestión- Expediente.png" class="d-block w-100" alt="..."></a>
             </div>
             <div class="carousel-item">
-              <a href="#"><img src="../img/Gestión Quimioterapia..png" class="d-block w-100" alt="..."></a>
+              <a href="../logica/servicios2.php"><img src="../img/Gestión Quimioterapia..png" class="d-block w-100" alt="..."></a>
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -94,7 +105,7 @@
       <H1 class="card-title letras">Instituto Oncológico Nacional</H1>
       <H1><p class="card-text letras">Nuestro Lema: "Por Un Servicio Más Humano"</p></H1>
   <H1>
-    <a href="#" type="button"  class="btn btn-secondary boton-color letras">Servicios</a>
+    <a href="../html/servicios2.php" type="button"  class="btn btn-secondary boton-color letras">Servicios</a>
   <H1>
     </div>
     </div>          
@@ -102,14 +113,14 @@
       <br>
       <div class="card-group cartas">
         <div class="card">
-          <a href="https://www.ion.gob.pa/plataforma-para-entrega-de-medicamentos/"><img src="../img/Carrusel/imagen-carrusel3.jpg" class="card-img-top" alt="..."></a>
+          <img src="../img/Carrusel/imagen-carrusel3.jpg" class="card-img-top" alt="..."></a>
           <div class="card-body">
             <h5 class="card-title texto">Nuestra Visión:</h5>
             <p class="card-text texto">Ser líderes en la atención, investigación, prevención y rehabilitacíon del paciente con cáncer en Panamá..</p>
           </div>
         </div>
         <div class="card">
-          <a href="https://www.ion.gob.pa/horario-oncobus/"><img src="../img/hospital.jpeg" class="card-img-top" alt="..." style="height: 130%; width: 120%;"></a>
+          <img src="../img/hospital.jpeg" class="card-img-top" alt="..." style="height: 130%; width: 120%;"></a>
           <div class="card-body">
             <br>
             <br>
@@ -119,7 +130,7 @@
           </div>
         </div>
         <div class="card">
-          <a href="https://www.ion.gob.pa/dia-mundial-de-la-salud/"><img src="../img/Carrusel/valores.jpg" class="card-img-top" alt="..." style="height:125%; width: 100%;"></a>
+         <img src="../img/Carrusel/valores.jpg" class="card-img-top" alt="..." style="height:125%; width: 100%;"></a>
           <div class="card-body">
             <br>
             <br>

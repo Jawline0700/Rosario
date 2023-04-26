@@ -2,6 +2,8 @@
 
     include("../logica/verificar_sesion.php");
     include("../conexion/conexion.php");
+    $tipo_user = $_SESSION['tipo'];
+
 
 ?>
 <!DOCTYPE html>
@@ -36,9 +38,14 @@
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
+          <li ><?php if($tipo_user == 1 || $tipo_user == 2){?>
+            <a href="../html/control_citas.php" >Gestión Citas</a></li>
+            <?php } ?></li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+          <li ><?php if($tipo_user == 3){?>
+            <a href="../html/gestion_usuario.php" >Gestión Usuario</a>
+            <?php } ?>
+        </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
@@ -125,9 +132,13 @@
                 <td data-titulo="Estado" class="col"><?php echo $estadoCita; ?></td>
                 <td data-titulo="Turno" class="col"><?php echo $reg['Orden'] ?></td>
                 <td> 
+                    <?php if($tipo_user == 2){ ?>
                     <div class="contenido">
                         <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Modificar</button>
                     </div>
+                    <?php }else{?>
+                        Sin Acciones...
+                  <?php  } ?>
                 </td>
                 </tr>
                 <?php }} else { ?>

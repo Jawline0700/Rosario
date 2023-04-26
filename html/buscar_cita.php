@@ -4,6 +4,8 @@ include "../conexion/conexion.php";
 
 if(!empty($_POST)){
 $cedula = $_POST['cedula'];
+$tipo_user = $_SESSION['tipo'];
+
 $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
 $registrar = $campos->fetch(PDO::FETCH_OBJ);
 if($campos->rowCount()> 0){
@@ -55,9 +57,14 @@ if($campos->rowCount()> 0){
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><a href="../html/control_citas.php" >Gestión Citas</a></li>
+          <li ><?php if($tipo_user == 1 || $tipo_user == 2){?>
+            <a href="../html/control_citas.php" >Gestión Citas</a></li>
+            <?php } ?></li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
+          <li ><?php if($tipo_user == 3){ ?>
+               <a href="../html/gestion_usuario.php" >Gestión Usuario</a> 
+               <?php } ?>
+        </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php" > Gestión Radioterapia </a></li>
@@ -127,10 +134,11 @@ if($campos->rowCount()> 0){
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Cita</button>
                 </div>
-
+              <?php if($tipo_user == 1 ) { ?>
                 <div class="contenido">
                     <button type="button" class="btn btn-buscar" data-bs-toggle="modal" data-bs-target="#myModal2">Crear Cita</button>
                 </div>
+                <?php } ?>
                 
                      <div class="modal" id="myModal">
                         <div class="modal-dialog">
@@ -250,12 +258,16 @@ if($campos->rowCount()> 0){
                     <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
                     <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
+                        <?php if($tipo_user == 1){?>
                         <div class="contenido">
                             <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
                         </div>
                         <div class="contenido">
                             <button type="button"  onclick="pasardatos()" class="btn btn-eliminar" data-bs-toggle="modal" data-bs-target="#myModal4">Eliminar</button>
                         </div>
+                        <?php }else{?>
+                            Sin acciones...
+                        <?php }?>
                      </td>
                 </tr>
                 <?php } }else{ ?>
