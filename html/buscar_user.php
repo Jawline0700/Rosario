@@ -1,10 +1,11 @@
-<?php include "../logica/verificar_sesion.php";
+<?php 
+include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
 
 
 if(!empty($_POST)){
     $cedula = $_POST['cedula-search'];
-    $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+    $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Estado = 1");
     $registrar = $campos->fetch(PDO::FETCH_OBJ);
     $tipo_user = $_SESSION['tipo'];
 
@@ -440,11 +441,11 @@ if(!empty($_POST)){
 <?php 
   }
   else{
-    header("Location: ../html/gestión_solicitud.php?msg1= Cédula Invalida.");
+    header("Location: ../html/gestion_usuario.php?msg=Invalidos");
   }
 }
 else{
-    header("Location: ../html/gestión_solicitud.php?msg1= No deje campos en blanco.");
+    header("Location: ../html/gestion_usuario.php?msg=Vacios");
 }
 
 ?>

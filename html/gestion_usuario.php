@@ -178,17 +178,17 @@ $tipo_user = $_SESSION['tipo'];
                         <div class="mb-3">
                             <label class="texto">Edad:</label>
                             <br>
-                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad" name="edad-crear">
+                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad" name="edad-crear" min=1 max=120>
                         </div>
                         <div class="mb-3">
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="email-crear">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="email-crear" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Debe contener tres cadenas separadas por un @ y un punto">
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
-                            <input type="text"  placeholder="Digite su Telefono" name="telefono-crear">
+                            <input type="text" placeholder="Digite su Telefono" name="telefono-crear" pattern="[0-8]{8}">
                         </div>
                         <div class="mb-3">
                             <br>
