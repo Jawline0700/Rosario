@@ -77,7 +77,9 @@
                         <br>
                         <input type="text" id="turnoActual" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
                     </div>
-                    
+                    <div class="contenido">
+                    <button type="button" class="btn btn-buscar">Crear Cola</button>
+                </div>
                 </div>
     
         </div>

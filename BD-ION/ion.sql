@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2023 a las 20:58:56
+-- Tiempo de generación: 01-05-2023 a las 03:18:33
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.0.25
 
@@ -51,43 +51,18 @@ CREATE TABLE `cita` (
   `ID_Paciente` int(11) NOT NULL,
   `ID_Medico` int(11) NOT NULL,
   `ID_Tipo_Tratamiento` int(11) NOT NULL,
-  `ID_Estado_Cita` int(11) NOT NULL
+  `ID_Estado_Cita` int(11) NOT NULL,
+  `Orden` int(11) DEFAULT NULL,
+  `ID_Maquina` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `cita`
 --
 
-INSERT INTO `cita` (`ID_Cita`, `Fecha`, `ID_Paciente`, `ID_Medico`, `ID_Tipo_Tratamiento`, `ID_Estado_Cita`) VALUES
-(3, '2023-04-14', 3, 1, 2, 1),
-(4, '2023-04-14', 3, 1, 3, 3),
-(6, '2023-04-19', 3, 1, 1, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cola_quimio`
---
-
-CREATE TABLE `cola_quimio` (
-  `ID_Quimio` int(11) NOT NULL,
-  `ID_Paciente` int(11) NOT NULL,
-  `ID_Enfermera` int(11) NOT NULL,
-  `ID_Maquina_Quimio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cola_radio`
---
-
-CREATE TABLE `cola_radio` (
-  `ID_Cola_Radio` int(11) NOT NULL,
-  `ID_Paciente` int(11) NOT NULL,
-  `ID_Enfermera` int(11) NOT NULL,
-  `ID_Maquina_Cola` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `cita` (`ID_Cita`, `Fecha`, `ID_Paciente`, `ID_Medico`, `ID_Tipo_Tratamiento`, `ID_Estado_Cita`, `Orden`, `ID_Maquina`) VALUES
+(9, '2023-04-25', 4, 1, 1, 2, 0, NULL),
+(10, '2023-04-25', 3, 1, 2, 2, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -106,7 +81,8 @@ CREATE TABLE `enfermera` (
 --
 
 INSERT INTO `enfermera` (`ID_Enfermera`, `ID_Especialidad`, `ID_Usuario`) VALUES
-(1, 9, 5);
+(1, 9, 5),
+(2, 9, 9);
 
 -- --------------------------------------------------------
 
@@ -153,7 +129,8 @@ CREATE TABLE `estado_cita` (
 INSERT INTO `estado_cita` (`ID_Estado`, `Estado`) VALUES
 (1, 'Realizada'),
 (2, 'En Proceso'),
-(3, 'Cancelada');
+(3, 'Pendiente'),
+(4, 'Cancelada');
 
 -- --------------------------------------------------------
 
@@ -178,24 +155,22 @@ INSERT INTO `estado_expediente` (`ID_Estado_Expediente`, `Estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `maquina_quimio`
+-- Estructura de tabla para la tabla `maquina`
 --
 
-CREATE TABLE `maquina_quimio` (
+CREATE TABLE `maquina` (
   `ID_Maquina` int(11) NOT NULL,
+  `Tipo` int(11) NOT NULL,
   `Estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `maquina_radio`
+-- Volcado de datos para la tabla `maquina`
 --
 
-CREATE TABLE `maquina_radio` (
-  `ID_Maquina` int(11) NOT NULL,
-  `Estado` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `maquina` (`ID_Maquina`, `Tipo`, `Estado`) VALUES
+(2, 1, 1),
+(3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -233,7 +208,8 @@ CREATE TABLE `paciente` (
 
 INSERT INTO `paciente` (`ID_Paciente`, `ID_User`) VALUES
 (3, 3),
-(4, 7);
+(4, 7),
+(6, 8);
 
 -- --------------------------------------------------------
 
@@ -311,19 +287,22 @@ CREATE TABLE `usuario` (
   `Email` varchar(30) NOT NULL,
   `Password` varchar(64) DEFAULT NULL,
   `Telefono` varchar(15) NOT NULL,
-  `Tipo_Usuario` int(11) NOT NULL
+  `Tipo_Usuario` int(11) NOT NULL,
+  `Estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`ID_Usuario`, `Nombre`, `Cedula`, `Edad`, `Email`, `Password`, `Telefono`, `Tipo_Usuario`) VALUES
-(3, 'Wencers Castillo', '8-960-165', 22, 'mathewscastillo40@gmail.com', '123456', '63194033', 4),
-(4, 'Madonna', '8-999-999', 63, 'mdna63@gmail.com', '123', '3466', 1),
-(5, 'David Lara', '88888', 23, 'davidlara@gmail.com', '1234', '1245666', 2),
-(6, 'Kim Kardashian', '1999', 42, 'kimkardashian@gmail.com', '6789', '12345678', 3),
-(7, 'Mathews', '11111', 23, 'mathews0712@gmail.com', '12344', '14553', 4);
+INSERT INTO `usuario` (`ID_Usuario`, `Nombre`, `Cedula`, `Edad`, `Email`, `Password`, `Telefono`, `Tipo_Usuario`, `Estado`) VALUES
+(3, 'Wencers Castillo', '8-960-165', 22, 'mathewscastillo40@gmail.com', '123456', '63194033', 4, 1),
+(4, 'Madonna', '8-999-999', 63, 'mdna63@gmail.com', '123', '3466', 1, 1),
+(5, 'David Lara', '88888', 23, 'davidlara@gmail.com', '1234', '1245666', 2, 1),
+(6, 'Kim Kardashian', '1999', 42, 'kimkardashian@gmail.com', '6789', '12345678', 3, 1),
+(7, 'Mathews', '11111', 23, 'mathews0712@gmail.com', '12344', '14553', 4, 0),
+(8, 'John Quijano', '1234', 33, 'wencerscastillo40@gmail.com', '788590', '+50763194032', 4, 1),
+(9, 'Luigi Santana', '4-809-753', 22, 'luis76760@gmail.com', '374793', '+507 6553-1716', 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -344,24 +323,8 @@ ALTER TABLE `cita`
   ADD KEY `FK_Cita_Estado` (`ID_Estado_Cita`),
   ADD KEY `FK_Cita` (`ID_Paciente`),
   ADD KEY `FK_Cita_tratamiento` (`ID_Tipo_Tratamiento`),
-  ADD KEY `FK_Cita_Medico` (`ID_Medico`);
-
---
--- Indices de la tabla `cola_quimio`
---
-ALTER TABLE `cola_quimio`
-  ADD PRIMARY KEY (`ID_Quimio`),
-  ADD KEY `FK_Cola_Quimio` (`ID_Enfermera`),
-  ADD KEY `FK_Maquina_Quimio` (`ID_Maquina_Quimio`),
-  ADD KEY `FK_cola_paciente_Quimio` (`ID_Paciente`);
-
---
--- Indices de la tabla `cola_radio`
---
-ALTER TABLE `cola_radio`
-  ADD PRIMARY KEY (`ID_Cola_Radio`),
-  ADD KEY `FK_Maquina_Radio` (`ID_Maquina_Cola`),
-  ADD KEY `FK_Enferma_Radio` (`ID_Enfermera`);
+  ADD KEY `FK_Cita_Medico` (`ID_Medico`),
+  ADD KEY `ID_Maquina` (`ID_Maquina`);
 
 --
 -- Indices de la tabla `enfermera`
@@ -390,15 +353,9 @@ ALTER TABLE `estado_expediente`
   ADD PRIMARY KEY (`ID_Estado_Expediente`);
 
 --
--- Indices de la tabla `maquina_quimio`
+-- Indices de la tabla `maquina`
 --
-ALTER TABLE `maquina_quimio`
-  ADD PRIMARY KEY (`ID_Maquina`);
-
---
--- Indices de la tabla `maquina_radio`
---
-ALTER TABLE `maquina_radio`
+ALTER TABLE `maquina`
   ADD PRIMARY KEY (`ID_Maquina`);
 
 --
@@ -461,25 +418,13 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `ID_Cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT de la tabla `cola_quimio`
---
-ALTER TABLE `cola_quimio`
-  MODIFY `ID_Quimio` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cola_radio`
---
-ALTER TABLE `cola_radio`
-  MODIFY `ID_Cola_Radio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermera`
 --
 ALTER TABLE `enfermera`
-  MODIFY `ID_Enfermera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_Enfermera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidad`
@@ -491,19 +436,13 @@ ALTER TABLE `especialidad`
 -- AUTO_INCREMENT de la tabla `estado_cita`
 --
 ALTER TABLE `estado_cita`
-  MODIFY `ID_Estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `maquina_quimio`
+-- AUTO_INCREMENT de la tabla `maquina`
 --
-ALTER TABLE `maquina_quimio`
-  MODIFY `ID_Maquina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `maquina_radio`
---
-ALTER TABLE `maquina_radio`
-  MODIFY `ID_Maquina` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `maquina`
+  MODIFY `ID_Maquina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `medico`
@@ -515,7 +454,7 @@ ALTER TABLE `medico`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID_Paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `rol_usuario`
@@ -539,7 +478,7 @@ ALTER TABLE `tipo_tratamiento`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
@@ -558,24 +497,8 @@ ALTER TABLE `cita`
   ADD CONSTRAINT `FK_Cita` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`),
   ADD CONSTRAINT `FK_Cita_Estado` FOREIGN KEY (`ID_Estado_Cita`) REFERENCES `estado_cita` (`ID_Estado`),
   ADD CONSTRAINT `FK_Cita_Medico` FOREIGN KEY (`ID_Medico`) REFERENCES `medico` (`ID_Medico`),
-  ADD CONSTRAINT `FK_Cita_tratamiento` FOREIGN KEY (`ID_Tipo_Tratamiento`) REFERENCES `tipo_tratamiento` (`ID_Tipo_Tratamiento`);
-
---
--- Filtros para la tabla `cola_quimio`
---
-ALTER TABLE `cola_quimio`
-  ADD CONSTRAINT `FK_Cola_Quimio` FOREIGN KEY (`ID_Enfermera`) REFERENCES `enfermera` (`ID_Enfermera`),
-  ADD CONSTRAINT `FK_Cola_Quimio_Paciente` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`),
-  ADD CONSTRAINT `FK_Maquina_Quimio` FOREIGN KEY (`ID_Maquina_Quimio`) REFERENCES `maquina_quimio` (`ID_Maquina`),
-  ADD CONSTRAINT `FK_cola_paciente_Quimio` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`);
-
---
--- Filtros para la tabla `cola_radio`
---
-ALTER TABLE `cola_radio`
-  ADD CONSTRAINT `FK_Cola_Radio_Paciente` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`),
-  ADD CONSTRAINT `FK_Enferma_Radio` FOREIGN KEY (`ID_Enfermera`) REFERENCES `enfermera` (`ID_Enfermera`),
-  ADD CONSTRAINT `FK_Maquina_Radio` FOREIGN KEY (`ID_Maquina_Cola`) REFERENCES `maquina_radio` (`ID_Maquina`);
+  ADD CONSTRAINT `FK_Cita_tratamiento` FOREIGN KEY (`ID_Tipo_Tratamiento`) REFERENCES `tipo_tratamiento` (`ID_Tipo_Tratamiento`),
+  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`ID_Maquina`) REFERENCES `maquina` (`ID_Maquina`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `enfermera`
