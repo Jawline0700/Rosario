@@ -188,7 +188,7 @@ $tipo_user = $_SESSION['tipo'];
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
-                            <input type="text" placeholder="Digite su Telefono" name="telefono-crear" pattern="[0-8]{8}">
+                            <input type="text" class="icono-telefono" placeholder="Digite su Télefono" name="telefono-crear" pattern="[0-8]{8}"  onkeypress="return isNumberKey(event)"  title="Ingrese un número de 8 Digitos">
                         </div>
                         <div class="mb-3">
                             <br>
@@ -307,11 +307,11 @@ $tipo_user = $_SESSION['tipo'];
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Debe contener tres cadenas separadas por un @ y un punto">
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
-                            <input type="text"  placeholder="Digite su Telefono" name="telefono-user">
+                            <input type="text" class="icono-telefono" placeholder="Digite su Telefono" name="telefono-user" pattern="[0-8]{8}"  onkeypress="return isNumberKey(event)"  title="Ingrese un número de 8 Digitos">
                         </div>
 
                         <div class="mb-3">
@@ -387,6 +387,13 @@ $tipo_user = $_SESSION['tipo'];
     <script src="../js/infouser.js"></script>
 
     <script>
+
+                    function isNumberKey(evt) {
+                    var charCode = (evt.which) ? evt.which : evt.keyCode
+                    if (charCode > 31 && (charCode < 48 || charCode > 57))
+                        return false;
+                    return true;
+                    }
                         $("#estado-crear").change(function(){
                              console.log($("#estado-crear").val());
                             if($("#estado-crear").val() == 4 || $("#estado-crear").val() == 3 ){

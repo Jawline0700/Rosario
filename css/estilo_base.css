@@ -604,6 +604,14 @@ input:hover{
   background-position: left;
 }
 
+.icono-telefono-placeholder-image::placeholder{
+  background-image: url(../img/iconos/llamada-entrante.png);
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  background-position: left;
+
+}
+
 
 .contenedor-tabla{
   margin: 150px auto;
