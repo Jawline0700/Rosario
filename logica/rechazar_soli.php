@@ -13,7 +13,7 @@ require '../PHPMailer/SMTP.PHP';
 if(!empty($_POST)){
     $id = $_POST['soli-id'];
     $correo = $_POST['soli-correo'];
-    $estado = 2;
+    $estado = 4;
     $data = ['id'=>$id,'estado'=>$estado];
     $sql = "UPDATE solicitud_expediente set Estado=:estado WHERE ID_Solicitud =:id";
     $stmt = $conexion->prepare($sql);

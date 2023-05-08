@@ -240,10 +240,10 @@ $tipo_user = $_SESSION['tipo'];
             <tbody>
                 <tr>
                     <?php  
-                        $query = "SELECT c.ID_Cita,u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
-                        INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente
-                        INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
-                        INNER JOIN estado_cita as e ON c.ID_Estado_Cita = e.ID_Estado";
+                        $query = "SELECT c.ID_Cita,u.Nombre , u.Cedula , c.Fecha , e.Estado from cita
+                                  as c INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente 
+                                  INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
+                                  INNER JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado";
                         $consulta=$conexion->query($query);
                         $consulta->execute();
                         if($consulta->rowCount()>0){
@@ -333,7 +333,7 @@ $tipo_user = $_SESSION['tipo'];
                                         <br>
                                         <select id="estado" class="seleccion" name="estado" >
                                             <?php 
-                                            $consultar = $conexion->prepare("SELECT * from estado_cita");
+                                            $consultar = $conexion->prepare("SELECT * from estado");
                                             $consultar->execute();
                                             $info = $consultar->fetchAll();
                                             foreach($info as $valor):?>

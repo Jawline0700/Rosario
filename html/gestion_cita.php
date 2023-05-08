@@ -88,11 +88,11 @@ if($tipo_user == 4){
 
                 <?php 
                 $ID_Paciente = $datoid->ID_Paciente;
-                $query = "SELECT c.ID_Cita , t.Tipo as 'Tipo Cita', c.Fecha,us.Nombre, e.Estado as 'Estado Cita'FROM CITA AS c
-                INNER JOIN tipo_tratamiento AS t ON t.ID_tipo_Tratamiento = c.ID_tipo_tratamiento
-                INNER JOIN estado_cita as e ON e.ID_Estado = c.ID_Estado_Cita
-                INNER JOIN medico as m ON m.ID_Medico = c.ID_Medico 
-                INNER JOIN usuario as us ON m.ID_Usuario = us.ID_Usuario WHERE ID_Paciente = '$ID_Paciente'" ;
+                $query = "SELECT c.ID_Cita , t.Tipo as 'Tipo Cita', c.Fecha,us.Nombre, e.Estado as 'Estado Cita'
+                          FROM CITA AS c INNER JOIN tipo_tratamiento AS t ON t.ID_tipo_Tratamiento = c.ID_tipo_tratamiento 
+                          INNER JOIN estado as e ON e.ID_Estado = c.ID_Estado_Cita 
+                          INNER JOIN medico as m ON m.ID_Medico = c.ID_Medico 
+                          INNER JOIN usuario as us ON m.ID_Usuario = us.ID_Usuario WHERE ID_Paciente = '$ID_Paciente'" ;
                 $consulta=$conexion->query($query);
                 $consulta->execute();
                 if($consulta->rowCount()>0){

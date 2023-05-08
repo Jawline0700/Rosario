@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2023 a las 03:18:33
+-- Tiempo de generación: 08-05-2023 a las 23:27:07
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.0.25
 
@@ -62,7 +62,8 @@ CREATE TABLE `cita` (
 
 INSERT INTO `cita` (`ID_Cita`, `Fecha`, `ID_Paciente`, `ID_Medico`, `ID_Tipo_Tratamiento`, `ID_Estado_Cita`, `Orden`, `ID_Maquina`) VALUES
 (9, '2023-04-25', 4, 1, 1, 2, 0, NULL),
-(10, '2023-04-25', 3, 1, 2, 2, 0, NULL);
+(10, '2023-04-25', 3, 1, 2, 2, 0, NULL),
+(11, '2023-05-02', 3, 1, 1, 2, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,43 +115,23 @@ INSERT INTO `especialidad` (`ID_Especialidad`, `Tipo_Especialidad`, `Nombre`) VA
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estado_cita`
+-- Estructura de tabla para la tabla `estado`
 --
 
-CREATE TABLE `estado_cita` (
+CREATE TABLE `estado` (
   `ID_Estado` int(11) NOT NULL,
-  `Estado` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `estado_cita`
---
-
-INSERT INTO `estado_cita` (`ID_Estado`, `Estado`) VALUES
-(1, 'Realizada'),
-(2, 'En Proceso'),
-(3, 'Pendiente'),
-(4, 'Cancelada');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estado_expediente`
---
-
-CREATE TABLE `estado_expediente` (
-  `ID_Estado_Expediente` int(11) NOT NULL,
   `Estado` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `estado_expediente`
+-- Volcado de datos para la tabla `estado`
 --
 
-INSERT INTO `estado_expediente` (`ID_Estado_Expediente`, `Estado`) VALUES
-(1, 'En Proceso'),
-(2, 'Rechazada'),
-(3, 'Aprobada');
+INSERT INTO `estado` (`ID_Estado`, `Estado`) VALUES
+(1, 'Realizada'),
+(2, 'En Proceso'),
+(3, 'Pendiente'),
+(4, 'Cancelada / Rechazada');
 
 -- --------------------------------------------------------
 
@@ -251,7 +232,7 @@ CREATE TABLE `solicitud_expediente` (
 
 INSERT INTO `solicitud_expediente` (`ID_Solicitud`, `ID_Paciente`, `Expendiente_Entregado`, `Estado`) VALUES
 (6, 4, 1, 3),
-(8, 3, 1, 2);
+(10, 3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -341,16 +322,10 @@ ALTER TABLE `especialidad`
   ADD PRIMARY KEY (`ID_Especialidad`);
 
 --
--- Indices de la tabla `estado_cita`
+-- Indices de la tabla `estado`
 --
-ALTER TABLE `estado_cita`
+ALTER TABLE `estado`
   ADD PRIMARY KEY (`ID_Estado`);
-
---
--- Indices de la tabla `estado_expediente`
---
-ALTER TABLE `estado_expediente`
-  ADD PRIMARY KEY (`ID_Estado_Expediente`);
 
 --
 -- Indices de la tabla `maquina`
@@ -418,7 +393,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `ID_Cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID_Cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermera`
@@ -431,12 +406,6 @@ ALTER TABLE `enfermera`
 --
 ALTER TABLE `especialidad`
   MODIFY `ID_Especialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT de la tabla `estado_cita`
---
-ALTER TABLE `estado_cita`
-  MODIFY `ID_Estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `maquina`
@@ -466,7 +435,7 @@ ALTER TABLE `rol_usuario`
 -- AUTO_INCREMENT de la tabla `solicitud_expediente`
 --
 ALTER TABLE `solicitud_expediente`
-  MODIFY `ID_Solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID_Solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_tratamiento`
@@ -495,9 +464,9 @@ ALTER TABLE `administrador`
 --
 ALTER TABLE `cita`
   ADD CONSTRAINT `FK_Cita` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`),
-  ADD CONSTRAINT `FK_Cita_Estado` FOREIGN KEY (`ID_Estado_Cita`) REFERENCES `estado_cita` (`ID_Estado`),
   ADD CONSTRAINT `FK_Cita_Medico` FOREIGN KEY (`ID_Medico`) REFERENCES `medico` (`ID_Medico`),
   ADD CONSTRAINT `FK_Cita_tratamiento` FOREIGN KEY (`ID_Tipo_Tratamiento`) REFERENCES `tipo_tratamiento` (`ID_Tipo_Tratamiento`),
+  ADD CONSTRAINT `FK_Estado` FOREIGN KEY (`ID_Estado_Cita`) REFERENCES `estado` (`ID_Estado`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`ID_Maquina`) REFERENCES `maquina` (`ID_Maquina`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -524,7 +493,7 @@ ALTER TABLE `paciente`
 -- Filtros para la tabla `solicitud_expediente`
 --
 ALTER TABLE `solicitud_expediente`
-  ADD CONSTRAINT `FK_Estado_Solicitud` FOREIGN KEY (`Estado`) REFERENCES `estado_expediente` (`ID_Estado_Expediente`),
+  ADD CONSTRAINT `FK_Estado_Solicitud` FOREIGN KEY (`Estado`) REFERENCES `estado` (`ID_Estado`),
   ADD CONSTRAINT `FK_Solicitud_Expediendete_Paciente` FOREIGN KEY (`ID_Paciente`) REFERENCES `paciente` (`ID_Paciente`);
 
 --
