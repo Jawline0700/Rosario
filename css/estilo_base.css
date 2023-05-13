@@ -796,7 +796,7 @@ box-sizing:border-box;
     margin-left: 10px;
   }
   .btn-eliminar{
-    width: 30%;
+    width: 100%;
     text-align: center;
   }
 
@@ -807,7 +807,7 @@ box-sizing:border-box;
   }
 
   .btn-editar{
-    width: 25%;
+    width:100%;
     text-align: center;
   
     
