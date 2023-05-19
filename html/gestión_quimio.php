@@ -96,8 +96,7 @@
             </thead>
             <tbody>
             <?php
-                $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, co.ID_Maquina, u.Cedula, co.ID_Enfermera, ci.ID_Estado_Cita, ci.Orden FROM cita ci 
-                                                RIGHT JOIN cola co ON ci.ID_Paciente=co.ID_Paciente
+                $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, ci.ID_Maquina, u.Cedula, ci.ID_Estado_Cita, ci.Orden FROM cita ci
                                                 INNER JOIN paciente p ON ci.ID_Paciente=p.ID_Paciente
                                                 INNER JOIN usuario u ON p.ID_User=u.ID_Usuario
                                                 WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
