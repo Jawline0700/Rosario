@@ -2,8 +2,6 @@
 include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
 $tipo_user = $_SESSION['tipo'];
-
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
