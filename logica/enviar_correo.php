@@ -5,8 +5,6 @@ use PHPMailer\PHPMailer\SMTP;
 
 
 include('../conexion/conexion.php');
-include("verificar_solicitud.php");
-
 require '../PHPMailer/Exception.php';
 require '../PHPMailer/PHPMailer.php';
 require '../PHPMailer/SMTP.PHP';
@@ -25,9 +23,8 @@ if(isset($_POST['cedula'])){
     $correo = $row->Email;
     
     $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente as
-                                s inner Join paciente as p ON s.ID_Paciente = p.ID_Paciente 
-                                INNER JOIN usuario as u On u.ID_Usuario = p.ID_User 
-                                WHERE p.ID_Paciente = '$idpaciente';" );
+                                s INNER JOIN usuario as u On u.ID_Usuario = s.ID_Paciente
+                                WHERE s.ID_Paciente = '$idpaciente';" );
 
     $row = $retorno->fetch(PDO::FETCH_OBJ);
 
