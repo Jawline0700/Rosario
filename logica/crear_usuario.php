@@ -41,7 +41,11 @@ if(!empty($_POST)){
             $stmt->execute();
             $especial = $_POST['especial'];
             $id_usuario = $conexion->lastInsertId();
+            
 
+
+
+            
             $sentencia2 = $conexion->prepare("INSERT INTO Medico(ID_Usuario,ID_Especialidad) values (?,?)");
             $sentencia2->bindParam(1,$id_usuario);
             $sentencia2->bindParam(2,$especial);
