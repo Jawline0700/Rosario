@@ -12,13 +12,21 @@ if(!empty($_POST)){
  $sentencia = $conexion->query("SELECT p.ID_Paciente from usuario as u INNER JOIN paciente as p ON p.ID_User = u.ID_Usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4 AND Estado = 1");
  $registro = $sentencia->fetch(PDO::FETCH_OBJ);
 
+ // Obtener la última cita ingresada de ese tipo
+ $sentencia2 = $conexion->query("SELECT c.Orden FROM cita c WHERE c.Fecha = '$fecha_cita' and c.ID_Tipo_Tratamiento = $tipo ORDER BY c.Orden DESC LIMIT 1");
+ $registro2 = $sentencia2->fetch(PDO::FETCH_OBJ);
+ $orden = 1;
+ if($sentencia2->rowCount()>0){
+  $orden = $registro2->Orden + $orden;
+ }
+
  if($sentencia->rowCount()>0){
    $ID_Paciente = $registro->ID_Paciente;
 
-    $datos = new cita($fecha_cita,$ID_Paciente,$id_medico,$tipo,$estado);
+    $datos = new cita($fecha_cita,$ID_Paciente,$id_medico,$tipo,$estado,$orden);
 
     try{
-      $stmt = $conexion->prepare("INSERT INTO cita (Fecha,ID_Paciente,ID_Medico,ID_Tipo_Tratamiento,ID_Estado_Cita,Orden) values (:Fecha,:ID_Paciente,:ID_Medico,:ID_Tipo_Tratamiento,:ID_Estado_Cita,0)");
+      $stmt = $conexion->prepare("INSERT INTO cita (Fecha,ID_Paciente,ID_Medico,ID_Tipo_Tratamiento,ID_Estado_Cita,Orden) values (:Fecha,:ID_Paciente,:ID_Medico,:ID_Tipo_Tratamiento,:ID_Estado_Cita,:Orden)");
       $stmt->execute((array)$datos);
 
     }catch(PDOException $e){
