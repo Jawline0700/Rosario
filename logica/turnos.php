@@ -1,12 +1,12 @@
 <?php
     
     $Sesion = $_SESSION['id'];
-    $sentencia = $conexion->query("SELECT ID_Paciente FROM paciente WHERE ID_User = $Sesion");
+    $sentencia = $conexion->query("SELECT ID_Usuario FROM Usuario WHERE ID_Usuario = $Sesion");
     $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     $ID_Paciente = 0;
     foreach($registro as $reg){
-        $ID_Paciente = $reg['ID_Paciente']; 
+        $ID_Paciente = $reg['ID_Usuario']; 
     };
 
 ?>

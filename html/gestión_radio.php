@@ -87,7 +87,7 @@
                 <tr>
                     <th class="col">Maquina</th>
                     <th class="col">Cédula</th>
-                    <th class="col">Enfermera</th>
+                    <th class="col">Personal Medico</th>
                     <th class="col">Estado</th>
                     <th class="col">Turno</th>
                     <th class="col">Acciones</th>
@@ -96,9 +96,8 @@
             <tbody>
                 <?php
 
-                    $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, ci.ID_Maquina, u.Cedula, ci.ID_Estado_Cita, ci.Orden FROM cita ci
-                                                     INNER JOIN paciente p ON ci.ID_Paciente=p.ID_Paciente
-                                                     INNER JOIN usuario u ON p.ID_User=u.ID_Usuario
+                    $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, ci.ID_Maquina, ci.ID_Medico ,u.Cedula, ci.ID_Estado_Cita, ci.Orden 
+                                                     FROM cita ci INNER JOIN usuario u ON ci.ID_Paciente  = u.ID_Usuario 
                                                      WHERE ci.ID_Tipo_Tratamiento = 3 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
                     $sentencia->execute();
                     $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -112,8 +111,8 @@
                             $reg['ID_Maquina'] = "No asignado";
                         }
 
-                        if($reg['ID_Enfermera'] == null){
-                            $reg['ID_Enfermera'] = "No asignado";
+                        if($reg['ID_Medico'] == null){
+                            $reg['ID_Medico'] = "No asignado";
                         }
 
                         $estadoCita = "Cancelada";
@@ -129,7 +128,7 @@
                     ?>
                     <td data-titulo="Maquina" class="col"><?php echo $reg['ID_Maquina'] ?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $reg['Cedula'] ?></td>
-                    <td data-titulo="Enf." class="col"><?php echo $reg['ID_Enfermera'] ?></td>
+                    <td data-titulo="Enf." class="col"><?php echo $reg['ID_Medico'] ?></td>
                     <td data-titulo="Estado" class="col"><?php echo $estadoCita; ?></td>
                     <td data-titulo="Turno" class="col"><?php echo $reg['Orden'] ?></td>
                     <td> 
@@ -163,22 +162,38 @@
                         <div class="mb-3">
                             <label class="texto">Maquina:</label>
                             <br>
-                            <input type="text" class="seleccion">
+                            <select id="maquina" class="seleccion">
+                            <?php 
+                            $info = $conexion->prepare("SELECT * from maquina WHERE Tipo = 2 and Estado = 1");
+                            $info->execute();
+                            $data = $info->fetchAll();
+                            echo '<option disabled selected>Seleccione una opción:</option>';
+                            $estado = "Disponible";
+                            foreach($data as $fila):
+                                echo '<option value="'.$fila["ID_Maquina"].'name="id_maquina">'.$fila["ID_Maquina"].'</option>';
+                            endforeach
+                            ?>
+                            </select>
+                            
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula">
+                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" readonly>
 
                         </div>
                         <div class="mb-3">
                             <label class="texto">Enfermera:</label>
                             <br>
-                            <select id="Medicos" class="seleccion">
-                                <br>
-                                <option value="" class="seleccion">Rosa Perez</option>
-                                <option value="" class="seleccion">Mariano Gomez</option>
-                                <option value="" class="seleccion">Israel </option>
-                                <option value="" class="seleccion">Farrah Moan</option>
+                            <select id="enfermera" class="seleccion">
+                                <?php  
+                                $info = $conexion->prepare("SELECT * FROM usuario WHERE Tipo_Usuario = 2"); 
+                                $info->execute();
+                                $data = $info->fetchAll();
+                                 echo '<option disabled selected>Seleccione una opción:</option>';
+                                 foreach($data as $fila):
+                                    echo '<option value="'.$fila["ID_Usuario"].'name="id-user-ra">'.$fila["Nombre"].'</option>';
+                                endforeach
+                                ?>
                             </select>
                         </div>
 
@@ -186,10 +201,16 @@
                             <br>
                             <label class="texto">Estado:</label>
                             <br>
-                            <select id="Tipo de Tratamiento" class="seleccion">
-                                <option value="" class="seleccion">En Proceso</option>
-                                <option value="" class="seleccion">Finalizado</option>
-                                <option value="" class="seleccion">Disponible</option>
+                            <select id="Estado" class="seleccion">
+                                <?php 
+                                $info = $conexion->prepare("SELECT * FROM Estado");
+                                $info->execute();
+                                $data = $info->fetchAll();
+                                echo '<option disabled selected>Seleccione una opción:</option>';
+                                foreach($data as $fila):
+                                    echo '<option value="'.$fila["ID_Estado"].'name="id_estado">'.$fila["Estado"].'</option>';
+                                endforeach
+                                ?>
                             </select>
                         </div>
 
@@ -201,38 +222,18 @@
                            
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer pie-pagina">
+                    <div class="modal-footer pie-pagina">
                     <button type="submit" class="btn btn-crear">Modificar</button>
-                    <button type="submit" class="btn btn-buscar">Cancelar</button>
-
+                    <button type="reset" class="btn btn-buscar">Cancelar</button>
                 </div>
+                </div>
+               
 
             </div>
         </div>
      </div>
 
 
-
-    <div class="modal" id="myModal4">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Finalizar</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p class="texto">¿Desea Finalizar esta Radioterapia?</p>
-                  
-                    </div>
-                    <div class="modal-footer pie-pagina">
-                        <button type="submit" class=" btn btn-buscar">Si</button>
-                        <button type="submit" class="btn btn-crear">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <br>
     <br>
     <br>

@@ -1,11 +1,11 @@
 
 <?php 
 include "../logica/verificar_sesion.php";
-include("../logica/proceso_idpatient.php");
 include("../logica/verificar_quimio.php");
 include("../logica/verificar_radio.php");
 
 $tipo_user =  $_SESSION['tipo'];
+$id = $_SESSION['id'];
 if($tipo_user == 4){
 
 
@@ -87,12 +87,10 @@ if($tipo_user == 4){
             <tbody>
 
                 <?php 
-                $ID_Paciente = $datoid->ID_Paciente;
-                $query = "SELECT c.ID_Cita , t.Tipo as 'Tipo Cita', c.Fecha,us.Nombre, e.Estado as 'Estado Cita'
+                $query = "SELECT c.ID_Cita , t.Tipo as 'Tipo Cita', c.ID_Medico ,c.Fecha,us.Nombre, e.Estado as 'Estado Cita'
                           FROM CITA AS c INNER JOIN tipo_tratamiento AS t ON t.ID_tipo_Tratamiento = c.ID_tipo_tratamiento 
                           INNER JOIN estado as e ON e.ID_Estado = c.ID_Estado_Cita 
-                          INNER JOIN medico as m ON m.ID_Medico = c.ID_Medico 
-                          INNER JOIN usuario as us ON m.ID_Usuario = us.ID_Usuario WHERE ID_Paciente = '$ID_Paciente'" ;
+                          INNER JOIN usuario as us ON c.ID_Paciente = us.ID_Usuario WHERE ID_Paciente = '$id'" ;
                 $consulta=$conexion->query($query);
                 $consulta->execute();
                 if($consulta->rowCount()>0){
@@ -103,7 +101,7 @@ if($tipo_user == 4){
                     <tr>
                     <td data-titulo="ID_Cita:" class="col"><?php echo $fila['ID_Cita'] ?></td>
                     <td data-titulo="Tipo de Cita:" class="col"><?php echo $fila['Tipo Cita']?></td>
-                    <td data-titulo="Medico:" class="col"><?php echo $fila['Nombre']?></td>
+                    <td data-titulo="Medico:" class="col"><?php echo $fila['ID_Medico']?></td>
                     <td data-titulo="Fecha de Atención:" class="col"> <?php echo $fila['Fecha']?></td>
                     <td data-titulo="Estado:" class="col"><?php echo $fila['Estado Cita']?></td>
                     </tr> 

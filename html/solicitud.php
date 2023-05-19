@@ -1,10 +1,10 @@
 <?php 
 include "../logica/verificar_sesion.php";
-include("../logica/proceso_idpatient.php");
 include("../logica/verificar_quimio.php");
 include("../logica/verificar_radio.php");
 
 $tipo_user =  $_SESSION['tipo'];
+ echo $id = $_SESSION['id'];
 if($tipo_user == 4){
 ?>
 <!DOCTYPE html>
@@ -67,10 +67,10 @@ if($tipo_user == 4){
         <div class="soli-info-container">
             <form action="../logica/enviar_correo.php" method="POST" class="inputs-container">
                 <div class="izquierda">
-                    <label class="texto-login">Solicitar Expediente Médico</label>   
+                    <label class="texto-login centrear">Solicitar Expediente Médico</label>   
                 </div>
                 <div class="centrear">
-                    <input type="hidden" name="ID-Paciente" value= <?php echo $ID_Paciente = $datoid->ID_Paciente; ?>>
+                    <input type="hidden" name="ID-Paciente" value= <?php echo $id?>>
                     <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name= "cedula">
                 </div>
                 <?php if(isset($_GET['msg'])){?>

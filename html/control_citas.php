@@ -241,8 +241,7 @@ $tipo_user = $_SESSION['tipo'];
                 <tr>
                     <?php  
                         $query = "SELECT c.ID_Cita,u.Nombre , u.Cedula , c.Fecha , e.Estado from cita
-                                  as c INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente 
-                                  INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
+                                  as c  INNER JOIN usuario as u ON c.ID_Paciente = u.ID_Usuario 
                                   INNER JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado";
                         $consulta=$conexion->query($query);
                         $consulta->execute();
