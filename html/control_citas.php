@@ -254,6 +254,8 @@ $tipo_user = $_SESSION['tipo'];
                     <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
                     <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
+
+                    
                         <?php if($tipo_user == 1){ ?>
                         <div class="contenido">
                             <button type="button"  class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Editar</button>
