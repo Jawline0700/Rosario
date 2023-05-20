@@ -88,8 +88,8 @@ if($campos->rowCount()> 0){
             <h2 class="subtitulo">Gestión de Citas</h2>
         <div class="centrear">  
             <div class="buscar-info-container">
-            <?php if(isset($_GET['msg'])){?>
-            <?php $valor = $_GET['msg'];
+            <?php if(isset($_GET['msg'])){
+                  $valor = $_GET['msg'];
                   if($valor == "Exito" ){ 
                     echo '<script type="text/JavaScript">
                     Swal.fire({
@@ -129,8 +129,7 @@ if($campos->rowCount()> 0){
                           })
                               </script>';
                     }
-                    ?>
-            <?php } ?>                   
+            } ?>                   
                 <div class="contenido">
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Cita</button>
                 </div>
@@ -190,11 +189,12 @@ if($campos->rowCount()> 0){
                                             <br>
                                             <select id="Medicos" class="seleccion" name="medico">
                                                 <?php 
-                                                $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre FROM usuario med 
+                                                                                    WHERE med.Tipo_Usuario = 1");
                                                 $informacion->execute();
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):
-                                                    echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
+                                                    echo '<option value="'.$identificador["ID_Usuario"].'  name="medico">'.$identificador["Nombre"].'</option>';
                                                 endforeach;
                                                 ?>
                                             </select>
@@ -243,10 +243,13 @@ if($campos->rowCount()> 0){
             <tbody>
                 <tr>
                 <?php  
-                    $query = "SELECT c.ID_Cita,u.Nombre , u.Cedula , c.Fecha , e.Estado from cita as c 
-                    INNER JOIN paciente as p ON c.ID_Paciente = p.ID_Paciente
-                    INNER JOIN usuario as u ON p.ID_User = u.ID_Usuario 
-                    INNER JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado WHERE u.Cedula = '$cedula'";
+                    $query = "SELECT c.ID_Cita, med.Nombre, pac.Cedula, c.Fecha, e.Estado 
+                    FROM cita c 
+                    JOIN usuario pac ON c.ID_Paciente = pac.ID_Usuario 
+                    JOIN usuario med ON c.ID_Paciente = med.ID_Usuario 
+                    JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado
+                    WHERE pac.Cedula = '$cedula'
+                    ORDER BY Actividad DESC";
                     $consulta=$conexion->query($query);
                     $consulta->execute();
                     if($consulta->rowCount()>0){
@@ -305,7 +308,9 @@ if($campos->rowCount()> 0){
                                             <br>
                                             <select id="Medicos" class="seleccion" name="medico">
                                                 <?php 
-                                                $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre 
+                                                                                    FROM usuario med 
+                                                                                    WHERE med.Tipo_Usuario = 1");
                                                 $informacion->execute();
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):

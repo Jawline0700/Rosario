@@ -4,7 +4,6 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 include('../conexion/conexion.php');
-include("verificar_solicitud.php");
 
 require '../PHPMailer/Exception.php';
 require '../PHPMailer/PHPMailer.php';
