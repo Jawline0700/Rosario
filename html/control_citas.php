@@ -185,12 +185,14 @@ $tipo_user = $_SESSION['tipo'];
                                             <br>
                                             <select id="Medicos" class="seleccion" name="medico">
                                                 <?php 
-                                                $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre 
+                                                                                    FROM usuario med 
+                                                                                    WHERE med.Tipo_Usuario = 1");
                                                 $informacion->execute();
                                                 echo '<option disabled selected>Seleccione una opción:</option>';
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):
-                                                    echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
+                                                    echo '<option value="'.$identificador["ID_Usuario"].'  name="medico">'.$identificador["Nombre"].'</option>';
                                                 endforeach;
                                                 ?>
                                             </select>
@@ -240,9 +242,12 @@ $tipo_user = $_SESSION['tipo'];
             <tbody>
                 <tr>
                     <?php  
-                        $query = "SELECT c.ID_Cita,u.Nombre, u.Cedula , c.Fecha , e.Estado from cita
-                                  as c  INNER JOIN usuario as u ON c.ID_Paciente = u.ID_Usuario 
-                                  INNER JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado";
+                        $query = "SELECT c.ID_Cita, med.Nombre, pac.Cedula, c.Fecha, e.Estado 
+                                  FROM cita c 
+                                  JOIN usuario pac ON c.ID_Paciente = pac.ID_Usuario 
+                                  JOIN usuario med ON c.ID_Paciente = med.ID_Usuario 
+                                  JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado
+                                  ORDER BY Actividad DESC";
                         $consulta=$conexion->query($query);
                         $consulta->execute();
                         if($consulta->rowCount()>0){
@@ -302,12 +307,14 @@ $tipo_user = $_SESSION['tipo'];
                                             <br>
                                             <select id="Medicos" class="seleccion" name="medico">
                                                 <?php 
-                                                $informacion = $conexion->prepare("SELECT m.ID_Medico,u.Nombre FROM medico as m INNER JOIN usuario as u ON m.ID_Usuario = u.ID_Usuario");
+                                                $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre 
+                                                                                    FROM usuario med 
+                                                                                    WHERE med.Tipo_Usuario = 1");
                                                 $informacion->execute();
                                                 echo '<option disabled selected>Seleccione una opción:</option>';
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):
-                                                    echo '<option value="'.$identificador["ID_Medico"].'  name="medico">'.$identificador["Nombre"].'</option>';
+                                                    echo '<option value="'.$identificador["ID_Usuario"].'  name="medico">'.$identificador["Nombre"].'</option>';
                                                 endforeach;
                                                 ?>
                                             </select>

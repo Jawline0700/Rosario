@@ -141,9 +141,10 @@ if(!empty($_POST)){
             <tbody>
                 <tr>
                     <?php 
-                    $query = "SELECT s.ID_Solicitud , u.Nombre , u.Cedula , u.Email, i.Estado from solicitud_expediente as 
-                             s INNER JOIN usuario as u ON u.ID_Usuario = s.ID_Paciente
-                             INNER JOIN estado as i ON i.ID_Estado = s.Estado WHERE u.Cedula ='$cedula' AND s.";
+                    $query = "SELECT s.ID_Solicitud, pac.Nombre, pac.Cedula, pac.Email, e.Estado FROM solicitud_expediente s 
+                                JOIN usuario pac ON s.ID_Paciente = pac.ID_Usuario
+                                JOIN estado e ON e.ID_Estado = s.Estado 
+                                WHERE s.estado = 2 AND pac.Cedula = '$cedula'";
                     $consulta = $conexion->query($query);
                     $consulta->execute();
                     if($consulta->rowCount()>0){
