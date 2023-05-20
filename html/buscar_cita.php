@@ -31,7 +31,7 @@ if($campos->rowCount()> 0){
     <script>
          function pasardatos(){
             const tabla = document.getElementById("tabla");
-
+            
             tabla.addEventListener('click', (e)=>{
                 e.stopPropagation(); 
                  var id =  e.target.parentElement.parentElement.parentElement.children[0].textContent;
@@ -40,7 +40,7 @@ if($campos->rowCount()> 0){
         }
     </script>
    
-   
+
 
 </head>
 <body>
