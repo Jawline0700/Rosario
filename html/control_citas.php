@@ -234,7 +234,8 @@ $tipo_user = $_SESSION['tipo'];
                     <th class="col">ID_Cita</th>
                     <th class="col">Cédula</th>
                     <th class="col">Nombre</th>
-                    <th class="col">Fecha Cita</th>
+                    <th class="col">Tipo</th>
+                    <th class="col">Fecha</th>
                     <th class="col">Estado</th>
                     <th class="col">Acciones</th>
                 </tr>
@@ -242,12 +243,13 @@ $tipo_user = $_SESSION['tipo'];
             <tbody>
                 <tr>
                     <?php  
-                        $query = "SELECT c.ID_Cita, med.Nombre, pac.Cedula, c.Fecha, e.Estado 
-                                  FROM cita c 
-                                  JOIN usuario pac ON c.ID_Paciente = pac.ID_Usuario 
-                                  JOIN usuario med ON c.ID_Paciente = med.ID_Usuario 
-                                  JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado
-                                  ORDER BY Actividad DESC";
+                        $query = "SELECT c.ID_Cita, med.Nombre, pac.Cedula, tt.Tipo, c.Fecha, e.Estado 
+                                    FROM cita c 
+                                    JOIN usuario pac ON c.ID_Paciente = pac.ID_Usuario 
+                                    JOIN usuario med ON c.ID_Paciente = med.ID_Usuario 
+                                    JOIN estado e ON c.ID_Estado_Cita = e.ID_Estado
+                                    JOIN tipo_tratamiento tt ON c.ID_Tipo_Tratamiento = tt.ID_Tipo_Tratamiento
+                                    ORDER BY Actividad DESC";
                         $consulta=$conexion->query($query);
                         $consulta->execute();
                         if($consulta->rowCount()>0){
@@ -256,6 +258,7 @@ $tipo_user = $_SESSION['tipo'];
                     <td data-titulo="ID_Cita" class="col"><?php echo $dato['ID_Cita']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $dato['Cedula']?></td>
                     <td data-titulo="Nombre" class="col"><?php echo $dato['Nombre']?></td>
+                    <td data-titulo="Tipo" class="col"><?php echo $dato['Tipo']?></td>
                     <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
                     <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
                     <td> 
@@ -303,13 +306,12 @@ $tipo_user = $_SESSION['tipo'];
                                         <div class="mb-3">
                                             <label class="texto">Medico:</label>
                                             <br>
-                                            <select id="Medicos" class="seleccion" name="medico">
+                                            <select id="selectMedico" class="seleccion" name="medico">
                                                 <?php 
                                                 $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre 
                                                                                     FROM usuario med 
                                                                                     WHERE med.Tipo_Usuario = 1");
                                                 $informacion->execute();
-                                                echo '<option disabled selected>Seleccione una opción:</option>';
                                                 $data = $informacion->fetchAll();
                                                 foreach($data as $identificador):
                                                     echo '<option value="'.$identificador["ID_Usuario"].'  name="medico">'.$identificador["Nombre"].'</option>';
@@ -322,22 +324,21 @@ $tipo_user = $_SESSION['tipo'];
                                             <br>
                                             <label class="texto">Tipo de Tratamiento</label>
                                             <br>
-                                            <select id="Tipo" class="seleccion" name="tratamiento">
-                                            <?php 
-                                            $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
-                                            $consultar->execute();
-                                            echo '<option disabled selected>Seleccione una opción:</option>';
-                                            $info = $consultar->fetchAll();
-                                            foreach($info as $valor):?>
-                                             <option value= <?php echo $valor["ID_Tipo_Tratamiento"]?> ><?php echo $valor["Tipo"]?></option>';
-                                            <?php endforeach; ?>
+                                            <select id="selectTratamiento" class="seleccion" name="tratamiento">
+                                                <?php 
+                                                    $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
+                                                    $consultar->execute();
+                                                    $info = $consultar->fetchAll();
+                                                    foreach($info as $valor):?>
+                                                        <option value= <?php echo $valor["ID_Tipo_Tratamiento"]?> ><?php echo $valor["Tipo"]?></option>';
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>                    
                                         <div class="mb-3">
                                         <br>
                                         <label class="texto">Estado de la Cita</label>
                                         <br>
-                                        <select id="estado" class="seleccion" name="estado" >
+                                        <select id="selectEstado" class="seleccion" name="estado" >
                                             <?php 
                                             $consultar = $conexion->prepare("SELECT * from estado");
                                             $consultar->execute();
@@ -345,7 +346,6 @@ $tipo_user = $_SESSION['tipo'];
                                             foreach($info as $valor):?>
                                             <option value= <?php echo $valor["ID_Estado"]?> ><?php echo $valor["Estado"]?></option>';
                                             <?php endforeach; ?>
-                                            ?>
                                         </select>
                                         <input type="hidden" name=id-cita>
                                        

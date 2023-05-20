@@ -241,8 +241,8 @@ $tipo_user = $_SESSION['tipo'];
         <table id="tabla-user">
             <thead>
                 <tr>
-                    <th class="col">ID_Usuario</th>
-                    <th class="col">Nombre</th>
+                    <th class="col" style="display: none;">ID_Usuario</th>
+                    <th class="col" >Nombre</th>
                     <th class="col">Cédula</th>
                     <th class="col">Telefono</th>
                     <th class="col">Email</th>
@@ -259,7 +259,7 @@ $tipo_user = $_SESSION['tipo'];
                         if($consulta->rowCount()>0){
                         while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
 
-                            <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
+                            <td data-titulo="ID:" class="col" style="display: none;"><?php echo $dato['ID_Usuario']?></td>
                             <td data-titulo="Nombre:" class="col"><?php echo $dato['Nombre']?></td>
                             <td data-titulo="Cédula:" class="col"><?php echo $dato['Cedula']?></td>
                             <td data-titulo="Telefono:" class="col"><?php echo $dato['Telefono'] ?></td>
@@ -318,16 +318,14 @@ $tipo_user = $_SESSION['tipo'];
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado-editar" class="seleccion" name="user-tipo">
-                            <?php  
+                            <select id="tipoUser" class="seleccion" name="user-tipo">
+                            <?php
                                 $informacion = $conexion->prepare("SELECT * from rol_usuario");
                                 $informacion->execute();
                                 $data = $informacion->fetchAll();
-                                echo '<option disabled selected>Seleccione una opción:</option>';
                                 foreach($data as $fila):?>
                                    <option value="<?php echo $fila["ID_Rol"]?>"><?php echo $fila["Descripcion"]?></option>
-                                <?php endforeach; ?> 
-
+                                <?php endforeach; ?>
                             </select>
                             <input type="hidden" name="id-usuario">
                         </div>

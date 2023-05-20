@@ -9,13 +9,20 @@ function llenardatos(){
         var telefono =  e.target.parentElement.parentElement.parentElement.children[3].textContent;
         var email =  e.target.parentElement.parentElement.parentElement.children[4].textContent;
         var user = e.target.parentElement.parentElement.parentElement.children[5].textContent;
-       
+        
         document.getElementsByName("id-usuario")[0].value = id;
         document.getElementsByName("nombre-user")[0].value = nombre;
         document.getElementsByName("correo-user")[0].value = email;
         document.getElementsByName("cedula-user")[0].value = cedula;
-        document.getElementsByName("telefono-user")[0].value = telefono;
-
+        var selecTipoUser = document.getElementById("tipoUser");
+        var contador = 0;
+        while(selecTipoUser.length > contador){
+            if(selecTipoUser.options[contador].text == user){
+                selecTipoUser.selectedIndex = contador;
+            } 
+            contador++;
+        }
+        
         if(user == "Paciente"){
              $('#estado-editar').prop('disabled','disabled');
              $('#especial-editar').prop('disabled','disabled');
@@ -24,8 +31,7 @@ function llenardatos(){
             $('#estado-editar').prop('disabled',false);
             $('#especial-editar').prop('disabled',false);
         }
-    
-         
+       
     })
 }
 
