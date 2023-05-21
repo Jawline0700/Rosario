@@ -38,13 +38,12 @@
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><?php if($tipo_user == 1 || $tipo_user == 2){?>
+          <li >
             <a href="../html/control_citas.php" >Gestión Citas</a></li>
-            <?php } ?></li>
+        </li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><?php if($tipo_user == 3){?>
+          <li >
             <a href="../html/gestion_usuario.php" >Gestión Usuario</a>
-            <?php } ?>
         </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
@@ -96,8 +95,9 @@
             </thead>
             <tbody>
             <?php
-                $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, ci.ID_Medico ,ci.ID_Maquina, u.Cedula, ci.ID_Estado_Cita, ci.Orden 
-                                                FROM cita ci INNER JOIN usuario u ON ci.ID_Paciente = u.ID_Usuario WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
+                $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, med.Nombre, ci.ID_Maquina, pac.Cedula, ci.ID_Estado_Cita, ci.Orden 
+                                                FROM cita ci JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario JOIN usuario med on ci.ID_Paciente = med.ID_Usuario 
+                                                WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
                 $sentencia->execute();
                 $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 if(count($registro) > 0){

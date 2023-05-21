@@ -48,14 +48,11 @@ if(!empty($_POST)){
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
           <li >
-          <?php if($tipo_user == 1 || $tipo_user == 2){?>
             <a href="../html/control_citas.php" >Gestión Citas</a></li>
-            <?php } ?>
         </li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><?php if($tipo_user == 3) {?>
+          <li >
             <a href="../html/gestion_usuario.php" >Gestión Usuario</a></li>
-            <?php } ?>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
                   <li><a href="../html/gestión_radio.php">Gestión Radioterapia </a></li>
@@ -134,9 +131,11 @@ if(!empty($_POST)){
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Usuario</button>
                 </div>
 
+                <?php if($tipo_user == 3){ ?>
                 <div class="contenido">
                     <button type="button" class="btn btn-buscar" data-bs-toggle="modal" data-bs-target="#myModal2">Crear Usuario</button>
                 </div>
+                <?php } ?>
                 
                      <div class="modal" id="myModal">
                         <div class="modal-dialog">
@@ -267,13 +266,14 @@ if(!empty($_POST)){
                     $consulta->execute();
                     if($consulta->rowCount()>0){
                     while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
+                    
                     <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
                     <td data-titulo="Nombre:" class="col"><?php echo $dato['Nombre']?></td>
                     <td data-titulo="Cédula:" class="col"><?php echo $dato['Cedula']?></td>
                     <td data-titulo="Telefono:" class="col"><?php echo $dato['Telefono'] ?></td>
                     <td data-titulo="Correo:" class="col"><?php echo $dato['Email'] ?></td>
                     <td data-titulo="Tipo Usuario:" class="col"><?php echo $dato['Descripcion']?></td>
-                    <td> 
+                    <td> <?php if($tipo_user == 3){?>
                         <div class="contenido">
                                 <button type="button" onclick="llenardatos()" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
                         </div>
@@ -282,7 +282,10 @@ if(!empty($_POST)){
                         </div>
                     </td>
                 </tr>
-                <?php } }else{?>
+                <?php }else{?>
+                      Sin Acciones..
+            <?php  } 
+                } }else{?>
                     <td data-titulo="Usuario" class="col" colspan=6>Usuario no Encontrado</td> 
             <?php } ?>
             </tbody>

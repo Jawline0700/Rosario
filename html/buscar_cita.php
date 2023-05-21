@@ -57,13 +57,12 @@ if($campos->rowCount()> 0){
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><?php if($tipo_user == 1 || $tipo_user == 2){?>
+          <li >
             <a href="../html/control_citas.php" >Gestión Citas</a></li>
-            <?php } ?></li>
+            </li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li ><?php if($tipo_user == 3){ ?>
+          <li >
                <a href="../html/gestion_usuario.php" >Gestión Usuario</a> 
-               <?php } ?>
         </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>

@@ -38,14 +38,13 @@ $tipo_user = $_SESSION['tipo'];
     <nav>
       <ul>
           <li ><a href="../html/pagina_inicio2.php" id="selected"></a></li>
-          <li ><?php if($tipo_user == 1 || $tipo_user == 2){?>
+          <li >
             <a href="../html/control_citas.php" >Gestión Citas</a></li>
-            <?php } ?>
         </li>
           <li ><a href="../html/gestión_solicitud.php" >Gestión Expediente</a></li>
-          <li > <?php if($tipo_user == 3) {?>
+          <li>
             <a href="../html/gestion_usuario.php" >Gestión Usuario</a>
-            <?php }?>
+        
         </li>
           <li ><a href="../html/servicios2.php" >Servicios</a>
               <ul>
@@ -125,9 +124,11 @@ $tipo_user = $_SESSION['tipo'];
                     <button type="button" class="btn btn-crear" data-bs-toggle="modal" data-bs-target="#myModal">Buscar Usuario</button>
                 </div>
 
+                <?php if($tipo_user == 3){ ?>
                 <div class="contenido">
                     <button type="button" class="btn btn-buscar" data-bs-toggle="modal" data-bs-target="#myModal2">Crear Usuario</button>
                 </div>
+                <?php } ?>
                 
                      <div class="modal" id="myModal">
                         <div class="modal-dialog">
@@ -252,7 +253,7 @@ $tipo_user = $_SESSION['tipo'];
             </thead>
             <tbody>
                 <tr>
-                        <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
                                         INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1";
                         $consulta = $conexion->query($query);
                         $consulta->execute();
@@ -266,14 +267,21 @@ $tipo_user = $_SESSION['tipo'];
                             <td data-titulo="Correo:" class="col"><?php echo $dato['Email'] ?></td>
                             <td data-titulo="Tipo Usuario:" class="col"><?php echo $dato['Descripcion']?></td>
                             <td> 
+                                <?php if($tipo_user == 3){?>
                                 <div class="contenido">
                                         <button type="button" onclick="llenardatos()" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
                                 </div>
                                 <div class="contenido">
                                     <button typr="button" onclick="deleteusario();" class="btn btn-eliminar"  data-bs-toggle="modal" data-bs-target="#myModal4" >Eliminar</button>
                                 </div>
+
                             </td>
+
+                            <?php }else{?>
+                                 Sin Acciones..
+                            <?php }?>
                         </tr>
+                        
                 <?php } }else{?>
                     <td data-titulo="Sin Usuario" class="col" colspan=6>No hay usuarios para mostrar..</td> 
                 <?php }?>
