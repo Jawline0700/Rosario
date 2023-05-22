@@ -4,7 +4,7 @@ include("../logica/verificar_quimio.php");
 include("../logica/verificar_radio.php");
 
 $tipo_user =  $_SESSION['tipo'];
- echo $id = $_SESSION['id'];
+
 if($tipo_user == 4){
 ?>
 <!DOCTYPE html>
@@ -128,7 +128,7 @@ if($tipo_user == 4){
 
 </section>
 <footer>
-    <img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
+    <img src="../img/LogoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
     <div class="social-icons-container">
       <a href="https://www.facebook.com/ioncologico" class="social-icon"></a>
       <a href="https://www.instagram.com/ioncologico/" class="social-icon"></a>

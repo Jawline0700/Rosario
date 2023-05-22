@@ -230,7 +230,7 @@ $tipo_user = $_SESSION['tipo'];
 
 </body>
 <footer>
-  <img src="../img/logoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
+  <img src="../img/LogoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
   <div class="social-icons-container">
     <a href="https://www.facebook.com/ioncologico" class="social-icon"></a>
     <a href="https://www.instagram.com/ioncologico/" class="social-icon"></a>
