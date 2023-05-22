@@ -75,10 +75,6 @@
                         <br>
                         <input type="text" id="turnoActual" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
                     </div>
-
-                    <div class="contenido">
-                        <button type="button" class="btn btn-buscar">Crear Cola</button>
-                    </div>
                 </div>                
         </div>
         <table>
@@ -96,7 +92,7 @@
                 <?php
 
                     $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente, med.Nombre, ci.ID_Maquina, pac.Cedula, ci.ID_Estado_Cita, ci.Orden 
-                                                     FROM cita ci JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario JOIN usuario med on ci.ID_Paciente = med.ID_Usuario 
+                                                     FROM cita ci JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario JOIN usuario med on ci.ID_Medico = med.ID_Usuario 
                                                      WHERE ci.ID_Tipo_Tratamiento = 3 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
                     $sentencia->execute();
                     $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -127,7 +123,7 @@
                     ?>
                     <td data-titulo="Maquina" class="col"><?php echo $reg['ID_Maquina'] ?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $reg['Cedula'] ?></td>
-                    <td data-titulo="Enf." class="col"><?php echo $reg['ID_Medico'] ?></td>
+                    <td data-titulo="Enf." class="col"><?php echo $reg['Nombre'] ?></td>
                     <td data-titulo="Estado" class="col"><?php echo $estadoCita; ?></td>
                     <td data-titulo="Turno" class="col"><?php echo $reg['Orden'] ?></td>
                     <td> 
