@@ -124,7 +124,7 @@ $tipo_user = $_SESSION['tipo'];
         <table id="tabla-soli">
             <thead>
                 <tr>
-                    <th class="col">ID_Solicitud</th>
+                    <th class="col" style="display: none;">ID_Solicitud</th>
                     <th class="col">Nombre</th>
                     <th class="col">Cédula</th>
                     <th class="col">Email</th>
@@ -143,7 +143,7 @@ $tipo_user = $_SESSION['tipo'];
                     if($consulta->rowCount()>0){
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
                     ?>
-                    <td data-titulo="ID" class="col"> <?php echo $fila['ID_Solicitud'] ?></td>
+                    <td data-titulo="ID" class="col" style="display: none;"> <?php echo $fila['ID_Solicitud'] ?></td>
                     <td data-titulo="Nombre" class="col"><?php echo $fila['Nombre']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $fila['Cedula']?></td>
                     <td data-titulo="Email" class="col"><?php echo $fila['Email']?></td>
