@@ -67,7 +67,7 @@
                         <div class="mb-3">
                             <label class="texto">Turno Actual:</label>
                             <br>
-                            <input type="text" id="turnoActual" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
+                            <input type="text" id="turnoActual" style="width: 170%; margin-left: -35%;" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
                         </div>
                     </div>
                 </div>
