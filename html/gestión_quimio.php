@@ -89,10 +89,22 @@
                                                             FROM cita ci 
                                                             JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario 
                                                             JOIN usuario med on ci.ID_Medico = med.ID_Usuario 
-                                                            WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() 
-                                                            ORDER BY FIELD(ci.ID_Estado_Cita, 2, 3, 1, 4)");
+                                                            WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() AND ci.ID_Estado_Cita = 2
+                                                            ORDER BY Orden ASC");
                         $sentencia->execute();
-                        $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+                        $registro1 = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+                        $sentencia2 = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Maquina, pac.Cedula, med.Nombre, ci.ID_Estado_Cita, ci.Orden 
+                                                            FROM cita ci 
+                                                            JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario 
+                                                            JOIN usuario med on ci.ID_Medico = med.ID_Usuario 
+                                                            WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE()
+                                                                AND ci.ID_Estado_Cita BETWEEN 1 AND 4 AND ci.ID_Estado_Cita != 2
+                                                            ORDER BY FIELD(ci.ID_Estado_Cita, 3, 1, 4), Orden ASC");
+                        $sentencia2->execute();
+                        $registro2 = $sentencia2->fetchAll(PDO::FETCH_ASSOC);
+                        $registro = array_merge($registro1, $registro2); ?>
+                        
+                        <?php 
                         if(count($registro) > 0){
                             foreach($registro as $reg){
                         
@@ -244,7 +256,7 @@
 
     <script src='../js/gestionServicios.js'> </script>
 
-    <footer>
+    <footer style="margin-top: 100px">
         <img src="../img/LogoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
         <div class="social-icons-container">
             <a href="https://www.facebook.com/ioncologico" class="social-icon"></a>

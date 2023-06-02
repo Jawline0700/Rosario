@@ -249,17 +249,28 @@ $tipo_user = $_SESSION['tipo'];
                                     JOIN estado e ON c.ID_Estado_Cita = e.ID_Estado
                                     JOIN tipo_tratamiento tt ON c.ID_Tipo_Tratamiento = tt.ID_Tipo_Tratamiento
                                     ORDER BY Actividad DESC";
+
                         $consulta=$conexion->query($query);
                         $consulta->execute();
                         if($consulta->rowCount()>0){
                         while($dato=$consulta->fetch(PDO::FETCH_ASSOC)){
+
+                            $colorEstadoCita = "bg-danger";
+                            switch($dato['Estado']){
+                                case "Realizada / Aprobada": $colorEstadoCita = "bg-primary";
+                                        break;
+                                case "En Proceso": $colorEstadoCita = "bg-success";
+                                        break;
+                                case "Pendiente": $colorEstadoCita = "bg-warning";
+                                        break;
+                            }
                     ?>
                     <td data-titulo="ID_Cita" class="col" style="display: none;"><?php echo $dato['ID_Cita']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $dato['Cedula']?></td>
                     <td data-titulo="Nombre" class="col"><?php echo $dato['Nombre']?></td>
                     <td data-titulo="Tipo" class="col"><?php echo $dato['Tipo']?></td>
                     <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
-                    <td data-titulo="Estado" class="col"><?php echo $dato['Estado']?></td>
+                    <td data-titulo="Estado" class="col d-flex m-0 justify-content-space-between align-items-center" style="width: 100%" ><p style="margin: 15% 0; width: 90%;" ><?php echo $dato['Estado']; ?></p><p style="margin: 0 5%; padding: 6%; width: 10%; border: 1.5px solid black;" class="rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                     <td> 
 
                     

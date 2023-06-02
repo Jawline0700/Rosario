@@ -142,13 +142,23 @@ $tipo_user = $_SESSION['tipo'];
                     $consulta->execute();
                     if($consulta->rowCount()>0){
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
+
+                        $colorEstadoCita = "bg-danger";
+                        switch($fila['Estado']){
+                            case "Realizada / Aprobada": $colorEstadoCita = "bg-primary";
+                                    break;
+                            case "En Proceso": $colorEstadoCita = "bg-success";
+                                    break;
+                            case "Pendiente": $colorEstadoCita = "bg-warning";
+                                    break;
+                        }
+
                     ?>
                     <td data-titulo="ID" class="col" style="display: none;"> <?php echo $fila['ID_Solicitud'] ?></td>
                     <td data-titulo="Nombre" class="col"><?php echo $fila['Nombre']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $fila['Cedula']?></td>
                     <td data-titulo="Email" class="col"><?php echo $fila['Email']?></td>
-                    <td data-titulo="Estado" class="col"><?php echo $fila['Estado']?></td>
-                  
+                    <td data-titulo="Estado" class="col d-flex m-0 justify-content-space-between align-items-center" style="width: 100%" ><p style="margin: 2% 0; width: 90%;" ><?php echo $fila["Estado"]; ?></p><p style="margin: 0 5%; padding: 6%; width: 10%; border: 1.5px solid black;" class="rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                     <td> 
                         <?php if($tipo_user == 3){ ?>
                         <div class="contenido">

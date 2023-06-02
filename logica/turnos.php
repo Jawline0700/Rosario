@@ -19,14 +19,18 @@
   let suTurno = 0;
 
   <?php 
-    $sentencia = $conexion->prepare("SELECT Orden FROM cita WHERE Fecha = CURDATE() AND ID_Tipo_Tratamiento = 2 AND (ID_Estado_Cita = 2 OR ID_Estado_Cita = 3) ORDER BY ID_Estado_Cita ASC, Orden DESC LIMIT 1");
-    $sentencia->execute(); 
+    $sentencia = $conexion->prepare("SELECT Orden FROM cita WHERE Fecha = CURDATE() AND ID_Tipo_Tratamiento = $tratamiento AND ID_Estado_Cita = 2 ORDER BY Orden DESC LIMIT 1");
+    $sentencia->execute();
+
+    if($sentencia->rowCount()==0){
+      $sentencia = $conexion->prepare("SELECT Orden FROM cita WHERE Fecha = CURDATE() AND ID_Tipo_Tratamiento = $tratamiento AND ID_Estado_Cita = 3 ORDER BY Orden ASC LIMIT 1");
+      $sentencia->execute();
+    }
   ?>
 
   let buscarTurnoActual = <?php echo json_encode($sentencia->fetchAll(PDO::FETCH_ASSOC)); ?>;
   buscarTurnoActual.forEach(function(reg)
   {
-    console.warn(reg.Orden);
     turnoActual = reg.Orden;
   });
 

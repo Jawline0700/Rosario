@@ -18,13 +18,13 @@ echo "si";
     echo "si";
     switch($gestion){
         case 1: 
-            header("Location: ../html/gestión_radio.php?msg=Exito");
+            header("Location: ../html/gestión_radio.php");
             break;
         case 2: 
             header("Location: ../html/gestión_quimio.php");
             break;
         default:
-            header("Location: ../html/gestión_usuario.php?msg=Exito");
+            header("Location: ../html/gestión_usuario.php");
             break;
     }
 } else {
