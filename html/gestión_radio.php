@@ -172,7 +172,13 @@
                             <br/>
                             <select id="selectMaquina" name="selectMaquina" class="seleccion">
                                 <?php 
-                                $info = $conexion->prepare("SELECT ID_Maquina from maquina WHERE Tipo = 1 and Estado = 1");
+                                $info = $conexion->prepare("SELECT ID_Maquina
+                                                            FROM maquina 
+                                                            WHERE Tipo = 1 AND Estado = 1 AND NOT EXISTS 
+                                                                (SELECT 1 
+                                                                FROM cita 
+                                                                WHERE cita.ID_Maquina = maquina.ID_Maquina AND
+                                                                        fecha = CURDATE() AND ID_Tipo_Tratamiento = 3 AND ID_Estado_Cita = 2)");
                                 $info->execute();
                                 $data = $info->fetchAll();
                                 echo '<option value="null" selected>Ninguna</option>';

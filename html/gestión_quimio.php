@@ -172,11 +172,20 @@
                             <br/>
                             <select id="selectMaquina" name="selectMaquina" class="seleccion">
                                 <?php 
-                                $info = $conexion->prepare("SELECT ID_Maquina from maquina WHERE Tipo = 2 and Estado = 1");
+                                $info = $conexion->prepare("SELECT ID_Maquina
+                                                            FROM maquina 
+                                                            WHERE Tipo = 2 AND Estado = 1 AND NOT EXISTS 
+                                                                (SELECT 1 
+                                                                FROM cita 
+                                                                WHERE cita.ID_Maquina = maquina.ID_Maquina AND
+                                                                        fecha = CURDATE() AND ID_Tipo_Tratamiento = 2 AND ID_Estado_Cita = 2)");
                                 $info->execute();
                                 $data = $info->fetchAll();
-                                echo '<option value="null" selected>Ninguna</option>';
-                                $estado = "Disponible";
+                                $estado = "Disponible"; ?>
+                                <option value="null" selected>Ninguna</option>';
+                                <?php if(count($data) == 0){ ?>
+                                    <option disabled >No hay máquinas disponibles</option>
+                                <?php } 
                                 foreach($data as $fila): ?>
                                     <option value=<?php echo $fila["ID_Maquina"]?>><?php echo $fila["ID_Maquina"] ?></option>
                                 <?php endforeach ?>

@@ -93,21 +93,28 @@ if($tipo_user == 4){
                 $consulta=$conexion->query($query);
                 $consulta->execute();
                 if($consulta->rowCount()>0){
-                while($fila=$consulta->fetch(PDO::FETCH_ASSOC)){
+                  while($fila=$consulta->fetch(PDO::FETCH_ASSOC)){
+                    $colorEstadoCita = "bg-danger";
+                    switch($fila['Estado Cita']){
+                        case "Realizada / Aprobada": $colorEstadoCita = "bg-primary";
+                                break;
+                        case "En Proceso": $colorEstadoCita = "bg-success";
+                                break;
+                        case "Pendiente": $colorEstadoCita = "bg-warning";
+                                break;
+                    }
                 ?>
-                    <tr>
-                    <td data-titulo="ID_Cita:" class="col"><?php echo $fila['ID_Cita'] ?></td>
-                    <td data-titulo="Tipo de Cita:" class="col"><?php echo $fila['Tipo Cita']?></td>
-                    <td data-titulo="Medico:" class="col"><?php echo $fila['Nombre']?></td>
-                    <td data-titulo="Fecha de Atención:" class="col"> <?php echo $fila['Fecha']?></td>
-                    <td data-titulo="Estado:" class="col"><?php echo $fila['Estado Cita']?></td>
-                    </tr> 
-             <?php
-                }
-            }else{?>
-                <td data-titulo="Sin Cita" class="col" colspan=6>No Mantiene Citas...</td> 
-          <?php  } ?>
-            
+                <tr>
+                  <td data-titulo="ID_Cita:" class="col"><?php echo $fila['ID_Cita'] ?></td>
+                  <td data-titulo="Tipo de Cita:" class="col"><?php echo $fila['Tipo Cita']?></td>
+                  <td data-titulo="Medico:" class="col"><?php echo $fila['Nombre']?></td>
+                  <td data-titulo="Fecha de Atención:" class="col"> <?php echo $fila['Fecha']?></td>
+                  <td data-titulo="Estado:" class="col d-flex m-0 justify-content-space-between align-items-center" style="width: 100%" ><p style="margin: 0% 0%; width: 90%;" ><?php echo $fila['Estado Cita']; ?></p><p style="margin: 0 5%; padding: 4%; width: 5%; border: 1.5px solid black;" class="rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
+                </tr> 
+                <?php }
+                } else { ?>
+                  <td data-titulo="Sin Cita" class="col" colspan=6>No Mantiene Citas...</td> 
+                <?php } ?>
             </tbody>
         </table>
         </div>
