@@ -170,7 +170,7 @@
                         <div class="mb-3">
                             <label class="texto">Maquina:</label>
                             <br/>
-                            <select id="selectMaquina" name="selectMaquina" class="seleccion">
+                            <select id="selectMaquina" name="selectMaquina" class="seleccion" required>
                                 <?php 
                                 $info = $conexion->prepare("SELECT ID_Maquina
                                                             FROM maquina 

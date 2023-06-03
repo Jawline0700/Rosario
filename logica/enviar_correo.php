@@ -13,18 +13,17 @@ if(isset($_POST['cedula'])){
 
     $cedula = $_POST['cedula'];
     $idpaciente = $_POST['ID-Paciente'];
+    var_dump($_POST);
     $estado = 2;
     $info = 1;
-    $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4;");
+    $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4");
     $row  = $consulta->fetch(PDO::FETCH_OBJ);
 
     if($consulta->rowCount()>0){
 
     $correo = $row->Email;
     
-    $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente as
-                                s INNER JOIN usuario as u On u.ID_Usuario = s.ID_Paciente
-                                WHERE s.ID_Paciente = '$idpaciente';" );
+    $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
 
     $row = $retorno->fetch(PDO::FETCH_OBJ);
 

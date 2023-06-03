@@ -4,6 +4,7 @@ include("../logica/verificar_quimio.php");
 include("../logica/verificar_radio.php");
 
 $tipo_user =  $_SESSION['tipo'];
+$id = $_SESSION['id'];
 
 if($tipo_user == 4){
 ?>
