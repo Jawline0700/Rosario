@@ -158,7 +158,7 @@ $tipo_user = $_SESSION['tipo'];
                     <td data-titulo="Nombre" class="col"><?php echo $fila['Nombre']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $fila['Cedula']?></td>
                     <td data-titulo="Email" class="col"><?php echo $fila['Email']?></td>
-                    <td data-titulo="Estado" class="col d-flex m-0 justify-content-space-between align-items-center" style="width: 100%" ><p style="margin: 2% 0; width: 90%;" ><?php echo $fila["Estado"]; ?></p><p style="margin: 0 5%; padding: 6%; width: 10%; border: 1.5px solid black;" class="rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
+                    <td data-titulo="Estado" class="semaforo col d-flex m-0 justify-content-space-between align-items-center"><p class="nombreEstado" ><?php echo $fila["Estado"]; ?></p><p class="colorEstado rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                     <td> 
                         <?php if($tipo_user == 3){ ?>
                         <div class="contenido">

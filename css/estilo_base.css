@@ -769,6 +769,21 @@ box-sizing:border-box;
   background-position:left;
 }
 
+.semaforo{
+  width: 100%;
+}
+
+.nombreEstado{
+  margin: 15% 0;
+  width: 90%; 
+}
+
+.colorEstado{
+  margin: 0 5%;
+  padding: 6%;
+  width: 10%;
+  border: 1.5px solid black;
+}
 
 /************************************************************************ Diseño Responsive ********************************************************/
 
@@ -835,7 +850,6 @@ box-sizing:border-box;
 
   table td[data-titulo]{
     display: flex;
-
   }
 
   table td[data-titulo]::before{
@@ -844,6 +858,23 @@ box-sizing:border-box;
     color:black;
     font-weight:600;    
   }
+
+  .semaforo{
+    margin: 0 0 0 10px !important;
+    width: 97.5%;
+  }
+  
+  .nombreEstado{
+    margin: 0%;
+    width: 90%; 
+  }
+  
+  .colorEstado{
+    padding: 4%;
+    width: 6%;
+    border: 1.5px solid black;
+  }
+
 
   table thead{
     display: none;

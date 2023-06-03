@@ -135,7 +135,7 @@
                             <td data-titulo="Maquina" class="col"><?php echo $reg['ID_Maquina'] ?></td>
                             <td data-titulo="Cédula" class="col"><?php echo $reg['Cedula'] ?></td>
                             <td data-titulo="P.Medico" class="col"><?php echo $reg['Nombre'] ?></td>
-                            <td data-titulo="Estado" class="col d-flex m-0 justify-content-space-between align-items-center" style="width: 100%" ><p style="margin: 7.5% 0; width: 90%;" ><?php echo $estadoCita; ?></p><p style="margin: 0 5%; padding: 6%; width: 10%; border: 1.5px solid black;" class="rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
+                            <td data-titulo="Estado" class="semaforo col d-flex m-0 justify-content-space-between align-items-center"><p class="nombreEstado"><?php echo $estadoCita; ?></p><p class="colorEstado rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                             <td data-titulo="Turno" class="col"><?php echo $reg['Orden'] ?></td>
                             <td> 
                                 <?php if($tipo_user == 2){ ?>

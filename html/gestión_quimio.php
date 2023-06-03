@@ -71,7 +71,7 @@
                     <div class="mb-3">
                         <label class="texto">Turno Actual:</label>
                         <br>
-                        <input type="text" id="turnoActual" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
+                        <input type="text" id="turnoActual" style="width: 170%; margin-left: -35%;" class="seleccion icono-placeholder-image-fila" readonly placeholder="#17">
                     </div>
                 </div>
     
@@ -109,12 +109,16 @@
                     }
 
                     $estadoCita = "Cancelada";
+                    $colorEstadoCita = "bg-danger";
                     switch($reg['ID_Estado_Cita']){
                         case 1: $estadoCita = 'Realizada';
+                                $colorEstadoCita = "bg-primary";
                                 break;
                         case 2: $estadoCita = 'En Proceso';
+                                $colorEstadoCita = "bg-success";
                                 break;
                         case 3: $estadoCita = 'Pendiente';
+                                $colorEstadoCita = "bg-warning";
                                 break;
                     }
 
@@ -122,7 +126,7 @@
                 <td data-titulo="Maquina" class="col"><?php echo $reg['ID_Maquina'] ?></td>
                 <td data-titulo="Cédula" class="col"><?php echo $reg['Cedula'] ?></td>
                 <td data-titulo="P.Medico" class="col"><?php echo $reg['Nombre'] ?></td>
-                <td data-titulo="Estado" class="col"><?php echo $estadoCita; ?></td>
+                <td data-titulo="Estado" class="semaforo col d-flex m-0 justify-content-space-between align-items-center"><p class="nombreEstado"><?php echo $estadoCita; ?></p><p class="colorEstado rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                 <td data-titulo="Turno" class="col"><?php echo $reg['Orden'] ?></td>
                 <td> 
                     <?php if($tipo_user == 2){ ?>

@@ -270,7 +270,7 @@ $tipo_user = $_SESSION['tipo'];
                     <td data-titulo="Nombre" class="col"><?php echo $dato['Nombre']?></td>
                     <td data-titulo="Tipo" class="col"><?php echo $dato['Tipo']?></td>
                     <td data-titulo="Fecha Cita" class="col"><?php echo $dato['Fecha']?></td>
-                    <td data-titulo="Estado" class="col d-flex m-0 justify-content-space-between align-items-center" style="width: 100%" ><p style="margin: 15% 0; width: 90%;" ><?php echo $dato['Estado']; ?></p><p style="margin: 0 5%; padding: 6%; width: 10%; border: 1.5px solid black;" class="rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
+                    <td data-titulo="Estado" class="semaforo col d-flex m-0 justify-content-space-between align-items-center"><p class="nombreEstado"><?php echo $dato['Estado']; ?></p><p class="colorEstado rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                     <td> 
 
                     
