@@ -201,7 +201,7 @@ include "../conexion/conexion.php";
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
-                            <input type="text"  placeholder="Digite su Telefono" name="telefono-crear"  pattern="[0-8]{8}"  onkeypress="return isNumberKey(event)"  title="Ingrese un número de 8 Digitos">
+                            <input type="text"  placeholder="Digite su Telefono" name="telefono-crear" title="Ingrese un número de 8 Digitos">
                         </div>
                         <div class="mb-3">
                             <br>
@@ -327,7 +327,7 @@ include "../conexion/conexion.php";
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
-                            <input type="text"  placeholder="Digite su Telefono" name="telefono-user" pattern="[0-8]{8}"  onkeypress="return isNumberKey(event)"  title="Ingrese un número de 8 Digitos">
+                            <input type="text"  placeholder="Digite su Telefono" name="telefono-user" title="Ingrese un número de 8 Digitos">
                         </div>
 
                         <div class="mb-3">

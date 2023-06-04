@@ -114,28 +114,22 @@ if($tipo_user == 4 ){
       <br>
       <div class="card-group cartas">
         <div class="card">
-          <img src="../img/Carrusel/imagen-carrusel3.jpg" class="card-img-top" alt="..."></a>
+          <img src="../img/Carrusel/imagen-carrusel3.jpg" class="card-img-top text-center" alt="..." style="height:250px; width: 250px; object-fit: cover;"></a>
           <div class="card-body">
             <h5 class="card-title texto">Nuestra Visión:</h5>
             <p class="card-text texto">Ser líderes en la atención, investigación, prevención y rehabilitacíon del paciente con cáncer en Panamá..</p>
           </div>
         </div>
-        <div class="card">
-          <img src="../img/hospital.jpeg" class="card-img-top" alt="..." style="height: 130%; width: 120%;"></a>
+        <div class="card text-center">
+          <img src="../img/hospital.jpeg" class="card-img-top" alt="..." style="height:250px; width: 250px; object-fit: cover;"></a>
           <div class="card-body">
-            <br>
-            <br>
-            <br>
             <h5 class="card-title texto">Nuestra Misión:</h5>
             <p class="card-text texto">Ser una institución especializada en la rama de la oncología, cuyo propósito fundamental es brindar una excelente atención médica, social y familiar, a toda la población panameña, con el apoyo de la comunidad; y en la que intervienen directamente un equipo humano altamente calificado y de gran sensibilidad humana.</p>
           </div>
         </div>
         <div class="card">
-         <img src="../img/Carrusel/valores.jpg" class="card-img-top" alt="..." style="height:125%; width: 100%;"></a>
+         <img src="../img/Carrusel/valores.jpg" class="card-img-top " alt="..." style="height:250px; width: 250px; object-fit: cover;"></a>
           <div class="card-body">
-            <br>
-            <br>
-            <br>
             <h5 class="card-title texto">Nuestro Valores:</h5>
             <p class="card-text texto">
                 Servicio, <br>

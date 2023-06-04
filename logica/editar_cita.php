@@ -16,10 +16,6 @@ $sentencia = $conexion->query("SELECT * FROM cita AS c INNER JOIN usuario as u
                               c.Fecha = '$Fecha' and c.ID_Tipo_Tratamiento = '$ID_Tipo_Tratamiento'");
 $sentencia->execute();
 
-if($sentencia->rowCount()>0){
-    header("Location: ../html/control_citas.php?msg=error");
-}
-else{
     $data = ['Fecha'=>$Fecha,'ID_Medico'=>$ID_Medico,'ID_Tipo_Tratamiento'=>$ID_Tipo_Tratamiento,'ID_Estado_Cita'=>$ID_Estado_Cita,'ID_Cita'=>$ID_Cita];
     $sql = "UPDATE cita set Fecha=:Fecha,ID_Medico=:ID_Medico,ID_Tipo_Tratamiento=:ID_Tipo_Tratamiento,ID_Estado_Cita=:ID_Estado_Cita WHERE ID_Cita=:ID_Cita";
     
@@ -27,7 +23,7 @@ else{
     if($stmt->execute($data)){
         header("Location: ../html/control_citas.php?msg=Exito");
     }
-}
+
 
 }else{
 

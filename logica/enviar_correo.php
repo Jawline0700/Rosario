@@ -15,16 +15,28 @@ if(isset($_POST['cedula'])){
     $idpaciente = $_POST['ID-Paciente'];
     $estado = 2;
     $info = 1;
-    $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4");
-    $row  = $consulta->fetch(PDO::FETCH_OBJ);
 
+    try{
+        $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4");
+        $row  = $consulta->fetch(PDO::FETCH_OBJ);
+    
+    }catch(Exception $e){
+        echo 'Caught exception: ', $e->getMessage(), "\n";
+        header("Location: ../html/solicitud.php?msg=Invalidos");
+    }
+    
     if($consulta->rowCount()>0){
 
-    $correo = $row->Email;
-    
-    $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
+        try{
 
-    $row = $retorno->fetch(PDO::FETCH_OBJ);
+            $correo = $row->Email;
+            $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
+            $row = $retorno->fetch(PDO::FETCH_OBJ);
+        
+        }catch(Exception $e){
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+            header("Location: ../html/solicitud.php?msg=Invalidos");
+        }
 
 if($retorno->rowCount() == 0){
          
@@ -78,7 +90,7 @@ else{
    
     }
     else{
-      header("Location: ../html/solicitud.php?msg=Vacios");
+      header("Location: ../html/solicitud.php?msg=Invalidos");
     }
 
 

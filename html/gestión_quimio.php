@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
+    <script src='../js/gestionServicios.js'></script>
    
 </head>
 <body>
@@ -81,9 +82,10 @@
                 </div>
     
         </div>
-        <table>
+        <table id="tabla-citas">
             <thead>
                 <tr>
+                    <th class="col" style="display: none;">ID_Cita</th>
                     <th class="col">Maquina</th>
                     <th class="col">Cédula</th>
                     <th class="col">Personal Medico</th>
@@ -94,40 +96,50 @@
             </thead>
             <tbody>
             <?php
-                $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Paciente,med.Nombre, ci.ID_Maquina, pac.Cedula, ci.ID_Estado_Cita, ci.Orden 
-                                                FROM cita ci JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario JOIN usuario med on ci.ID_Medico = med.ID_Usuario 
-                                                WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() ORDER BY ci.Orden");
+             $sentencia = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Maquina, pac.Cedula, med.Nombre, ci.ID_Estado_Cita, ci.Orden FROM cita ci 
+                                              JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario JOIN usuario med on ci.ID_Medico = med.ID_Usuario WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE() 
+                                              AND ci.ID_Estado_Cita = 2 ORDER BY Orden ASC");
                 $sentencia->execute();
-                $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-                if(count($registro) > 0){
-                foreach($registro as $reg){
-                ?>
-                <tr id='<?php echo $reg['ID_Cita'] ?>'>
+                $registro1 = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+                $sentencia2 = $conexion->prepare("SELECT ci.ID_Cita, ci.ID_Maquina, pac.Cedula, med.Nombre, ci.ID_Estado_Cita, ci.Orden 
+                                                    FROM cita ci 
+                                                    JOIN usuario pac ON ci.ID_Paciente = pac.ID_Usuario 
+                                                    JOIN usuario med on ci.ID_Medico = med.ID_Usuario 
+                                                    WHERE ci.ID_Tipo_Tratamiento = 2 AND ci.Fecha = CURDATE()
+                                                        AND ci.ID_Estado_Cita BETWEEN 1 AND 4 AND ci.ID_Estado_Cita != 2
+                                                    ORDER BY FIELD(ci.ID_Estado_Cita, 3, 1, 4), Orden ASC");
+                $sentencia2->execute();
+                $registro2 = $sentencia2->fetchAll(PDO::FETCH_ASSOC);
+                $registro = array_merge($registro1, $registro2); ?>
+                
                 <?php 
+                if(count($registro) > 0){
+                    foreach($registro as $reg){
+                
+                        if($reg['ID_Maquina'] == null){
+                            $reg['ID_Maquina'] = "No asignada";
+                        }
 
-                    if($reg['ID_Maquina'] == null){
-                        $reg['ID_Maquina'] = "No asignado";
-                    }
+                        if($reg['ID_Medico'] == null){
+                            $reg['ID_Medico'] = "No asignado";
+                        }
 
-                    if($reg['ID_Medico'] == null){
-                        $reg['ID_Medico'] = "No asignado";
-                    }
-
-                    $estadoCita = "Cancelada";
-                    $colorEstadoCita = "bg-danger";
-                    switch($reg['ID_Estado_Cita']){
-                        case 1: $estadoCita = 'Realizada';
-                                $colorEstadoCita = "bg-primary";
-                                break;
-                        case 2: $estadoCita = 'En Proceso';
-                                $colorEstadoCita = "bg-success";
-                                break;
-                        case 3: $estadoCita = 'Pendiente';
-                                $colorEstadoCita = "bg-warning";
-                                break;
-                    }
-
+                        $estadoCita = "Cancelada";
+                        $colorEstadoCita = "bg-danger";
+                        switch($reg['ID_Estado_Cita']){
+                            case 1: $estadoCita = 'Realizada';
+                                    $colorEstadoCita = "bg-primary";
+                                    break;
+                            case 2: $estadoCita = 'En Proceso';
+                                    $colorEstadoCita = "bg-success";
+                                    break;
+                            case 3: $estadoCita = 'Pendiente';
+                                    $colorEstadoCita = "bg-warning";
+                                    break;
+                        }
                 ?>
+                <td data-titulo="ID_Cita" class="col" style="display: none;"><?php echo $reg['ID_Cita'] ?></td>
                 <td data-titulo="Maquina" class="col"><?php echo $reg['ID_Maquina'] ?></td>
                 <td data-titulo="Cédula" class="col"><?php echo $reg['Cedula'] ?></td>
                 <td data-titulo="P.Medico" class="col"><?php echo $reg['Nombre'] ?></td>
@@ -160,40 +172,44 @@
                 </div>
 
                 <div class="modal-body centrear">
-                    <form>
+                    <form method="POST" action="../logica/update_cita.php">
+                    <input type="text" style="display: none;" name="id-cita" id="id-cita">
                         <div class="mb-3">
-                            <label class="texto">Maquina:</label>
-                            <select required>
+                        <select id="selectMaquina" name="selectMaquina" class="seleccion" required>
                                 <?php 
-                                $info = $conexion->prepare("SELECT * from maquina WHERE Tipo = 2 and Estado = 1");
+                                $info = $conexion->prepare("SELECT ID_Maquina
+                                                            FROM maquina 
+                                                            WHERE Tipo = 2 AND Estado = 1 AND NOT EXISTS 
+                                                                (SELECT 1 
+                                                                FROM cita 
+                                                                WHERE cita.ID_Maquina = maquina.ID_Maquina AND
+                                                                        fecha = CURDATE() AND ID_Tipo_Tratamiento = 2 AND ID_Estado_Cita = 2)");
                                 $info->execute();
                                 $data = $info->fetchAll();
-                                echo '<option disabled selected>Seleccione una opción:</option>';
+                                echo '<option value="null" selected>Ninguna</option>';
                                 $estado = "Disponible";
-                                foreach($data as $fila):
-                                    echo '<option value="'.$fila["ID_Maquina"].'name="id_maquina">'.$fila["ID_Maquina"].'</option>';
-                                endforeach
-                                ?>
+                                foreach($data as $fila): ?>
+                                    <option value=<?php echo $fila["ID_Maquina"]?>><?php echo $fila["ID_Maquina"] ?></option>
+                                <?php endforeach ?>
                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula">
+                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" id="cedula-cita" name="cedula-cita" disabled >
 
                         </div>
                         <div class="mb-3">
-                            <label class="texto">Enfermera:</label>
+                            <label class="texto">Personal Medico:</label>
                             <br>
-                            <select id="Enfermera" class="seleccion">
+                            <select id="selectPersonalMedico" name="selectPersonalMedico" class="seleccion">
                             <?php  
-                                $info = $conexion->prepare("SELECT * FROM usuario WHERE Tipo_Usuario = 2"); 
+                                $info = $conexion->prepare("SELECT ID_Usuario, Nombre FROM usuario WHERE Tipo_Usuario = 1 OR Tipo_Usuario = 2"); 
                                 $info->execute();
-                                $data = $info->fetchAll();
-                                 echo '<option disabled selected>Seleccione una opción:</option>';
-                                 foreach($data as $fila):
-                                    echo '<option value="'.$fila["ID_Usuario"].'name="id-user-ra">'.$fila["Nombre"].'</option>';
-                                endforeach
-                                ?>
+                                $data = $info->fetchAll(); ?>
+                                <option disabled >Seleccione una opción:</option>
+                                <?php foreach($data as $fila): ?>
+                                    <option value=<?php echo $fila["ID_Usuario"] ?>><?php echo $fila["Nombre"] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
 
@@ -201,16 +217,14 @@
                             <br>
                             <label class="texto">Estado:</label>
                             <br>
-                            <select id="Estado" class="seleccion">
+                            <select id="selectEstado" name="selectEstado" class="seleccion">
                             <?php 
                                 $info = $conexion->prepare("SELECT * FROM Estado");
                                 $info->execute();
                                 $data = $info->fetchAll();
-                                echo '<option disabled selected>Seleccione una opción:</option>';
-                                foreach($data as $fila):
-                                    echo '<option value="'.$fila["ID_Estado"].'name="id_estado">'.$fila["Estado"].'</option>';
-                                endforeach
-                                ?>
+                                foreach($data as $fila): ?>
+                                    <option value=<?php echo $fila["ID_Estado"] ?>><?php echo $fila["Estado"] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
 
@@ -218,13 +232,15 @@
                             <br>
                             <label class="texto">Turno:</label>
                             <br>
-                            <input type="text" class="seleccion icono-placeholder-image-fila" placeholder="#18" readonly>
+                            <input type="text" id="turno-cita" name="turno-cita" class="seleccion icono-placeholder-image-fila" readonly disabled>
                            
                         </div>
                 <div class="modal-footer pie-pagina">
                     <button type="submit" class="btn btn-crear">Modificar</button>
                     <button type="reset" class="btn btn-buscar">Cancelar</button>
                 </div>
+                <input type="hidden" name="gestion" value="2" />
+                   <!-- gestion: 1=Radio, 2=Quimio, 3=Pacientes -->
                     </form>
                 </div>
                
@@ -263,6 +279,7 @@
     <br>
 
 </body>
+
 <footer>
   <img src="../img/LogoION.png" alt="Logo Hospital ION" style="height:70px" class="logo">
   <div class="social-icons-container">
@@ -283,7 +300,7 @@
 
 <?php 
     
-    $_SESSION['tratamiento']=4;
+    $_SESSION['tratamiento']= 2;
     include("../logica/turnos.php"); 
     unset($_SESSION['tratamiento']);
 }

@@ -99,6 +99,14 @@ if($tipo_user == 4){
                           })
                               </script>';
                     }
+                    else if($valor == "Invalidos"){
+                      echo '<script type="text/JavaScript">
+                      Swal.fire({
+                          icon: "error",
+                          title: "Valores Invalidos",
+                        })
+                            </script>';
+                  }
                     ?>
             <?php } ?>
                 <div class="centrear">
