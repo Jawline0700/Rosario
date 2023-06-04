@@ -13,7 +13,6 @@ if(isset($_POST['cedula'])){
 
     $cedula = $_POST['cedula'];
     $idpaciente = $_POST['ID-Paciente'];
-    var_dump($_POST);
     $estado = 2;
     $info = 1;
     $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4");

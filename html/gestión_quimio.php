@@ -3,6 +3,11 @@
     include("../logica/verificar_sesion.php");
     include("../conexion/conexion.php");
     $tipo_user = $_SESSION['tipo'];
+
+    if($tipo_user == 4){
+        header("Location: pagina_inicio.php");
+    }else{
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -281,7 +286,7 @@
     $_SESSION['tratamiento']=4;
     include("../logica/turnos.php"); 
     unset($_SESSION['tratamiento']);
-    
+}
   ?>
 
 </html>

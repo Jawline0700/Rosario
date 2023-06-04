@@ -2,7 +2,9 @@
 
 $tipo_user = $_SESSION['tipo'];
 
-
+if($tipo_user == 4 ){
+  header("Location: pagina_inicio.php");
+}else{
 ?>
 
 
@@ -172,3 +174,5 @@ $tipo_user = $_SESSION['tipo'];
 </footer>
 
 </html>
+
+<?php }?>

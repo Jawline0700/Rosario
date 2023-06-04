@@ -3,13 +3,18 @@ include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
 
 
-if(!empty($_POST)){
-    $cedula = $_POST['cedula-search'];
-    $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Estado = 1");
-    $registrar = $campos->fetch(PDO::FETCH_OBJ);
-    $tipo_user = $_SESSION['tipo'];
+    if(!empty($_POST)){
+            $cedula = $_POST['cedula-search'];
+            $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Estado = 1");
+            $registrar = $campos->fetch(PDO::FETCH_OBJ);
+            $tipo_user = $_SESSION['tipo'];
 
-    if($campos->rowCount()> 0){
+        if($campos->rowCount()> 0){
+
+                if($tipo_user == 4){
+                    header("Location: pagina_inicio.php");
+                }
+        
 
  ?>
 
@@ -176,23 +181,23 @@ if(!empty($_POST)){
                         <div class="mb-3">
                             <label class="texto">Nombre:</label>
                             <br>
-                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-crear">
+                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-crear" required>
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula" name="cedula-crear">
+                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula" name="cedula-crear" required>
 
                         </div>
                         <div class="mb-3">
                             <label class="texto">Edad:</label>
                             <br>
-                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad" name="edad-crear" min=1 max=120>
+                            <input type="number" class="seleccion icono-edad"  placeholder="Digite la edad" name="edad-crear" min=1 max=120 required>
                         </div>
                         <div class="mb-3">
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="email-crear" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Debe contener tres cadenas separadas por un @ y un punto">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="email-crear" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Debe contener tres cadenas separadas por un @ y un punto" required>
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
@@ -202,7 +207,7 @@ if(!empty($_POST)){
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado-crear" class="seleccion" name="user-tipo">
+                            <select id="estado-crear" class="seleccion" name="user-tipo" required>
                                 <?php  
                                 $informacion = $conexion->prepare("SELECT * from rol_usuario");
                                 $informacion->execute();
@@ -307,18 +312,18 @@ if(!empty($_POST)){
                         <div class="mb-3">
                             <label class="texto">Nombre:</label>
                             <br>
-                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-user">
+                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-user" required>
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" readonly class="icono-cedula" placeholder="Digite la Cédula" name="cedula-user">
+                            <input type="text" readonly class="icono-cedula" placeholder="Digite la Cédula" name="cedula-user" required>
 
                         </div>
                         <div class="mb-3">
                             <br>
                             <label class="texto">Correo Electronico:</label>
                             <br>
-                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Debe contener tres cadenas separadas por un @ y un punto">
+                            <input type="email" class="seleccion icono-email" placeholder="Digite el Email" name="correo-user" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Debe contener tres cadenas separadas por un @ y un punto" required>
                         </div>
                         <div class="mb-3">
                             <label class="texto">Télefono:</label>
@@ -329,7 +334,7 @@ if(!empty($_POST)){
                             <br>
                             <label class="texto">Tipo de Usuario:</label>
                             <br>
-                            <select id="estado-editar" class="seleccion" name="user-tipo">
+                            <select id="estado-editar" class="seleccion" name="user-tipo" required>
                             <?php  
                                 $informacion = $conexion->prepare("SELECT * from rol_usuario");
                                 $informacion->execute();

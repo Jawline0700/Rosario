@@ -2,12 +2,17 @@
 include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
 
-if(!empty($_POST)){
-    $cedula = $_POST['cedula-soli'];
-    $tipo_user = $_SESSION['tipo'];    
-    $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
-    $registrar = $campos->fetch(PDO::FETCH_OBJ);
-    if($campos->rowCount()> 0){
+    if(!empty($_POST)){
+            $cedula = $_POST['cedula-soli'];
+            $tipo_user = $_SESSION['tipo'];    
+            $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+            $registrar = $campos->fetch(PDO::FETCH_OBJ);
+
+        if($campos->rowCount()> 0){
+            if($tipo_user == 4){
+                header("Location: pagina_inicio.php");
+            }
+    
 
 
 ?>
@@ -89,6 +94,14 @@ if(!empty($_POST)){
                     Swal.fire({
                         icon: "success",
                         title: "Solicitud Rechazada con exito",
+                      })
+                          </script>';
+                    }
+                    else if($valor == "Invalidos"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "error",
+                        title: "Campos Invalidos",
                       })
                           </script>';
                     }?>

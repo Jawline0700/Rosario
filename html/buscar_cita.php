@@ -2,14 +2,20 @@
 include "../logica/verificar_sesion.php"; 
 include "../conexion/conexion.php";
 
-if(!empty($_POST)){
-$cedula = $_POST['cedula'];
-$tipo_user = $_SESSION['tipo'];
+    if(!empty($_POST)){
+            $cedula = $_POST['cedula'];
+            $tipo_user = $_SESSION['tipo'];
 
-$campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
-$registrar = $campos->fetch(PDO::FETCH_OBJ);
-if($campos->rowCount()> 0){
-    
+            $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Tipo_Usuario = 4");
+
+            $registrar = $campos->fetch(PDO::FETCH_OBJ);
+
+     if($campos->rowCount()> 0){
+
+                if($tipo_user == 4){
+                    header("Location: pagina_inicio.php");
+                }
+        
 ?>
 
 <!DOCTYPE html>
@@ -176,17 +182,17 @@ if($campos->rowCount()> 0){
                                         <div class="mb-3">
                                             <label class="texto">Fecha de Cita</label>
                                             <br>
-                                            <input type="date" class="seleccion" name="fecha">
+                                            <input type="date" class="seleccion" name="fecha" required>
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Cédula Paciente</label>
-                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula">
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula" required>
 
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Medico:</label>
                                             <br>
-                                            <select id="Medicos" class="seleccion" name="medico">
+                                            <select id="Medicos" class="seleccion" name="medico" required>
                                                 <?php 
                                                 $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre FROM usuario med 
                                                                                     WHERE med.Tipo_Usuario = 1");
@@ -203,7 +209,7 @@ if($campos->rowCount()> 0){
                                             <br>
                                             <label class="texto">Tipo de Tratamiento</label>
                                             <br>
-                                            <select id="Tipo" class="seleccion" name="tratamiento">
+                                            <select id="Tipo" class="seleccion" name="tratamiento" required>
                                             <?php 
                                             $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
                                             $consultar->execute();

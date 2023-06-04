@@ -3,6 +3,10 @@ include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
 $tipo_user = $_SESSION['tipo'];
 
+if($tipo_user == 4){
+    header("Location: pagina_inicio.php");
+}
+else{
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -119,6 +123,14 @@ $tipo_user = $_SESSION['tipo'];
                           })
                               </script>';
                     }
+                    else if($valor == "error"){
+                        echo '<script type="text/JavaScript">
+                        Swal.fire({
+                            icon: "error",
+                            title: "No se puede crear dos citas para un mismo tratamiento y un mismo dia",
+                          })
+                              </script>';
+                    }
                     ?>
             <?php } ?>
                    
@@ -172,17 +184,17 @@ $tipo_user = $_SESSION['tipo'];
                                         <div class="mb-3">
                                             <label class="texto">Fecha de Cita</label>
                                             <br>
-                                            <input type="date" class="seleccion" name="fecha">
+                                            <input type="date" class="seleccion" name="fecha" required>
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Cédula Paciente</label>
-                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula">
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula" required>
 
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Medico:</label>
                                             <br>
-                                            <select id="Medicos" class="seleccion" name="medico">
+                                            <select id="Medicos" class="seleccion" name="medico" required>
                                                 <?php 
                                                 $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre 
                                                                                     FROM usuario med 
@@ -201,7 +213,7 @@ $tipo_user = $_SESSION['tipo'];
                                             <br>
                                             <label class="texto">Tipo de Tratamiento</label>
                                             <br>
-                                            <select id="Tipo" class="seleccion" name="tratamiento">
+                                            <select id="Tipo" class="seleccion" name="tratamiento" required>
                                             <?php 
                                             $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
                                             $consultar->execute();
@@ -429,3 +441,5 @@ $tipo_user = $_SESSION['tipo'];
 </footer>
 
 </html>
+
+<?php } ?>

@@ -11,13 +11,24 @@ $ID_Tipo_Tratamiento = $_POST['tratamiento'];
 $ID_Estado_Cita = $_POST['estado'];
 $ID_Cita = $_POST['id-cita'];
 
-$data = ['Fecha'=>$Fecha,'ID_Medico'=>$ID_Medico,'ID_Tipo_Tratamiento'=>$ID_Tipo_Tratamiento,'ID_Estado_Cita'=>$ID_Estado_Cita,'ID_Cita'=>$ID_Cita];
-$sql = "UPDATE cita set Fecha=:Fecha,ID_Medico=:ID_Medico,ID_Tipo_Tratamiento=:ID_Tipo_Tratamiento,ID_Estado_Cita=:ID_Estado_Cita WHERE ID_Cita=:ID_Cita";
+$sentencia = $conexion->query("SELECT * FROM cita AS c INNER JOIN usuario as u 
+                              ON c.ID_Paciente = u.ID_Usuario WHERE u.Cedula = '$cedula' AND 
+                              c.Fecha = '$Fecha' and c.ID_Tipo_Tratamiento = '$ID_Tipo_Tratamiento'");
+$sentencia->execute();
 
-$stmt = $conexion->prepare($sql);
-if($stmt->execute($data)){
-    header("Location: ../html/control_citas.php?msg=Exito");
+if($sentencia->rowCount()>0){
+    header("Location: ../html/control_citas.php?msg=error");
 }
+else{
+    $data = ['Fecha'=>$Fecha,'ID_Medico'=>$ID_Medico,'ID_Tipo_Tratamiento'=>$ID_Tipo_Tratamiento,'ID_Estado_Cita'=>$ID_Estado_Cita,'ID_Cita'=>$ID_Cita];
+    $sql = "UPDATE cita set Fecha=:Fecha,ID_Medico=:ID_Medico,ID_Tipo_Tratamiento=:ID_Tipo_Tratamiento,ID_Estado_Cita=:ID_Estado_Cita WHERE ID_Cita=:ID_Cita";
+    
+    $stmt = $conexion->prepare($sql);
+    if($stmt->execute($data)){
+        header("Location: ../html/control_citas.php?msg=Exito");
+    }
+}
+
 }else{
 
     header("Location: ../html/control_citas.php?msg=Vacios");

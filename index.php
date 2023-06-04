@@ -40,7 +40,7 @@ include "conexion/conexion.php";
                 <label class="texto-login">Contraseña</label>
             </div>
             <div class="centrear">
-            <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2" name="password">
+            <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2" name="password" pattern="[A-Za-z0-9]+" title="No Acepta Caracteres Especiales">
             <br>
             <?php if(isset($_GET['msg'])){?>
             <?php $valor = $_GET['msg'];

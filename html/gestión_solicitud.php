@@ -2,6 +2,10 @@
 include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
 $tipo_user = $_SESSION['tipo'];
+
+if($tipo_user == 4){
+    header("Location: pagina_inicio.php");
+}else{
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -84,7 +88,16 @@ $tipo_user = $_SESSION['tipo'];
                         title: "Solicitud Rechazada con exito",
                       })
                           </script>';
-                    }?>
+                    }
+                    else if($valor == "Invalidos"){
+                        echo '<script type="text/JavaScript">
+                       Swal.fire({
+                        icon: "error",
+                        title: "Campos Invalidos",
+                      })
+                          </script>';
+                    }
+                    ?>
 
             <?php } ?>
             <div class="buscar-info-container">
@@ -258,3 +271,4 @@ $tipo_user = $_SESSION['tipo'];
 </footer>
 
 </html>
+<?php } ?>

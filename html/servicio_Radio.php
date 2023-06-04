@@ -5,7 +5,9 @@
   include("../logica/verificar_quimio.php");
   include("../logica/verificar_radio.php");  
 $tipo_user =  $_SESSION['tipo'];
-if($tipo_user == 4){
+
+if($consultar->rowCount() > 0){
+    if($tipo_user == 4){
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -126,6 +128,9 @@ if($tipo_user == 4){
     header("Location: ../index.php?msg=1");
     exit();
   }
+}else{
+  header("Location:pagina_inicio.php");
+}
     
   ?>
 

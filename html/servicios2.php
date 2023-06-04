@@ -1,6 +1,11 @@
 <?php include "../logica/verificar_sesion.php";
 
-$tipo_user = $_SESSION['tipo'];  ?>
+$tipo_user = $_SESSION['tipo']; 
+
+if($tipo_user == 4){
+  header("Location: pagina_inicio.php");
+}else{
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -130,3 +135,5 @@ $tipo_user = $_SESSION['tipo'];  ?>
 </footer>
 
 </html>
+
+<?php } ?>

@@ -9,7 +9,7 @@ require '../PHPMailer/SMTP.PHP';
 
 include("../conexion/conexion.php");
 
-if(!empty($_POST)){
+if(!empty( $_POST['nombre-crear']) and !empty($_POST['cedula-crear']) and !empty( $_POST['edad-crear']) and !empty( $_POST['email-crear'])){
 
     $nombre_user = $_POST['nombre-crear'];
     $cedula_crear = $_POST['cedula-crear'];
@@ -86,6 +86,9 @@ if(!empty($_POST)){
     else{
         header("Location: ../html/gestion_usuario.php?msg=Error2");
     }
+}else{
+    
+ header("Location: ../html/gestion_usuario.php?msg=Vacios");
 }
 
 ?>
