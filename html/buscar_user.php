@@ -1,18 +1,16 @@
 <?php 
 include "../logica/verificar_sesion.php";
 include "../conexion/conexion.php";
-
+$tipo_user = $_SESSION['tipo'];
 
     if(!empty($_POST)){
             $cedula = $_POST['cedula-search'];
             $campos = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula' AND Estado = 1");
             $registrar = $campos->fetch(PDO::FETCH_OBJ);
-            $tipo_user = $_SESSION['tipo'];
-
         if($campos->rowCount()> 0){
 
-                if($tipo_user == 4){
-                    header("Location: pagina_inicio.php");
+    if($tipo_user == 4){
+        header("Location: pagina_inicio.php");
                 }
         
 
@@ -265,11 +263,29 @@ include "../conexion/conexion.php";
             </thead>
             <tbody>
                 <tr>
-                    <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
-                                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Cedula ='$cedula' AND u.Estado = 1";
+                    <?php 
+                  if($_SESSION['tipo'] == 3){
+                        $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                        INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Cedula ='$cedula' AND u.Estado = 1";
+                        $bandera = true;
+
+                  }else{
+                        $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                        INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Cedula ='$cedula' AND u.Estado = 1 AND u.tipo_usuario = 3";
+                        $consulta = $conexion->query($query);
+                        $consulta->execute();
+                    if($consulta->rowCount()>0){
+                       $bandera = false;
+               }else{
+                $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Cedula ='$cedula' AND u.Estado = 1";
+                $bandera = true;
+               }
+                  }
+                   
                     $consulta = $conexion->query($query);
                     $consulta->execute();
-                    if($consulta->rowCount()>0){
+                    if($bandera == true){
                     while($dato =$consulta->fetch(PDO::FETCH_ASSOC)){ ?>
                     
                     <td data-titulo="ID:" class="col"><?php echo $dato['ID_Usuario']?></td>
@@ -278,7 +294,7 @@ include "../conexion/conexion.php";
                     <td data-titulo="Telefono:" class="col"><?php echo $dato['Telefono'] ?></td>
                     <td data-titulo="Correo:" class="col"><?php echo $dato['Email'] ?></td>
                     <td data-titulo="Tipo Usuario:" class="col"><?php echo $dato['Descripcion']?></td>
-                    <td> <?php if($tipo_user == 3){?>
+                    <td> <?php if($_SESSION['tipo'] == 3){?>
                         <div class="contenido">
                                 <button type="button" onclick="llenardatos()" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3" >Editar</button>
                         </div>
@@ -291,7 +307,7 @@ include "../conexion/conexion.php";
                       Sin Acciones..
             <?php  } 
                 } }else{?>
-                    <td data-titulo="Usuario" class="col" colspan=6>Usuario no Encontrado</td> 
+                    <td data-titulo="Usuario" class="col" colspan=7 >Usuario no Encontrado</td> 
             <?php } ?>
             </tbody>
         </table>

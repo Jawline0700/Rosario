@@ -255,8 +255,15 @@ Header("Location: pagina_inicio.php");
             </thead>
             <tbody>
                 <tr>
-                <?php $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
-                                        INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1";
+                <?php
+                if($tipo_user == 3){
+                    $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1";
+                }else{
+                    $query = "SELECT  u.ID_Usuario, u.Nombre, u.Cedula, u.Edad , u.Email ,u.Telefono ,r.Descripcion FROM `usuario`  as u 
+                    INNER JOIN rol_usuario as r ON u.Tipo_Usuario = r.ID_Rol WHERE u.Estado = 1 AND r.ID_Rol BETWEEN 1 AND 4 AND u.Tipo_Usuario != 3";
+                }
+
                         $consulta = $conexion->query($query);
                         $consulta->execute();
                         if($consulta->rowCount()>0){

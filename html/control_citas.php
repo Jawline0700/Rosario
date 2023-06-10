@@ -254,6 +254,7 @@ else{
             <tbody>
                 <tr>
                     <?php  
+
                         $query = "SELECT c.ID_Cita, med.Nombre, pac.Cedula, tt.Tipo, c.Fecha, e.Estado 
                                     FROM cita c 
                                     JOIN usuario pac ON c.ID_Paciente = pac.ID_Usuario 

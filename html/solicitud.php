@@ -68,7 +68,7 @@ if($tipo_user == 4){
         <div class="soli-info-container">
             <form action="../logica/enviar_correo.php" method="POST" class="inputs-container">
                 <div class="izquierda">
-                    <label class="texto-login centrear">Solicitar Expediente Médico</label>   
+                    <label class="texto-login centrear">Solicitar Expediente Médico (Copia) </label>   
                 </div>
                 <div class="centrear">
                     <input type="hidden" name="ID-Paciente" value= <?php echo $id?>>
