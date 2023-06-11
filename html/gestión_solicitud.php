@@ -149,8 +149,9 @@ if($tipo_user == 4){
                 <tr>
                     <?php 
                     $query = "SELECT s.ID_Solicitud , u.Nombre , u.Cedula , u.Email, i.Estado from solicitud_expediente as s 
-                              INNER JOIN usuario as u ON u.ID_Usuario = s.ID_Paciente
-                              INNER JOIN estado as i ON i.ID_Estado = s.Estado WHERE s.estado = 2";
+                              INNER JOIN usuario as u ON u.ID_Usuario = s.ID_Paciente INNER JOIN estado as i ON i.ID_Estado = s.Estado 
+                              WHERE s.Estado ORDER BY FIELD(S.Estado,1,2,3,4)";
+                              
                     $consulta = $conexion->query($query);
                     $consulta->execute();
                     if($consulta->rowCount()>0){

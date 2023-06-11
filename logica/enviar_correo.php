@@ -29,9 +29,16 @@ if(isset($_POST['cedula'])){
 
         try{
 
-            $correo = $row->Email;
-            $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
-            $row = $retorno->fetch(PDO::FETCH_OBJ);
+                    $consultar = $conexion->query("SELECT * from solicitud_expediente WHERE ID_Paciente= $idpaciente");
+                    $row = $consulta->fetch(PDO::FETCH_ASSOC);
+               if($consultar->rowCount()>0){
+                    header("Location: ../html/solicitud.php?msg=confi");
+
+               }else{
+                    $correo = $row->Email;
+                    $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
+                    $row = $retorno->fetch(PDO::FETCH_OBJ);
+               }                   
         
         }catch(Exception $e){
             echo 'Caught exception: ', $e->getMessage(), "\n";

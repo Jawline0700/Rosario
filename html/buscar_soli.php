@@ -157,18 +157,27 @@ include "../conexion/conexion.php";
                     $query = "SELECT s.ID_Solicitud, pac.Nombre, pac.Cedula, pac.Email, e.Estado FROM solicitud_expediente s 
                                 JOIN usuario pac ON s.ID_Paciente = pac.ID_Usuario
                                 JOIN estado e ON e.ID_Estado = s.Estado 
-                                WHERE s.estado = 2 AND pac.Cedula = '$cedula'";
+                                WHERE s.Estado AND pac.Cedula = '$cedula'  ORDER BY FIELD(S.Estado,1,2,3,4)";
                     $consulta = $conexion->query($query);
                     $consulta->execute();
                     if($consulta->rowCount()>0){
                     while($fila = $consulta->fetch(PDO::FETCH_ASSOC)){
+
+                        $colorEstadoCita = "bg-danger";
+                        switch($fila['Estado']){
+                            case "Realizada / Aprobada": $colorEstadoCita = "bg-primary";
+                                    break;
+                            case "En Proceso": $colorEstadoCita = "bg-success";
+                                    break;
+                            case "Pendiente": $colorEstadoCita = "bg-warning";
+                                    break;
+                        }
                     ?>
-                    <td data-titulo="ID_Solicitud" class="col"> <?php echo $fila['ID_Solicitud'] ?></td>
+                    <td data-titulo="ID" class="col" style="display: none;"> <?php echo $fila['ID_Solicitud'] ?></td>
                     <td data-titulo="Nombre" class="col"><?php echo $fila['Nombre']?></td>
                     <td data-titulo="Cédula" class="col"><?php echo $fila['Cedula']?></td>
                     <td data-titulo="Email" class="col"><?php echo $fila['Email']?></td>
-                    <td data-titulo="Estado" class="col"><?php echo $fila['Estado']?></td>
-                  
+                    <td data-titulo="Estado" class="semaforo col d-flex m-0 justify-content-space-between align-items-center"><p class="nombreEstado" ><?php echo $fila["Estado"]; ?></p><p class="colorEstado rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
                     <td> <?php if($tipo_user == 3){?>
                         <div class="contenido">
                             <button type="button" onClick="pasarid()" class="btn btn-editar"data-bs-toggle="modal" data-bs-target="#myModal3">Aprobar</button>

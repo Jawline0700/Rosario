@@ -75,7 +75,8 @@ if($tipo_user == 4){
                     <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name= "cedula">
                 </div>
                 <?php if(isset($_GET['msg'])){?>
-            <?php $valor = $_GET['msg'];
+                <?php $valor = $_GET['msg'];
+
                   if($valor == "Exito" ){ 
                     echo '<script type="text/JavaScript">
                     Swal.fire({
@@ -106,7 +107,14 @@ if($tipo_user == 4){
                           title: "Valores Invalidos",
                         })
                             </script>';
-                  }
+                  }if($valor == "confi"){
+                    echo '<script type="text/JavaScript">
+                    Swal.fire({
+                        icon: "success",
+                        title: "Su Solicitud ha sido procesada, revise su correo para conocer el estado de sus solicitud",
+                      })
+                          </script>';
+                }
                     ?>
             <?php } ?>
                 <div class="centrear">
