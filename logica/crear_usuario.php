@@ -72,7 +72,7 @@ if(!empty( $_POST['nombre-crear']) and !empty($_POST['cedula-crear']) and !empty
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Instituto Oncológico Nacional - Creación de Usuario - Rosario ';
             $mail->Body    = 'La creación de su usuario se ha realizado con exito 
-                              su Contraseña es la siguiente'.$password1;
+                              su Contraseña es la siguiente: '.$password1;
         
             $mail->send();
     
