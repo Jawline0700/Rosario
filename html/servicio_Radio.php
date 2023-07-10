@@ -77,6 +77,7 @@ if($consultar->rowCount() > 0){
                 <div class="centrear">
                     <label class="texto-login">Su turno:</label>
                     <input type="text" id="suTurno" placeholder="Su Turno Es 0"  class="icono-placeholder-image-fila" readonly>
+                    <label class="texto">Actualice la página cada 5 min...</label>
                 </div>
             </form>
         </div>

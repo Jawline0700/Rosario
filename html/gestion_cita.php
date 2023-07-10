@@ -109,7 +109,7 @@ if($tipo_user == 4){
                   <td data-titulo="Tipo de Cita:" class="col"><?php echo $fila['Tipo Cita']?></td>
                   <td data-titulo="Medico:" class="col"><?php echo $fila['Nombre']?></td>
                   <td data-titulo="Fecha de Atención:" class="col"> <?php echo $fila['Fecha']?></td>
-                  <td data-titulo="Estado:" class="semaforo col d-flex m-0 justify-content-space-between align-items-center"><p class="nombreEstado" ><?php echo $fila['Estado Cita']; ?></p><p class="colorEstado rounded-circle <?php echo $colorEstadoCita ?>"></p></td>
+                  <td data-titulo="Estado:" class="col"><?php echo $fila['Estado Cita']; ?></td>
                 </tr> 
                 <?php }
                 } else { ?>

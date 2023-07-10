@@ -8,10 +8,11 @@ function MappearCita(){
         var personalMedico =  e.target.parentElement.parentElement.parentElement.children[3].textContent;
         var estado =  e.target.parentElement.parentElement.parentElement.children[4].textContent;
         var turno =  e.target.parentElement.parentElement.parentElement.children[5].textContent;
-        
+    
         document.getElementById("id-cita").value = id;
         document.getElementById("cedula-cita").value = cedula;
         document.getElementById("turno-cita").value = turno;
+   
 
         var selectMaquina = document.getElementById("selectMaquina");
         var contador = 0;

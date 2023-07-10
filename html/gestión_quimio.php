@@ -24,7 +24,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilo_base.css">
-    <script src='../js/gestionServicios.js'></script>
    
 </head>
 <body>
@@ -148,7 +147,7 @@
                 <td> 
                     <?php if($tipo_user == 2){ ?>
                     <div class="contenido">
-                        <button type="button" class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#myModal3">Modificar</button>
+                        <button type="button" class="btn btn-editar" data-bs-toggle="modal"  onclick="MappearCita()" data-bs-target="#myModal3">Modificar</button>
                     </div>
                     <?php }else{?>
                         Sin Acciones...
@@ -249,7 +248,7 @@
         </div>
      </div>
 
-
+<script src='../js/gestionServicios.js'> </script>
 
     <div class="modal" id="myModal4">
         <div class="modal-dialog">

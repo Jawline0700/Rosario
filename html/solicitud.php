@@ -111,7 +111,7 @@ if($tipo_user == 4){
                     echo '<script type="text/JavaScript">
                     Swal.fire({
                         icon: "success",
-                        title: "Su Solicitud ha sido procesada, revise su correo para conocer el estado de sus solicitud",
+                        title: "Su Solicitud esta siendo procesada",
                       })
                           </script>';
                 }
