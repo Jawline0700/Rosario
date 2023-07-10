@@ -17,10 +17,11 @@ if(isset($_POST['cedula'])){
     $info = 1;
 
     try{
-        $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
+        $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente");
         $consulta = $conexion->query("SELECT Email from usuario WHERE Cedula = '$cedula'and Tipo_Usuario = 4");
         $row  = $consulta->fetch(PDO::FETCH_OBJ);
         $correo = $row->Email;
+        
     
     }catch(Exception $e){
         echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -31,17 +32,14 @@ if(isset($_POST['cedula'])){
 
         try{
 
-                $consultar = $conexion->query("SELECT * from solicitud_expediente WHERE ID_Paciente= $idpaciente");
-                $row = $consulta->fetch(PDO::FETCH_ASSOC);
+                $consultar = $conexion->query("SELECT cedula from solicitud_expediente as s INNER JOIN usuario as u ON s.ID_Paciente = u.ID_Usuario WHERE s.ID_Paciente = '$idpaciente' AND u.Cedula = '$cedula'");
                if($consultar->rowCount()>0){
 
                 header("Location: ../html/solicitud.php?msg=confi");
 
                }else{
-                    $retorno = $conexion->query("SELECT Expendiente_Entregado from solicitud_expediente WHERE ID_Paciente = $idpaciente" );
-                    $row = $retorno->fetch(PDO::FETCH_OBJ);
-
-                                
+                
+                            
             if($retorno->rowCount() == 0){
                     
                 $mail = new PHPMailer(true);
