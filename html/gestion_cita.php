@@ -119,6 +119,9 @@ if($tipo_user == 4){
         </table>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
   
 
 </section>
