@@ -314,11 +314,11 @@ else{
                                         <div class="mb-3">
                                             <label class="texto">Fecha de Cita</label>
                                             <br>
-                                            <input type="date" class="seleccion" name="fecha-editar">
+                                            <input type="date" class="seleccion" name="fecha-editar" readonly disabled>
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Cédula Paciente</label>
-                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula-editar" readonly>
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula-editar" readonly disabled>
 
                                         </div>
                                         <div class="mb-3">
@@ -342,7 +342,7 @@ else{
                                             <br>
                                             <label class="texto">Tipo de Tratamiento</label>
                                             <br>
-                                            <select id="selectTratamiento" class="seleccion" name="tratamiento">
+                                            <select id="selectTratamiento" class="seleccion" name="tratamiento" readonly disabled>
                                                 <?php 
                                                     $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
                                                     $consultar->execute();

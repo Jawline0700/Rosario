@@ -253,7 +253,7 @@ include "../conexion/conexion.php";
                     JOIN usuario pac ON c.ID_Paciente = pac.ID_Usuario 
                     JOIN usuario med ON c.ID_Paciente = med.ID_Usuario 
                     JOIN estado as e ON c.ID_Estado_Cita = e.ID_Estado
-                    WHERE pac.Cedula = '$cedula'
+                    WHERE pac.Cedula = '$cedula' AND pac.Estado = 1
                     ORDER BY Actividad DESC";
                     $consulta=$conexion->query($query);
                     $consulta->execute();
@@ -301,17 +301,17 @@ include "../conexion/conexion.php";
                                         <div class="mb-3">
                                             <label class="texto">Fecha de Cita</label>
                                             <br>
-                                            <input type="date" class="seleccion" name="fecha-editar">
+                                            <input type="date" class="seleccion" name="fecha-editar" readonly disabled>
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Cédula Paciente</label>
-                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula-editar" readonly>
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula-editar" readonly disabled>
 
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Medico:</label>
                                             <br>
-                                            <select id="Medicos" class="seleccion" name="medico">
+                                            <select id="Medicos" class="seleccion" name="medico" readonly disabled>
                                                 <?php 
                                                 $informacion = $conexion->prepare("SELECT med.ID_Usuario, med.Nombre 
                                                                                     FROM usuario med 
@@ -329,7 +329,7 @@ include "../conexion/conexion.php";
                                             <br>
                                             <label class="texto">Tipo de Tratamiento</label>
                                             <br>
-                                            <select id="Tipo" class="seleccion" name="tratamiento">
+                                            <select id="Tipo" class="seleccion" name="tratamiento" readonly disabled>
                                             <?php 
                                             $consultar = $conexion->prepare("SELECT * From tipo_tratamiento ");
                                             $consultar->execute();
