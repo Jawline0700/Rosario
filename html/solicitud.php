@@ -110,7 +110,7 @@ if($tipo_user == 4){
                   }if($valor == "confi"){
                     echo '<script type="text/JavaScript">
                     Swal.fire({
-                        icon: "success",
+                        icon: "warning",
                         title: "Su Solicitud esta siendo procesada",
                       })
                           </script>';

@@ -151,7 +151,7 @@ $tipo_user = $_SESSION['tipo'];
                                 <div class="modal-body">
                                     <form method="POST" Action="buscar_user.php">
                                         <div class="mb-3" >
-                                            <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-search">
+                                            <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-search" pattern="[A-Za-z0-9]+[-]" title="No acepta caracteres especiales">
                                         </div>
                                         <div class="modal-footer pie-pagina">
                                             <button type="submit" class="btn btn-crear">Buscar</button>

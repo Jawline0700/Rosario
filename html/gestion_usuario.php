@@ -171,11 +171,11 @@ Header("Location: pagina_inicio.php");
                         <div class="mb-3">
                             <label class="texto">Nombre:</label>
                             <br>
-                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-crear" required>
+                            <input type="text" class="seleccion icono-placeholder-image" placeholder="Digite el Nombre" name="nombre-crear" required  pattern="[A-Za]" title="Solo acepta letras"> 
                         </div>
                         <div class="mb-3">
                             <label class="texto">Cédula:</label>
-                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula" name="cedula-crear" required>
+                            <input type="text" class="icono-cedula" placeholder="Digite la Cédula" name="cedula-crear" required pattern="[A-Za-z0-9]+[-]" title="No acepta caracteres especiales">
 
                         </div>
                         <div class="mb-3">

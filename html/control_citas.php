@@ -131,6 +131,14 @@ else{
                           })
                               </script>';
                     }
+                    else if($valor == "error2"){
+                        echo '<script type="text/JavaScript">
+                        Swal.fire({
+                            icon: "error",
+                            title: "Fecha Invalida",
+                          })
+                              </script>';
+                    }
                     ?>
             <?php } ?>
                    
@@ -188,7 +196,7 @@ else{
                                         </div>
                                         <div class="mb-3">
                                             <label class="texto">Cédula Paciente</label>
-                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula" required>
+                                            <input type="text" class="icono-placeholder-image" placeholder="Digite la Cédula" name="cedula" required pattern="[A-Za-z0-9]+[-]" title="No acepta caracteres especiales">
 
                                         </div>
                                         <div class="mb-3">

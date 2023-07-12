@@ -34,13 +34,13 @@ include "conexion/conexion.php";
                 <label class="texto-login">Número de Cédula</label>   
             </div>
             <div class="centrear">
-                <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name="cedula-inicio">
+                <input type="text" placeholder="Digite su Cédula" class="icono-placeholder-image" name="cedula-inicio" pattern="[A-Za-z0-9]+[-]" title="No acepta caracteres especiales">
             </div>
             <div class="izquierda">
                 <label class="texto-login">Contraseña</label>
             </div>
             <div class="centrear">
-            <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2" name="password" pattern="[A-Za-z0-9]+" title="No Acepta Caracteres Especiales">
+            <input type="password"  placeholder="Digite su Contraseña" class="icono-placeholder-image2" name="password">
             <br>
             <?php if(isset($_GET['msg'])){?>
             <?php $valor = $_GET['msg'];

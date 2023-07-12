@@ -143,7 +143,6 @@ include "../conexion/conexion.php";
         <table id="tabla-soli">
             <thead>
                 <tr>
-                    <th class="col">ID_Solicitud</th>
                     <th class="col">Nombre</th>
                     <th class="col">Cédula</th>
                     <th class="col">Email</th>

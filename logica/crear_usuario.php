@@ -22,7 +22,7 @@ if(!empty( $_POST['nombre-crear']) and !empty($_POST['cedula-crear']) and !empty
     $password1 = mt_rand(10000, 1000000);
     $mail = new PHPMailer(true);
 
-    $verificar = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula_crear' AND Email= '$email_crear'");
+    $verificar = $conexion->query("SELECT * from usuario WHERE Cedula = '$cedula_crear'");
     $registrar = $verificar->fetch(PDO::FETCH_OBJ);
 
     if($verificar->rowCount() == 0){

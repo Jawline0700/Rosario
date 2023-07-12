@@ -118,7 +118,7 @@ if($tipo_user == 4){
                             <div class="modal-body">
                                 <form method="POST" action="../html/buscar_soli.php">
                                     <div class="mb-3" >
-                                        <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-soli">
+                                        <input type="text" class="icono-lupa-placeholder-image" placeholder="Digite la Cédula" name="cedula-soli" pattern="[A-Za-z0-9]+[-]" title="No acepta caracteres especiales">
                                     </div>
                                     <div class="modal-footer pie-pagina">
                                    <button type="submit" class="btn btn-crear">Buscar</button>

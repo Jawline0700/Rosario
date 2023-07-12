@@ -13,7 +13,7 @@ if(isset($_POST['cedula'])){
 
     $cedula = $_POST['cedula'];
     $idpaciente = $_POST['ID-Paciente'];
-    $estado = 2;
+    $estado = 3;
     $info = 1;
 
     try{
